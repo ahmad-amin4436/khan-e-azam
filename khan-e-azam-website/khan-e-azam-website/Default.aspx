@@ -197,53 +197,6 @@
 	</div>		
 	<!-- Banner -->
 
-	<!-- Icon wrapper-2  -->
-	<section class="content-inner sm:pt-[100px] sm:pb-[70px] pt-[50px] pb-5">
-		<div class="container">
-			<div class="row justify-center relative icon-wrapper2 md:mx-[-30px]">
-				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
-					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
-						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
-							<span class="icon-cell text-primary duration-500">
-								<i class="flaticon-offer xl:text-[45px] text-[35px]"></i>
-							</span>
-						</div>
-						<div class="icon-content overflow-hidden">
-							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Discount Voucher</a></h5>
-							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
-						</div>
-					</div>
-				</div>
-				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
-					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
-						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
-							<span class="icon-cell text-primary duration-500">
-								<i class="flaticon-hamburger xl:text-[45px] text-[35px]"></i>
-							</span>
-						</div>
-						<div class="icon-content overflow-hidden">
-							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Fresh Healthy Food</a></h5>
-							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
-						</div>
-					</div>
-				</div>
-				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
-					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
-						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
-							<span class="icon-cell text-primary duration-500">
-								<i class="flaticon-room-service xl:text-[45px] text-[35px]"></i>
-							</span>
-						</div>
-						<div class="icon-content overflow-hidden">
-							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Discount Voucher</a></h5>
-							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<!-- Browser Our Menu -->
 	<section class="content-inner-1 pb-[100px] overflow-hidden pt-0">
 		<div class="container">
@@ -656,6 +609,53 @@
 		</div>
 	</section>
 	<!-- Are Menu-->
+    
+	<!-- Icon wrapper-2  -->
+	<section class="content-inner  sm:pb-[70px] pt-[50px] pb-5">
+		<div class="container">
+			<div class="row justify-center relative icon-wrapper2 md:mx-[-30px]">
+				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
+					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
+						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
+							<span class="icon-cell text-primary duration-500">
+								<i class="flaticon-offer xl:text-[45px] text-[35px]"></i>
+							</span>
+						</div>
+						<div class="icon-content overflow-hidden">
+							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Discount Voucher</a></h5>
+							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
+						</div>
+					</div>
+				</div>
+				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
+					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
+						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
+							<span class="icon-cell text-primary duration-500">
+								<i class="flaticon-hamburger xl:text-[45px] text-[35px]"></i>
+							</span>
+						</div>
+						<div class="icon-content overflow-hidden">
+							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Fresh Healthy Food</a></h5>
+							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
+						</div>
+					</div>
+				</div>
+				<div class="lg:w-2/6 w-full md:w-6/12 px-[30px] max-2lg:px-6 mb-[30px]">
+					<div class="icon-bx-wraper bg-white overflow-hidden flex items-center duration-500">
+						<div class="icon-bx duration-500 bg-[var(--rgba-primary-1)] xl:w-[100px] xl:h-[100px] xl:min-w-[100px] w-[80px] h-[80px] min-w-[80px] rounded-full text-center mr-5 xl:leading-[110px] leading-[80px]">
+							<span class="icon-cell text-primary duration-500">
+								<i class="flaticon-room-service xl:text-[45px] text-[35px]"></i>
+							</span>
+						</div>
+						<div class="icon-content overflow-hidden">
+							<h5 class="dz-title mb-2 xl:text-xl text-lg"><a href="services.html">Discount Voucher</a></h5>
+							<p class="text-[15px]">lorem ipsum dolor shit amet lorem ipsum</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<!-- Master Chef -->
 	<section class="bg-light sm:content-inner lg:pt-[100px] pt-[70px] lg:pb-[70px] pb-[40px] relative overflow-hidden max-2xl:mx-0 mx-[100px] max-2xl:rounded-none rounded-[30px] bg-[url('images/background/pic10.html')] bg-fixed">
