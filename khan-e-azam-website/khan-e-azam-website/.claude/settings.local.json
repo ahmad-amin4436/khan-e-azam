@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(sqlcmd -S \".\\\\SQLEXPRESS\" -U sa -P \"abcd@1234\" -i \"c:\\\\Users\\\\Administrator\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-website\\\\khan-e-azam-website\\\\App_Data\\\\FixImagePaths.sql\" -t 30)"
+      "Bash(sqlcmd -S \".\\\\SQLEXPRESS\" -U sa -P \"abcd@1234\" -i \"c:\\\\Users\\\\Administrator\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-website\\\\khan-e-azam-website\\\\App_Data\\\\FixImagePaths.sql\" -t 30)",
+      "Bash(cat \"c:/Users/Administrator/Documents/GitHub/khan-e-azam/khan-e-azam-template/swigo-tailwind.vercel.app/index.html\" | head -400 | tail -300)",
+      "Read(//c/Users/Administrator/Documents/GitHub/khan-e-azam/khan-e-azam-template/swigo-tailwind.vercel.app/**)",
+      "Bash(ls \"C:\\\\Users\\\\Administrator\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-template\")",
+      "Read(//c/Users/Administrator/Documents/GitHub/khan-e-azam/**)",
+      "Bash(dir \"C:\\\\Users\\\\Administrator\\\\Documents\\\\GitHub\\\\khan-e-azam\")",
+      "Bash(ls *.cs)",
+      "Bash(ls Models/*.cs)",
+      "Bash(ls DAL/*.cs)",
+      "Bash(grep -n \"main-bnr-2\\\\|banner-inner1\\\\|banner-media\\\\|swiper-bnr\" \"c:\\\\\\\\Users\\\\\\\\Administrator\\\\\\\\Documents\\\\\\\\GitHub\\\\\\\\khan-e-azam\\\\\\\\khan-e-azam-template\\\\\\\\swigo-tailwind.vercel.app\\\\\\\\index-2.html\")"
     ]
   }
 }
