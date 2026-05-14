@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlcmd -S \".\\\\SQLEXPRESS\" -U sa -P \"abcd@1234\" -i \"c:\\\\Users\\\\Administrator\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-website\\\\khan-e-azam-website\\\\App_Data\\\\FixImagePaths.sql\" -t 30)"
+    ]
+  }
+}

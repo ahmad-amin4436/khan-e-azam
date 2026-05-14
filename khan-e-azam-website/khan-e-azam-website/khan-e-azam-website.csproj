@@ -128,6 +128,7 @@
     <Content Include="assets\icons\line-awesome\fonts\la-brands-400.svg" />
     <Content Include="assets\icons\line-awesome\fonts\la-regular-400.svg" />
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900.svg" />
+    <Content Include="assets\images\9966545b-c76d-45d5-b835-e6480c8ab4ee.png" />
     <Content Include="assets\images\adv-media.jpg" />
     <Content Include="assets\images\adv\label.png" />
     <Content Include="assets\images\adv\pic1.png" />
@@ -356,6 +357,20 @@
     <Content Include="assets\vendor\switcher\switcher.js" />
     <Content Include="assets\vendor\wnumb\wNumb.js" />
     <Content Include="assets\video\video.mp4" />
+    <Content Include="App_Data\CreateDatabase.sql" />
+    <Content Include="Admin\Web.config" />
+    <Content Include="Admin\Admin.Master" />
+    <Content Include="Admin\Login.aspx" />
+    <Content Include="Admin\Logout.aspx" />
+    <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\BannerSlides.aspx" />
+    <Content Include="Admin\BrowseMenu.aspx" />
+    <Content Include="Admin\TodaysSpecials.aspx" />
+    <Content Include="Admin\MenuFilter.aspx" />
+    <Content Include="Admin\IconFeatures.aspx" />
+    <Content Include="Admin\Chefs.aspx" />
+    <Content Include="Admin\Testimonials.aspx" />
+    <Content Include="Admin\BlogPosts.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -430,6 +445,74 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="DAL\Database.cs" />
+    <Compile Include="DAL\AdminUserRepository.cs" />
+    <Compile Include="DAL\BannerSlideRepository.cs" />
+    <Compile Include="DAL\BrowseMenuRepository.cs" />
+    <Compile Include="DAL\TodaysSpecialRepository.cs" />
+    <Compile Include="DAL\MenuFilterRepository.cs" />
+    <Compile Include="DAL\IconFeatureRepository.cs" />
+    <Compile Include="DAL\ChefRepository.cs" />
+    <Compile Include="DAL\TestimonialRepository.cs" />
+    <Compile Include="DAL\BlogPostRepository.cs" />
+    <Compile Include="Models\AdminUser.cs" />
+    <Compile Include="Models\BannerSlide.cs" />
+    <Compile Include="Models\BrowseMenuItem.cs" />
+    <Compile Include="Models\TodaysSpecial.cs" />
+    <Compile Include="Models\MenuFilterItem.cs" />
+    <Compile Include="Models\IconFeature.cs" />
+    <Compile Include="Models\Chef.cs" />
+    <Compile Include="Models\Testimonial.cs" />
+    <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\BannerSlides.aspx.cs">
+      <DependentUpon>BannerSlides.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\BrowseMenu.aspx.cs">
+      <DependentUpon>BrowseMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TodaysSpecials.aspx.cs">
+      <DependentUpon>TodaysSpecials.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\MenuFilter.aspx.cs">
+      <DependentUpon>MenuFilter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\IconFeatures.aspx.cs">
+      <DependentUpon>IconFeatures.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Chefs.aspx.cs">
+      <DependentUpon>Chefs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Testimonials.aspx.cs">
+      <DependentUpon>Testimonials.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\BlogPosts.aspx.cs">
+      <DependentUpon>BlogPosts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
@@ -451,9 +534,7 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />

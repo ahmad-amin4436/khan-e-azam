@@ -1,0 +1,54 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TodaysSpecials.aspx.cs" Inherits="KhanEAzam.Admin.TodaysSpecials" MasterPageFile="~/Admin/Admin.Master" ValidateRequest="false" %>
+<asp:Content ContentPlaceHolderID="PageTitle" runat="server">Today's Specials</asp:Content>
+<asp:Content ContentPlaceHolderID="PageHeading" runat="server">Today's Specials</asp:Content>
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="pnlList" runat="server">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Today's Specials
+                <asp:Button ID="btnNew" runat="server" Text="+ Add New" CssClass="btn btn-primary btn-sm" OnClick="btnNew_Click" />
+            </div>
+            <div class="card-body p-0">
+                <asp:Label ID="lblMsg" runat="server" Visible="false" CssClass="alert alert-success m-3 d-block"></asp:Label>
+                <asp:GridView ID="gv" runat="server" AutoGenerateColumns="false" CssClass="table table-hover mb-0" DataKeyNames="Id" OnRowCommand="gv_RowCommand">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="#" />
+                        <asp:BoundField DataField="Name" HeaderText="Name" />
+                        <asp:BoundField DataField="Category" HeaderText="Category" />
+                        <asp:BoundField DataField="Weight" HeaderText="Weight" />
+                        <asp:BoundField DataField="Price" HeaderText="Price" />
+                        <asp:BoundField DataField="SortOrder" HeaderText="Order" />
+                        <asp:TemplateField HeaderText="Active">
+                            <ItemTemplate><span class='<%# (bool)Eval("IsActive") ? "badge-active" : "badge-inactive" %>'><%# (bool)Eval("IsActive") ? "Yes" : "No" %></span></ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Actions">
+                            <ItemTemplate>
+                                <asp:LinkButton runat="server" CommandName="EditRow" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-warning btn-sm">Edit</asp:LinkButton>
+                                <asp:LinkButton runat="server" CommandName="DeleteRow" CommandArgument='<%# Eval("Id") %>' CssClass="btn btn-danger btn-sm ml-1" OnClientClick="return confirm('Delete?')">Delete</asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
+    </asp:Panel>
+    <asp:Panel ID="pnlForm" runat="server" Visible="false">
+        <div class="card">
+            <div class="card-header"><asp:Label ID="lblFormTitle" runat="server">Add Special</asp:Label></div>
+            <div class="card-body">
+                <asp:HiddenField ID="hfId" runat="server" Value="0" />
+                <div class="row">
+                    <div class="col-md-6 form-group"><label>Name</label><asp:TextBox ID="txtName" runat="server" CssClass="form-control" /></div>
+                    <div class="col-md-3 form-group"><label>Category</label><asp:TextBox ID="txtCategory" runat="server" CssClass="form-control" placeholder="BBQ / Main Course" /></div>
+                    <div class="col-md-3 form-group"><label>Weight</label><asp:TextBox ID="txtWeight" runat="server" CssClass="form-control" placeholder="400g" /></div>
+                    <div class="col-md-4 form-group"><label>Price</label><asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" placeholder="Rs.750" /></div>
+                    <div class="col-md-8 form-group"><label>Image Path</label><asp:TextBox ID="txtImage" runat="server" CssClass="form-control" placeholder="assets/images/todays-special/1.jpg" /></div>
+                    <div class="col-md-4 form-group"><label>Sort Order</label><asp:TextBox ID="txtSortOrder" runat="server" CssClass="form-control" Text="0" /></div>
+                    <div class="col-md-4 form-group"><label>Active</label><br /><asp:CheckBox ID="chkIsActive" runat="server" Checked="true" Text=" Active" /></div>
+                </div>
+                <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary" OnClick="btnSave_Click" />
+                <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary ml-2" OnClick="btnCancel_Click" CausesValidation="false" />
+            </div>
+        </div>
+    </asp:Panel>
+</asp:Content>
