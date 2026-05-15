@@ -2,6 +2,7 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KhanEAzam.DAL;
+using KhanEAzam.Helpers;
 using KhanEAzam.Models;
 
 namespace KhanEAzam.Admin
@@ -10,10 +11,12 @@ namespace KhanEAzam.Admin
     {
         protected Panel pnlList, pnlForm;
         protected GridView gv;
-        protected Label lblMsg, lblFormTitle;
-        protected HiddenField hfId;
-        protected TextBox txtTitle, txtAuthor, txtDate, txtImage, txtVideo, txtComments, txtSortOrder;
+        protected Label lblMsg, lblFormTitle, lblUploadError;
+        protected HiddenField hfId, hfImagePath;
+        protected TextBox txtTitle, txtAuthor, txtDate, txtVideo, txtComments, txtSortOrder;
         protected CheckBox chkIsLarge, chkIsActive;
+        protected FileUpload fuImage;
+        protected System.Web.UI.WebControls.Image imgPreview;
         protected Button btnNew, btnSave, btnCancel;
 
         private readonly BlogPostRepository _repo = new BlogPostRepository();
@@ -37,8 +40,11 @@ namespace KhanEAzam.Admin
                 hfId.Value = p.Id.ToString(); lblFormTitle.Text = "Edit Blog Post";
                 txtTitle.Text = p.Title; txtAuthor.Text = p.Author;
                 txtDate.Text = p.PublishedDate.HasValue ? p.PublishedDate.Value.ToString("yyyy-MM-dd") : "";
-                txtImage.Text = p.Image; txtVideo.Text = p.VideoUrl;
+                txtVideo.Text = p.VideoUrl;
                 txtComments.Text = p.CommentCount.ToString(); txtSortOrder.Text = p.SortOrder.ToString();
+                hfImagePath.Value = p.Image;
+                if (!string.IsNullOrEmpty(p.Image)) { imgPreview.ImageUrl = "~/" + p.Image; imgPreview.Visible = true; }
+                else imgPreview.Visible = false;
                 chkIsLarge.Checked = p.IsLarge; chkIsActive.Checked = p.IsActive;
                 pnlList.Visible = false; pnlForm.Visible = true;
             }
@@ -46,13 +52,21 @@ namespace KhanEAzam.Admin
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            lblUploadError.Visible = false;
+            string imagePath = hfImagePath.Value;
+            if (fuImage.HasFile)
+            {
+                string uploaded = ImageUploadHelper.Save(fuImage.PostedFile, Server.MapPath("~/assets/images/uploads/"));
+                if (uploaded != null) imagePath = uploaded;
+                else { lblUploadError.Text = "Invalid file. Use JPG/PNG/GIF/WEBP under 5 MB."; lblUploadError.Visible = true; return; }
+            }
             DateTime? dt = null;
             if (DateTime.TryParse(txtDate.Text, out DateTime parsedDt)) dt = parsedDt;
 
             var p = new BlogPost
             {
                 Id = Convert.ToInt32(hfId.Value), Title = txtTitle.Text.Trim(), Author = txtAuthor.Text.Trim(),
-                PublishedDate = dt, Image = txtImage.Text.Trim(), VideoUrl = txtVideo.Text.Trim(),
+                PublishedDate = dt, Image = imagePath, VideoUrl = txtVideo.Text.Trim(),
                 CommentCount = int.TryParse(txtComments.Text, out int cc) ? cc : 0,
                 SortOrder = int.TryParse(txtSortOrder.Text, out int so) ? so : 0,
                 IsLarge = chkIsLarge.Checked, IsActive = chkIsActive.Checked
@@ -63,10 +77,12 @@ namespace KhanEAzam.Admin
         }
 
         protected void btnCancel_Click(object sender, EventArgs e) { pnlForm.Visible = false; pnlList.Visible = true; BindGrid(); }
+
         private void ClearForm()
         {
-            txtTitle.Text = txtAuthor.Text = txtDate.Text = txtImage.Text = txtVideo.Text = "";
+            txtTitle.Text = txtAuthor.Text = txtDate.Text = txtVideo.Text = "";
             txtComments.Text = txtSortOrder.Text = "0"; chkIsLarge.Checked = false; chkIsActive.Checked = true;
+            hfImagePath.Value = ""; imgPreview.Visible = false; lblUploadError.Visible = false;
         }
     }
 }

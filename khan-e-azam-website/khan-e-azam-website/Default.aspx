@@ -31,8 +31,6 @@
 												<h1 class="title mb-4 font-lobster text-white 2xl:text-[80px] xl:text-[70px] lg:text-[60px] md:text-[50px] sm:text-[36px] text-[28px] leading-tight"><%# Eval("Heading") %></h1>
 												<p class="lg:max-w-[580px] md:max-w-[350px] max-w-full font-light lg:text-lg sm:text-base text-sm leading-[27px] text-[#ffffffb3] max-sm:hidden"><%# Eval("Description") %></p>
 												<div class="banner-btn flex flex-wrap items-center lg:mt-10 sm:mt-[40px] mt-4 gap-[12px] sm:gap-[30px] lg:mb-[80px] mb-5">
-													<a href="contact-us.html" class="btn btn-primary btn-md btn-hover-1"><span>Book a Table</span></a>
-													<a href="about-us.html" class="btn btn-outline text-primary btn-md btn-hover-1"><span>View More</span></a>
 												</div>
 												<div class="food-card border-dashed border border-[#ffffff66] rounded-[10px] w-[370px] relative block max-xl:hidden">
 													<div class="dz-head border-b border-dashed border-[#ffffff66] flex justify-between py-[15px] px-[25px]">
@@ -60,7 +58,7 @@
 														</div>
 														<div class="dz-right">
 															<h5 class="text-primary mb-2"><%# Eval("Price") %></h5>
-															<a href="shop-cart.html" class="btn btn-primary btn-cart w-10 h-10 leading-[0.5rem] flex text-xl p-1"><i class="flaticon-shopping-cart text-white"></i></a>
+															<a href="Pages/Cart.aspx" class="btn btn-primary btn-cart w-10 h-10 leading-[0.5rem] flex text-xl p-1"><i class="flaticon-shopping-cart text-white"></i></a>
 														</div>
 													</div>
 													<img class="target-line absolute bottom-[50px] -right-full z-[2] translate-x-[25%] min-w-[485px]" src="assets/images/main-slider/slider2/line.png" alt="/">
@@ -115,7 +113,11 @@
 										<span class="text-bodycolor text-[13px]">Regular Price</span>
 										<span class="price duration-500"><%# Eval("Price") %></span>
 									</div>
-									<a class="detail-btn" href="product-detail.html"><i class="fa-solid fa-plus"></i></a>
+									<a class="detail-btn dz-cart-add" href="javascript:void(0);"
+								   data-cart-id='bm-<%# Eval("Id") %>'
+								   data-name='<%# System.Web.HttpUtility.HtmlAttributeEncode(Eval("Name").ToString()) %>'
+								   data-price='<%# Eval("Price") %>'
+								   data-image='<%# Eval("Image") %>'><i class="fa-solid fa-plus"></i></a>
 								</div>
 							</div>
 						</ItemTemplate>
@@ -149,7 +151,11 @@
 								</div>
 								<div class="dz-media rounded-[10px] mt-auto w-full overflow-hidden relative" style="height:180px;">
 									<img src='<%# Eval("Image") %>' alt="/" class="block w-full h-full object-cover">
-									<a class="detail-btn top-[-50px] z-[2] left-[50%] translate-x-[-50%] opacity-0 rounded-xl" href="our-menu-1.html"><i class="fa-solid fa-plus text-white"></i></a>
+									<a class="detail-btn dz-cart-add top-[-50px] z-[2] left-[50%] translate-x-[-50%] opacity-0 rounded-xl" href="javascript:void(0);"
+								   data-cart-id='ts-<%# Eval("Id") %>'
+								   data-name='<%# System.Web.HttpUtility.HtmlAttributeEncode(Eval("Name").ToString()) %>'
+								   data-price='<%# Eval("Price") %>'
+								   data-image='<%# Eval("Image") %>'><i class="fa-solid fa-plus text-white"></i></a>
 								</div>
 							</div>
 						</div>
@@ -157,7 +163,7 @@
 				</asp:Repeater>
 			</div>
 			<div class="w-full text-center mt-[30px]">
-				<a href="our-menu-1.html" class="btn btn-md btn-primary btn-hover-1"><span>See All Dishes</span></a>
+				<a href="Pages/Menu.aspx" class="btn btn-md btn-primary btn-hover-1"><span>See All Dishes</span></a>
 			</div>
 		</div>
 	</section>
@@ -195,7 +201,7 @@
 									</div>
 									<div class="dz-content w-full">
 										<div class="dz-head flex justify-between items-center">
-											<span class="header-text sm:text-lg text-sm font-semibold leading-7"><a href="our-menu-1.html" class="text-black2 max-w-[200px] sm:max-w-[280px] text-ellipsis overflow-hidden block whitespace-nowrap hover:text-primary"><%# Eval("Name") %></a></span>
+											<span class="header-text sm:text-lg text-sm font-semibold leading-7"><a href="Pages/Menu.aspx" class="text-black2 max-w-[200px] sm:max-w-[280px] text-ellipsis overflow-hidden block whitespace-nowrap hover:text-primary"><%# Eval("Name") %></a></span>
 											<span class="img-line sm:block hidden"></span>
 											<span class="header-price text-primary font-semibold sm:text-xl text-sm leading-7 ml-2"><%# Eval("Price") %></span>
 										</div>
@@ -207,7 +213,7 @@
 					</asp:Repeater>
 				</ul>
 				<div class="w-full text-center mt-[40px]">
-					<a href="our-menu-1.html" class="btn btn-md btn-primary btn-hover-1"><span>View All Menu</span></a>
+					<a href="Pages/Menu.aspx" class="btn btn-md btn-primary btn-hover-1"><span>View All Menu</span></a>
 				</div>
 			</div>
 		</div>

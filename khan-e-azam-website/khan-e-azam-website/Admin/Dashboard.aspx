@@ -45,6 +45,7 @@
                     <a href="Chefs.aspx" class="btn btn-outline-secondary btn-sm mb-2 mr-2"><i class="fas fa-user-chef mr-1"></i>Chefs</a>
                     <a href="Testimonials.aspx" class="btn btn-outline-secondary btn-sm mb-2 mr-2"><i class="fas fa-comment-dots mr-1"></i>Testimonials</a>
                     <a href="BlogPosts.aspx" class="btn btn-outline-secondary btn-sm mb-2 mr-2"><i class="fas fa-newspaper mr-1"></i>Blog Posts</a>
+                    <a href="Orders.aspx" class="btn btn-outline-secondary btn-sm mb-2 mr-2"><i class="fas fa-receipt mr-1"></i>Manage Orders</a>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using KhanEAzam.DAL;
+using KhanEAzam.Helpers;
 using KhanEAzam.Models;
 
 namespace KhanEAzam.Admin
@@ -10,10 +11,12 @@ namespace KhanEAzam.Admin
     {
         protected Panel pnlList, pnlForm;
         protected GridView gv;
-        protected Label lblMsg, lblFormTitle;
-        protected HiddenField hfId;
-        protected TextBox txtName, txtSubTitle, txtPrice, txtImage, txtSortOrder;
+        protected Label lblMsg, lblFormTitle, lblUploadError;
+        protected HiddenField hfId, hfImagePath;
+        protected TextBox txtName, txtSubTitle, txtPrice, txtSortOrder;
         protected CheckBox chkIsActive;
+        protected FileUpload fuImage;
+        protected System.Web.UI.WebControls.Image imgPreview;
         protected Button btnNew, btnSave, btnCancel;
 
         private readonly BrowseMenuRepository _repo = new BrowseMenuRepository();
@@ -36,8 +39,10 @@ namespace KhanEAzam.Admin
             {
                 var m = _repo.GetById(id); if (m == null) return;
                 hfId.Value = m.Id.ToString(); lblFormTitle.Text = "Edit Browse Menu Item";
-                txtName.Text = m.Name; txtSubTitle.Text = m.SubTitle;
-                txtPrice.Text = m.Price; txtImage.Text = m.Image;
+                txtName.Text = m.Name; txtSubTitle.Text = m.SubTitle; txtPrice.Text = m.Price;
+                hfImagePath.Value = m.Image;
+                if (!string.IsNullOrEmpty(m.Image)) { imgPreview.ImageUrl = "~/" + m.Image; imgPreview.Visible = true; }
+                else imgPreview.Visible = false;
                 txtSortOrder.Text = m.SortOrder.ToString(); chkIsActive.Checked = m.IsActive;
                 pnlList.Visible = false; pnlForm.Visible = true;
             }
@@ -45,10 +50,18 @@ namespace KhanEAzam.Admin
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            lblUploadError.Visible = false;
+            string imagePath = hfImagePath.Value;
+            if (fuImage.HasFile)
+            {
+                string uploaded = ImageUploadHelper.Save(fuImage.PostedFile, Server.MapPath("~/assets/images/uploads/"));
+                if (uploaded != null) imagePath = uploaded;
+                else { lblUploadError.Text = "Invalid file. Use JPG/PNG/GIF/WEBP under 5 MB."; lblUploadError.Visible = true; return; }
+            }
             var m = new BrowseMenuItem
             {
                 Id = Convert.ToInt32(hfId.Value), Name = txtName.Text.Trim(), SubTitle = txtSubTitle.Text.Trim(),
-                Price = txtPrice.Text.Trim(), Image = txtImage.Text.Trim(),
+                Price = txtPrice.Text.Trim(), Image = imagePath,
                 SortOrder = int.TryParse(txtSortOrder.Text, out int so) ? so : 0, IsActive = chkIsActive.Checked
             };
             if (m.Id == 0) _repo.Insert(m); else _repo.Update(m);
@@ -58,6 +71,11 @@ namespace KhanEAzam.Admin
 
         protected void btnCancel_Click(object sender, EventArgs e) { pnlForm.Visible = false; pnlList.Visible = true; BindGrid(); }
 
-        private void ClearForm() { txtName.Text = txtSubTitle.Text = txtPrice.Text = txtImage.Text = ""; txtSortOrder.Text = "0"; chkIsActive.Checked = true; }
+        private void ClearForm()
+        {
+            txtName.Text = txtSubTitle.Text = txtPrice.Text = "";
+            txtSortOrder.Text = "0"; chkIsActive.Checked = true;
+            hfImagePath.Value = ""; imgPreview.Visible = false; lblUploadError.Visible = false;
+        }
     }
 }

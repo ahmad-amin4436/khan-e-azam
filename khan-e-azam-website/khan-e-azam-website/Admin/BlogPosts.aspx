@@ -13,6 +13,11 @@
                 <asp:GridView ID="gv" runat="server" AutoGenerateColumns="false" CssClass="table table-hover mb-0" DataKeyNames="Id" OnRowCommand="gv_RowCommand">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="#" />
+                        <asp:TemplateField HeaderText="Image">
+                            <ItemTemplate>
+                                <img src='<%# ResolveUrl("~/" + Eval("Image")) %>' style="height:40px;width:60px;object-fit:cover;border-radius:4px;" onerror="this.style.display='none'" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="Title" HeaderText="Title" />
                         <asp:BoundField DataField="Author" HeaderText="Author" />
                         <asp:BoundField DataField="PublishedDate" HeaderText="Date" DataFormatString="{0:dd MMM yyyy}" />
@@ -44,12 +49,19 @@
                     <div class="col-md-4 form-group"><label>Author</label><asp:TextBox ID="txtAuthor" runat="server" CssClass="form-control" /></div>
                     <div class="col-md-4 form-group"><label>Published Date</label><asp:TextBox ID="txtDate" runat="server" CssClass="form-control" placeholder="2026-05-01" /></div>
                     <div class="col-md-4 form-group"><label>Comment Count</label><asp:TextBox ID="txtComments" runat="server" CssClass="form-control" Text="0" /></div>
-                    <div class="col-md-8 form-group"><label>Image Path</label><asp:TextBox ID="txtImage" runat="server" CssClass="form-control" placeholder="assets/images/blog/1.jpg" /></div>
-                    <div class="col-md-8 form-group"><label>Video URL (optional)</label><asp:TextBox ID="txtVideo" runat="server" CssClass="form-control" /></div>
+                    <div class="col-md-6 form-group"><label>Video URL <small class="text-muted">(optional, for large card)</small></label><asp:TextBox ID="txtVideo" runat="server" CssClass="form-control" /></div>
                     <div class="col-md-2 form-group"><label>Sort Order</label><asp:TextBox ID="txtSortOrder" runat="server" CssClass="form-control" Text="0" /></div>
                     <div class="col-md-2 form-group"><label>Large Card</label><br /><asp:CheckBox ID="chkIsLarge" runat="server" Text=" Large" /></div>
                     <div class="col-md-2 form-group"><label>Active</label><br /><asp:CheckBox ID="chkIsActive" runat="server" Checked="true" Text=" Active" /></div>
+                    <div class="col-md-12 form-group">
+                        <label>Cover Image</label>
+                        <asp:HiddenField ID="hfImagePath" runat="server" />
+                        <asp:Image ID="imgPreview" runat="server" Visible="false" CssClass="d-block img-thumbnail mb-2" style="max-height:100px;max-width:180px;" />
+                        <asp:FileUpload ID="fuImage" runat="server" CssClass="form-control-file" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <small class="form-text text-muted">JPG, PNG, GIF or WEBP · Max 5 MB. Leave blank to keep existing image.</small>
+                    </div>
                 </div>
+                <asp:Label ID="lblUploadError" runat="server" Visible="false" CssClass="alert alert-danger d-block mb-2"></asp:Label>
                 <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary" OnClick="btnSave_Click" />
                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary ml-2" OnClick="btnCancel_Click" CausesValidation="false" />
             </div>

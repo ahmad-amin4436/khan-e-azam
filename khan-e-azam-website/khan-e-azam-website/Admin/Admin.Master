@@ -47,6 +47,8 @@
                 <a href="Chefs.aspx" class='<%= GetActiveClass("Chefs") %>'><i class="fas fa-user-chef"></i> Chefs</a>
                 <a href="Testimonials.aspx" class='<%= GetActiveClass("Testimonials") %>'><i class="fas fa-comment-dots"></i> Testimonials</a>
                 <a href="BlogPosts.aspx" class='<%= GetActiveClass("BlogPosts") %>'><i class="fas fa-newspaper"></i> Blog Posts</a>
+                <div class="nav-section">Orders</div>
+                <a href="Orders.aspx" class='<%= GetActiveClass("Orders") %>'><i class="fas fa-receipt"></i> Manage Orders</a>
                 <div class="nav-section">Account</div>
                 <a href="Logout.aspx"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>

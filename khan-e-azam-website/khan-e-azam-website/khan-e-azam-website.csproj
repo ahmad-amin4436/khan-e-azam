@@ -193,6 +193,7 @@
     <Content Include="assets\images\blog\recent-blog\pic3.jpg" />
     <Content Include="assets\images\blog\recent-blog\pic4.jpg" />
     <Content Include="assets\images\blog\recent-blog\pic5.jpg" />
+    <Content Include="assets\images\logo2.png" />
     <Content Include="assets\images\faq\pic1.png" />
     <Content Include="assets\images\favicon.png" />
     <Content Include="assets\images\gallery\grid2\pic1.jpg" />
@@ -242,7 +243,6 @@
     <Content Include="assets\images\like.png" />
     <Content Include="assets\images\loading.gif" />
     <Content Include="assets\images\logo.png" />
-    <Content Include="assets\images\logo2.png" />
     <Content Include="assets\images\main-slider\slider1\img1.png" />
     <Content Include="assets\images\main-slider\slider1\img2.png" />
     <Content Include="assets\images\main-slider\slider1\img3.png" />
@@ -371,6 +371,7 @@
     <Content Include="Admin\Chefs.aspx" />
     <Content Include="Admin\Testimonials.aspx" />
     <Content Include="Admin\BlogPosts.aspx" />
+    <Content Include="Admin\Orders.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -412,6 +413,10 @@
     <Content Include="assets\json\coming-soon.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\background\pic10.html" />
+    <Content Include="Pages\Cart.aspx" />
+    <Content Include="Pages\Checkout.aspx" />
+    <Content Include="Pages\Menu.aspx" />
+    <Content Include="Pages\OrderTracking.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -446,6 +451,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\ImageUploadHelper.cs" />
     <Compile Include="DAL\Database.cs" />
     <Compile Include="DAL\AdminUserRepository.cs" />
     <Compile Include="DAL\BannerSlideRepository.cs" />
@@ -456,6 +462,7 @@
     <Compile Include="DAL\ChefRepository.cs" />
     <Compile Include="DAL\TestimonialRepository.cs" />
     <Compile Include="DAL\BlogPostRepository.cs" />
+    <Compile Include="DAL\OrderRepository.cs" />
     <Compile Include="Models\AdminUser.cs" />
     <Compile Include="Models\BannerSlide.cs" />
     <Compile Include="Models\BrowseMenuItem.cs" />
@@ -465,6 +472,7 @@
     <Compile Include="Models\Chef.cs" />
     <Compile Include="Models\Testimonial.cs" />
     <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -513,6 +521,13 @@
       <DependentUpon>BlogPosts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Admin\Orders.aspx.cs">
+      <DependentUpon>Orders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Orders.aspx.designer.cs">
+      <DependentUpon>Orders.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
@@ -524,6 +539,34 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Menu.aspx.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Menu.aspx.designer.cs">
+      <DependentUpon>Menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrderTracking.aspx.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\OrderTracking.aspx.designer.cs">
+      <DependentUpon>OrderTracking.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

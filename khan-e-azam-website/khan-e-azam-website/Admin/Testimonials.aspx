@@ -13,6 +13,11 @@
                 <asp:GridView ID="gv" runat="server" AutoGenerateColumns="false" CssClass="table table-hover mb-0" DataKeyNames="Id" OnRowCommand="gv_RowCommand">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="#" />
+                        <asp:TemplateField HeaderText="Photo">
+                            <ItemTemplate>
+                                <img src='<%# ResolveUrl("~/" + Eval("Image")) %>' style="height:45px;width:45px;object-fit:cover;border-radius:50%;" onerror="this.style.display='none'" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:BoundField DataField="ReviewerName" HeaderText="Reviewer" />
                         <asp:BoundField DataField="ReviewerPosition" HeaderText="Position" />
                         <asp:BoundField DataField="SortOrder" HeaderText="Order" />
@@ -39,10 +44,17 @@
                     <div class="col-md-6 form-group"><label>Reviewer Name</label><asp:TextBox ID="txtName" runat="server" CssClass="form-control" /></div>
                     <div class="col-md-6 form-group"><label>Position</label><asp:TextBox ID="txtPosition" runat="server" CssClass="form-control" placeholder="Loyal Customer" /></div>
                     <div class="col-md-12 form-group"><label>Review Text</label><asp:TextBox ID="txtReview" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4" /></div>
-                    <div class="col-md-8 form-group"><label>Image Path</label><asp:TextBox ID="txtImage" runat="server" CssClass="form-control" placeholder="assets/images/testimonial/1.jpg" /></div>
-                    <div class="col-md-2 form-group"><label>Sort Order</label><asp:TextBox ID="txtSortOrder" runat="server" CssClass="form-control" Text="0" /></div>
-                    <div class="col-md-2 form-group"><label>Active</label><br /><asp:CheckBox ID="chkIsActive" runat="server" Checked="true" Text=" Active" /></div>
+                    <div class="col-md-4 form-group"><label>Sort Order</label><asp:TextBox ID="txtSortOrder" runat="server" CssClass="form-control" Text="0" /></div>
+                    <div class="col-md-4 form-group"><label>Active</label><br /><asp:CheckBox ID="chkIsActive" runat="server" Checked="true" Text=" Active" /></div>
+                    <div class="col-md-12 form-group">
+                        <label>Reviewer Photo</label>
+                        <asp:HiddenField ID="hfImagePath" runat="server" />
+                        <asp:Image ID="imgPreview" runat="server" Visible="false" CssClass="d-block img-thumbnail mb-2" style="max-height:100px;max-width:150px;" />
+                        <asp:FileUpload ID="fuImage" runat="server" CssClass="form-control-file" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <small class="form-text text-muted">JPG, PNG, GIF or WEBP · Max 5 MB. Leave blank to keep existing photo.</small>
+                    </div>
                 </div>
+                <asp:Label ID="lblUploadError" runat="server" Visible="false" CssClass="alert alert-danger d-block mb-2"></asp:Label>
                 <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-primary" OnClick="btnSave_Click" />
                 <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-secondary ml-2" OnClick="btnCancel_Click" CausesValidation="false" />
             </div>
