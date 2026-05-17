@@ -1,48 +1,57 @@
 <%@ Page Title="Your Cart" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="khan_e_azam_website.Pages.Cart" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+	<style>
+		.kea-cart-item { display:flex; align-items:center; border-bottom:1px solid rgba(0,0,0,.08); padding:16px 0; }
+		.kea-cart-item:last-child { border-bottom:none; }
+		.kea-cart-img { width:80px; min-width:80px; height:80px; border-radius:10px; object-fit:cover; }
+		.kea-qty-wrap { display:flex; align-items:center; gap:8px; }
+		.kea-qty-btn { width:28px; height:28px; border:1px solid #ddd; border-radius:6px; background:#f5f5f5; cursor:pointer; font-size:16px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+		.kea-qty-btn:hover { background:var(--primary); border-color:var(--primary); color:#fff; }
+		.kea-qty-num { min-width:28px; text-align:center; font-weight:600; font-size:15px; }
+		.kea-remove-btn { background:none; border:none; cursor:pointer; color:#ccc; font-size:18px; padding:4px 8px; transition:color .2s; }
+		.kea-remove-btn:hover { color:#e74c3c; }
+		.kea-bill-row { display:flex; justify-content:space-between; padding:6px 0; font-size:14px; }
+		.kea-bill-total { border-top:2px solid #222; margin-top:8px; padding-top:10px; font-weight:700; font-size:16px; }
+	</style>
 
-	<!-- Page Banner -->
-	<div class="bg-primary pt-[70px] pb-[50px] text-center">
-		<h1 class="font-lobster text-white" style="font-size:clamp(2rem,5vw,3rem);margin:0;">Your Cart</h1>
-		<p class="text-white opacity-85 mt-[10px] text-[15px]">Review your items before placing the order</p>
-	</div>
 
-	<section class="lg:pt-[80px] sm:pt-[60px] pt-[40px] lg:pb-[100px] pb-[50px] bg-white">
+
+	<section style="padding:60px 0 80px;background:#fff;">
 		<div class="container">
 
 			<!-- Empty State -->
-			<div id="cartEmpty" class="hidden text-center py-[80px] px-5">
-				<i class="fa-solid fa-cart-shopping text-[4rem] text-[#ddd] block mb-5"></i>
-				<h4 class="text-[#999]">Your cart is empty</h4>
-				<p class="text-[#bbb] mb-6">Browse our menu and add something delicious!</p>
-				<a href="/Pages/Menu.aspx" class="btn btn-primary btn-hover-1"><span class="z-[2] relative block">Browse Menu &nbsp;<i class="fa-solid fa-arrow-right"></i></span></a>
+			<div id="cartEmpty" style="display:none;text-align:center;padding:80px 20px;">
+				<i class="fa-solid fa-cart-shopping" style="font-size:4rem;color:#ddd;display:block;margin-bottom:20px;"></i>
+				<h4 style="color:#999;">Your cart is empty</h4>
+				<p style="color:#bbb;margin-bottom:24px;">Browse our menu and add something delicious!</p>
+				<a href="Menu.aspx" class="btn btn-primary btn-hover-1"><span class="z-[2] relative block">Browse Menu &nbsp;<i class="fa-solid fa-arrow-right"></i></span></a>
 			</div>
 
 			<!-- Cart Content -->
-			<div id="cartContent" class="hidden row">
+			<div id="cartContent" style="display:none;" class="row">
 				<!-- Items list -->
-				<div class="lg:w-2/3 w-full px-[15px] mb-6">
-					<div class="card rounded-[12px] shadow-[0_2px_20px_rgba(0,0,0,.07)] p-6">
-						<div class="flex justify-between items-center mb-4">
-							<h5 class="mb-0">Cart Items <span id="cartItemCount" class="text-primary"></span></h5>
-							<button onclick="DzCart.clear();renderCart();" class="text-[#999] text-[13px] bg-transparent border-0 cursor-pointer">
+				<div class="lg:w-2/3 w-full px-[15px]">
+					<div class="card" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,.07);padding:24px;">
+						<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+							<h5 style="margin:0;">Cart Items <span id="cartItemCount" class="text-primary"></span></h5>
+							<button onclick="DzCart.clear();renderCart();" style="background:none;border:none;color:#999;cursor:pointer;font-size:13px;">
 								<i class="fa-solid fa-trash-can"></i> Clear All
 							</button>
 						</div>
 						<div id="cartItemsList"></div>
 					</div>
-					<div class="mt-4">
-						<a href="/Pages/Menu.aspx" class="text-[#666] text-sm"><i class="fa-solid fa-arrow-left mr-1"></i>Continue Shopping</a>
+					<div style="margin-top:16px;">
+						<a href="Menu.aspx" style="color:#666;font-size:14px;"><i class="fa-solid fa-arrow-left" style="margin-right:6px;"></i>Continue Shopping</a>
 					</div>
 				</div>
 
 				<!-- Bill summary -->
-				<div class="lg:w-1/3 w-full px-[15px] mb-6">
-					<div class="card rounded-[12px] shadow-[0_2px_20px_rgba(0,0,0,.07)] p-6 lg:sticky lg:top-[100px]">
-						<h5 class="mb-4">Bill Details</h5>
+				<div class="lg:w-1/3 w-full px-[15px]">
+					<div class="card" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,.07);padding:24px;position:sticky;top:100px;">
+						<h5 style="margin-bottom:16px;">Bill Details</h5>
 						<div id="billDetails"></div>
-						<a href="/Pages/Checkout.aspx" class="btn btn-primary block text-center btn-hover-1 mt-4">
+						<a href="Checkout.aspx" class="btn btn-primary block text-center btn-hover-1" style="margin-top:16px;">
 							<span class="z-[2] relative block">Proceed to Checkout &nbsp;<i class="fa-solid fa-arrow-right"></i></span>
 						</a>
 					</div>
@@ -52,11 +61,6 @@
 		</div>
 	</section>
 
-	<style>
-		.kea-qty-btn:hover { background:var(--primary); border-color:var(--primary); color:#fff; }
-		.kea-remove-btn:hover { color:#e74c3c; }
-	</style>
-
 	<script>
 		function renderCart() {
 			var items = DzCart.get();
@@ -64,54 +68,54 @@
 			var content = document.getElementById('cartContent');
 
 			if (!items || items.length === 0) {
-				empty.classList.remove('hidden');
-				content.classList.add('hidden');
+				empty.style.display = 'block';
+				content.style.display = 'none';
 				return;
 			}
 
-			empty.classList.add('hidden');
-			content.classList.remove('hidden');
+			empty.style.display = 'none';
+			content.style.display = '';
 
 			document.getElementById('cartItemCount').textContent = '(' + items.length + ')';
 
+			// Render items
 			var html = '';
 			items.forEach(function(item) {
-				var _pm = (item.price + '').replace(/,/g, '').match(/\d+(\.\d+)?/);
-				var priceNum = _pm ? parseFloat(_pm[0]) : 0;
+				var _pm = (item.price + '').replace(/,/g, '').match(/\d+(\.\d+)?/); var priceNum = _pm ? parseFloat(_pm[0]) : 0;
 				var lineTotal = (priceNum * item.qty).toFixed(0);
 				var displayPrice = item.priceStr || item.price;
 				var imgHtml = item.image
-					? '<img src="../' + item.image + '" class="w-[80px] min-w-[80px] h-[80px] rounded-[10px] object-cover" onerror="this.style.display=\'none\'" />'
-					: '<div class="w-[80px] min-w-[80px] h-[80px] rounded-[10px] bg-[#f5f5f5] flex items-center justify-center"><i class="flaticon-fast-food text-[28px] text-[#ccc]"></i></div>';
+					? '<img src="../' + item.image + '" class="kea-cart-img" onerror="this.style.display=\'none\'" />'
+					: '<div class="kea-cart-img" style="background:#f5f5f5;display:flex;align-items:center;justify-content:center;"><i class="flaticon-fast-food" style="font-size:28px;color:#ccc;"></i></div>';
 
-				html += '<div class="flex items-center gap-4 py-4 border-b border-[#eee]" data-id="' + item.id + '">'
-					+ '<div>' + imgHtml + '</div>'
-					+ '<div class="flex-1">'
-					+   '<h6 class="mb-1 text-[15px]">' + item.name + '</h6>'
-					+   '<div class="text-primary font-semibold text-sm">' + displayPrice + ' each</div>'
-					+   '<div class="flex items-center gap-2 mt-2">'
-					+     '<button class="kea-qty-btn w-7 h-7 border border-[#ddd] rounded-md bg-[#f5f5f5] cursor-pointer text-base flex items-center justify-center duration-200" onclick="changeQty(\'' + item.id + '\',-1)">&#8722;</button>'
-					+     '<span class="min-w-[28px] text-center font-semibold text-[15px]">' + item.qty + '</span>'
-					+     '<button class="kea-qty-btn w-7 h-7 border border-[#ddd] rounded-md bg-[#f5f5f5] cursor-pointer text-base flex items-center justify-center duration-200" onclick="changeQty(\'' + item.id + '\',1)">&#43;</button>'
+				html += '<div class="kea-cart-item" data-id="' + item.id + '">'
+					+ '<div style="margin-right:16px;">' + imgHtml + '</div>'
+					+ '<div style="flex:1;">'
+					+   '<h6 style="margin:0 0 6px;font-size:15px;">' + item.name + '</h6>'
+					+   '<div style="color:var(--primary);font-weight:600;font-size:14px;">' + displayPrice + ' each</div>'
+					+   '<div class="kea-qty-wrap" style="margin-top:10px;">'
+					+     '<button class="kea-qty-btn" onclick="changeQty(\'' + item.id + '\',-1)">&#8722;</button>'
+					+     '<span class="kea-qty-num">' + item.qty + '</span>'
+					+     '<button class="kea-qty-btn" onclick="changeQty(\'' + item.id + '\',1)">&#43;</button>'
 					+   '</div>'
 					+ '</div>'
-					+ '<div class="text-right min-w-[80px]">'
-					+   '<div class="font-bold text-[16px] text-primary">Rs. ' + lineTotal + '</div>'
-					+   '<button class="kea-remove-btn bg-transparent border-0 cursor-pointer text-[#ccc] text-lg px-2 py-1 duration-200" onclick="removeItem(\'' + item.id + '\')" title="Remove"><i class="fa-solid fa-xmark"></i></button>'
+					+ '<div style="text-align:right;min-width:80px;">'
+					+   '<div style="font-weight:700;font-size:16px;color:var(--primary);">Rs. ' + lineTotal + '</div>'
+					+   '<button class="kea-remove-btn" onclick="removeItem(\'' + item.id + '\')" title="Remove"><i class="fa-solid fa-xmark"></i></button>'
 					+ '</div>'
 					+ '</div>';
 			});
 			document.getElementById('cartItemsList').innerHTML = html;
 
+			// Render bill
 			var subtotal = DzCart.total();
 			var billHtml = '';
 			items.forEach(function(item) {
-				var _pm2 = (item.price + '').replace(/,/g, '').match(/\d+(\.\d+)?/);
-				var p = _pm2 ? parseFloat(_pm2[0]) : 0;
+				var _pm2 = (item.price + '').replace(/,/g, '').match(/\d+(\.\d+)?/); var p = _pm2 ? parseFloat(_pm2[0]) : 0;
 				var dp = item.priceStr || item.price;
-				billHtml += '<div class="flex justify-between py-1.5 text-sm"><span>' + item.name + ' x' + item.qty + '</span><span>Rs. ' + (p * item.qty).toFixed(0) + '</span></div>';
+				billHtml += '<div class="kea-bill-row"><span>' + item.name + ' x' + item.qty + '</span><span>' + dp + ' x' + item.qty + ' = Rs. ' + (p * item.qty).toFixed(0) + '</span></div>';
 			});
-			billHtml += '<div class="flex justify-between pt-2.5 mt-2 border-t-2 border-[#222] font-bold text-base"><span>Total</span><span class="text-primary">Rs. ' + subtotal.toFixed(0) + '</span></div>';
+			billHtml += '<div class="kea-bill-row kea-bill-total"><span>Total</span><span style="color:var(--primary);">Rs. ' + subtotal.toFixed(0) + '</span></div>';
 			document.getElementById('billDetails').innerHTML = billHtml;
 		}
 

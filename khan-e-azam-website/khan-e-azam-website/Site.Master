@@ -52,6 +52,9 @@
 		.dz-spinner { width:44px; height:44px; border-radius:50%; border:4px solid rgba(255,255,255,0.25); border-top-color:#fff; animation:dz-spin .65s linear infinite; margin-top:18px; }
 		#dzPageLoader { transition:opacity .35s ease, visibility .35s ease; }
 		#dzPageLoader.loaded { opacity:0; visibility:hidden; pointer-events:none; }
+		/* Contact sidebar */
+		#contactDrawer { position:fixed; top:0; left:-300px; width:300px; height:100%; z-index:999999; background:#fff; overflow-y:auto; transition:left .5s ease; padding:30px; }
+		#contactDrawer.open { left:0; }
 		/* FABs */
 		.dz-fab-stack { position:fixed; bottom:24px; right:24px; z-index:99998; display:flex; flex-direction:column-reverse; align-items:center; gap:12px; }
 		.dz-fab { width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 4px 18px rgba(0,0,0,.25); transition:transform .2s, box-shadow .2s;  }
@@ -90,6 +93,9 @@
         <asp:UpdatePanel ID="upMain" runat="server" UpdateMode="Conditional">
             <ContentTemplate> 
               
+	<!-- Pointer ring -->
+
+
 	<div class="page-wraper">
 	
 
@@ -132,16 +138,106 @@
 						</a>
 					</div>
 					<ul class="nav navbar-nav navbar lg:flex items-center">
-						<li><a href="/Default.aspx">Home</a></li>
-						<li><a href="/Pages/Menu.aspx">Our Menu</a></li>
-						<li><a href="/Pages/OrderTracking.aspx">Track Order</a></li>
+						<li class="sub-menu-down"><a href="javascript:void(0);">Home</a>
+							<ul class="sub-menu">
+								<li class="py-[5px] px-5 relative"><a href="index.html">Home 01</a></li>
+								<li class="py-[5px] px-5 relative"><a href="index-2.html">Home 02</a></li>
+								<li class="py-[5px] px-5 relative"><a href="index-3.html">Home 03</a></li>
+							</ul>
+						</li>
+						<li class="has-mega-menu sub-menu-down">
+							<a href="javascript:void(0);">Pages</a>
+							<ul class="mega-menu sub-menu left-0 p-0 max-w-[1100px] max-xl:max-w-[990px] w-full mx-auto">
+								<li><a href="javascript:;">Pages</a>
+									<ul class="sub-part lg:mt-[15px]">
+										<li><a href="about-us.html">About Us</a></li>
+										<li><a href="faq.html">FAQ</a></li>
+										<li><a href="team.html">Team</a></li>
+										<li><a href="team-detail.html">Team Detail</a></li>
+										<li><a href="testimonial.html">Testimonial</a></li>
+									</ul>
+								</li>
+								<li><a href="javascript:void(0);">Pages</a>
+									<ul class="lg:mt-[15px] sub-part">
+										<li><a href="services.html">Services</a></li>
+										<li><a href="service-detail.html">Service Detail</a></li>
+										<li><a href="error-404.html">Error 404</a></li>
+										<li><a href="coming-soon.html">Coming Soon</a></li>
+										<li><a href="under-maintenance.html">Under Maintenance</a></li>
+									</ul>
+								</li>
+								<li><a href="javascript:void(0);">Our Menus</a>
+									<ul class="lg:mt-[15px] sub-part">
+										<li><a href="our-menu-1.html">Menu Style 1</a></li>
+										<li><a href="our-menu-2.html">Menu Style 2</a></li>
+										<li><a href="our-menu-3.html">Menu Style 3</a></li>
+										<li><a href="our-menu-4.html">Menu Style 4</a></li>
+										<li><a href="our-menu-5.html">Menu Style 5</a></li>
+									</ul>
+								</li>
+								<li class="header-adv lg:table-cell hidden pt-[30px] px-2.5 pb-5 relative align-top w-1/4"><img src="/assets/images/adv-media.jpg" alt="/"></li>
+							</ul>
+						</li>
+						<li class="sub-menu-down">
+							<a href="javascript:void(0);">Shop</a>
+							<ul class="sub-menu">
+								<li class="py-[5px] px-5 relative"><a href="shop-style-1.html">Shop Style 1</a></li>
+								<li class="py-[5px] px-5 relative"><a href="shop-style-2.html">Shop Style 2</a></li>
+								<li class="py-[5px] px-5 relative"><a href="shop-cart.html">Shop Cart</a></li>
+								<li class="py-[5px] px-5 relative"><a href="shop-wishlist.html">Shop Wishlist</a></li>
+								<li class="py-[5px] px-5 relative"><a href="shop-checkout.html">Shop Checkout</a></li>
+								<li class="py-[5px] px-5 relative"><a href="product-detail.html">Product Detail</a></li>
+							</ul>
+						</li>
+						<li class="sub-menu-down has-mega-menu">
+							<a href="javascript:void(0);">Blogs</a>
+							<ul class="mega-menu sub-menu p-0 left-0 lg:table">
+								<li> <a href="javascript:;">Blog Grid</a>
+									<ul class="sub-part lg:mt-[15px]">
+										<li><a href="blog-grid-2.html">Blog Grid 2</a></li>
+										<li><a href="blog-grid-3.html">Blog Grid 3</a></li>
+										<li><a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a></li>
+										<li><a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a></li>
+									</ul>
+								</li>
+								<li> <a href="javascript:;">Blog List</a>
+									<ul class="sub-part lg:mt-[15px]">
+										<li><a href="blog-list.html">Blog List</a></li>
+										<li><a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a></li>
+										<li><a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a></li>
+										<li><a href="blog-both-sidebar.html">Blog Both Sidebar</a></li>
+									</ul>
+								</li>
+								<li> <a href="javascript:;">Blog Single</a>
+									<ul class="sub-part lg:mt-[15px]">
+										<li><a href="blog-standard.html">Blog Detail</a></li>
+										<li><a href="blog-open-gutenberg.html">Blog Open Gutenberg</a></li>
+										<li><a href="blog-detail-left-sidebar.html">Blog Details Left Sidebar</a></li>
+										<li><a href="blog-detail-right-sidebar.html">Blog Details Right Sidebar</a></li>
+									</ul>
+								</li>
+								<li> <a href="javascript:void(0);">Blog Masonry</a>
+									<ul class="sub-part lg:mt-[15px]">
+										<li><a href="blog-grid-3-masonary.html">Blog Grid 3 Masonry</a></li>
+										<li><a href="blog-grid-4-masonary.html">Blog Grid 4 Masonry</a></li>
+										<li><a href="blog-wide-list-sidebar.html">Blog Wide List Sidebar</a></li>
+										<li><a href="blog-wide-grid-sidebar.html">Blog Wide Grid Sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="contact-us.html">Contact Us</a>
+						</li>
 					</ul>
-
+					
 					<div class="dz-social-icon">
 						<ul>
 							<li><a target="_blank" class="fab fa-facebook-f" href="https://www.facebook.com/"></a></li>
+							<li><a target="_blank" class="fab fa-twitter" href="https://twitter.com/"></a></li>
+							<li><a target="_blank" class="fab fa-linkedin-in" href="https://www.linkedin.com/"></a></li>
 							<li><a target="_blank" class="fab fa-instagram" href="https://www.instagram.com/"></a></li>
-							<li><a target="_blank" class="fab fa-whatsapp" href="https://wa.me/923464436525"></a></li>
 						</ul>
 					</div>	
 				</div>	
@@ -248,37 +344,37 @@
 						</div>
 						<div class="xl:w-3/12 lg:w-2/12 sm:w-6/12 w-full px-[15px]">
 							<div class="widget widget_services mb-[30px]">
-								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Quick Links</h5>
+								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Our Links</h5>
 								<ul>
-									<li><a href="/Default.aspx"><span>Home</span></a></li>
-									<li><a href="/Pages/Menu.aspx"><span>Our Menu</span></a></li>
-									<li><a href="/Pages/Cart.aspx"><span>Your Cart</span></a></li>
-									<li><a href="/Pages/Checkout.aspx"><span>Checkout</span></a></li>
-									<li><a href="/Pages/OrderTracking.aspx"><span>Track Order</span></a></li>
+									<li><a href="index.html"><span>Home</span></a></li>
+									<li><a href="about-us.html"><span>About Us</span></a></li>
+									<li><a href="services.html"><span>Services</span></a></li>
+									<li><a href="team.html"><span>Team</span></a></li>
+									<li><a href="blog-standard.html"><span>Blog</span></a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="xl:w-3/12 lg:w-3/12 sm:w-6/12 w-full px-[15px]">
 							<div class="widget widget_services mb-[30px]">
-								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Our Services</h5>
+								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">OUR SERVICES</h5>
 								<ul>
-									<li><a href="/Pages/Menu.aspx"><span>Fresh Meals</span></a></li>
-									<li><a href="/Pages/Menu.aspx"><span>Home Delivery</span></a></li>
-									<li><a href="/Pages/Menu.aspx"><span>Takeaway</span></a></li>
-									<li><a href="/Pages/OrderTracking.aspx"><span>Order Tracking</span></a></li>
-									<li><a href="https://wa.me/923464436525" target="_blank"><span>WhatsApp Order</span></a></li>
+									<li><a href="blog-open-gutenberg.html"><span>Strategy & Research</span></a></li>
+									<li><a href="services.html"><span>Fast Delivery</span></a></li>
+									<li><a href="contact-us.html"><span>Seat Reservation</span></a></li>
+									<li><a href="shop-style-1.html"><span>Pickup In Store</span></a></li>
+									<li><a href="our-menu-1.html"><span>Our Menu</span></a></li>
 								</ul>
 							</div>
 						</div>
-						<div class="xl:w-3/12 lg:w-3/12 sm:w-6/12 w-full px-[15px]">
+						<div class="xl:w-3/12 lg:w-3/12 sm:w-6/12 w-full px-[15px]	">
 							<div class="widget widget_services mb-[30px]">
 								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Help Center</h5>
 								<ul>
-									<li><a href="/Pages/Menu.aspx"><span>Browse Menu</span></a></li>
-									<li><a href="/Pages/Cart.aspx"><span>View Cart</span></a></li>
-									<li><a href="/Pages/Checkout.aspx"><span>Place Order</span></a></li>
-									<li><a href="/Pages/OrderTracking.aspx"><span>Track My Order</span></a></li>
-									<li><a href="https://wa.me/923464436525" target="_blank"><span>Contact Us</span></a></li>
+									<li><a href="faq.html"><span>FAQ</span></a></li>
+									<li><a href="shop-style-1.html"><span>Shop</span></a></li>
+									<li><a href="shop-style-2.html"><span>Category Filter</span></a></li>
+									<li><a href="testimonial.html"><span>Testimonials</span></a></li>
+									<li><a href="contact-us.html"><span>Contact Us</span></a></li>
 								</ul>
 							</div>
 						</div>
@@ -295,9 +391,9 @@
 					</div>
 					<div class="lg:w-1/2 px-[15px]">
 						<ul class="footer-link mx-[-15px] lg:text-right text-center">
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="/Pages/Menu.aspx" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Our Menu</a></li>
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="/Pages/Cart.aspx" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Cart</a></li>
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="/Pages/OrderTracking.aspx" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Track Order</a></li>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="blog-standard.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Blog Detail</a></li>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="about-us.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">About</a></li>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="testimonial.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Testimonials</a></li>
 						</ul>
 					</div>
 				</div>
@@ -311,14 +407,14 @@
 	<!-- Floating Action Buttons -->
 	<div class="dz-fab-stack">
 		<a href="https://wa.me/923464436525" target="_blank" rel="noopener" title="Chat on WhatsApp" class="dz-fab dz-fab-wa">
-			<i class="fab fa-whatsapp text-white text-[26px]"></i>
+			<i class="fab fa-whatsapp" style="font-size:26px;color:#fff;"></i>
 		</a>
 		<a runat="server" href="~/Pages/Cart.aspx" title="View Cart" class="dz-fab dz-fab-cart">
-			<i class="fa-solid fa-cart-shopping text-white text-[21px]"></i>
+			<i class="fa-solid fa-cart-shopping" style="font-size:21px;color:#fff;"></i>
 			<span id="dz-cart-badge"></span>
 		</a>
-		<a id="dz-checkout-fab" href="javascript:void(0);" title="Checkout" class="dz-fab dz-fab-checkout hidden">
-			<i class="fa-solid fa-receipt text-white text-[20px]"></i>
+		<a id="dz-checkout-fab" href="javascript:void(0);" title="Checkout" class="dz-fab dz-fab-checkout" style="display:none;">
+			<i class="fa-solid fa-receipt" style="font-size:20px;color:#fff;"></i>
 		</a>
 	</div>
 	<div id="dz-toast"></div>
@@ -397,14 +493,14 @@
 			if (typeof window.keaPostUpdate === 'function') { window.keaPostUpdate(); }
 			// Re-bind nav handlers — UpdatePanel replaces DOM so jQuery handlers are lost
 			if (typeof jQuery !== 'undefined') {
-				jQuery('.togglebtn').off('click').on('click.kea', function () {
-					var $btn = jQuery(this);
-					$btn.toggleClass('open');
+				jQuery('.togglebtn').off('click.kea').on('click.kea', function () {
+					jQuery(this).toggleClass('open');
 					jQuery('.header-nav').toggleClass('open');
 					jQuery('.menu-backdrop').toggleClass('show');
-					$btn.find('.bar1').toggleClass('rotate1');
-					$btn.find('.bar2').toggleClass('opacity0');
-					$btn.find('.bar3').toggleClass('rotate2');
+					jQuery('.bar1').toggleClass('rotate1');
+					jQuery('.bar2').toggleClass('opacity0');
+					jQuery('.bar3').toggleClass('rotate2');
+					jQuery('.switch-btn').toggleClass('hidden');
 				});
 				jQuery('.menu-backdrop').off('click.kea').on('click.kea', function () {
 					jQuery(this).removeClass('show');
@@ -459,7 +555,7 @@
 			var co = document.getElementById('dz-checkout-fab');
 			var n = this.count();
 			if (b) { b.textContent = n; b.style.display = n > 0 ? 'flex' : 'none'; }
-			if (co) { if (n > 0) { co.classList.remove('hidden'); co.href = DzCartCheckoutUrl; } else { co.classList.add('hidden'); } }
+			if (co) { co.style.display = n > 0 ? 'flex' : 'none'; if (n > 0) co.href = DzCartCheckoutUrl; }
 		},
 		toast: function (msg) {
 			var el = document.getElementById('dz-toast');
