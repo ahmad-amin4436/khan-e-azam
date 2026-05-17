@@ -11,7 +11,8 @@
       "Bash(ls Models/*.cs)",
       "Bash(ls DAL/*.cs)",
       "Bash(grep -n \"main-bnr-2\\\\|banner-inner1\\\\|banner-media\\\\|swiper-bnr\" \"c:\\\\\\\\Users\\\\\\\\Administrator\\\\\\\\Documents\\\\\\\\GitHub\\\\\\\\khan-e-azam\\\\\\\\khan-e-azam-template\\\\\\\\swigo-tailwind.vercel.app\\\\\\\\index-2.html\")",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)"
     ]
   }
 }

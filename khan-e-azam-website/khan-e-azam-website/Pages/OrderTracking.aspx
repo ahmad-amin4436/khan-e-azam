@@ -15,40 +15,28 @@
 		.kea-tracker-step.active::before { background:#28a745; }
 		.kea-tracker-step.cancelled .kea-step-icon { background:#e74c3c; color:#fff; }
 		.kea-tracker-step.cancelled .kea-step-label { color:#e74c3c; }
-		.kea-info-row { display:flex; padding:10px 0; border-bottom:1px solid #f0f0f0; }
-		.kea-info-row:last-child { border-bottom:none; }
-		.kea-info-label { min-width:140px; font-weight:600; font-size:13px; color:#888; }
-		.kea-info-value { font-size:14px; color:#333; }
-		.kea-status-badge { display:inline-block; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
-		.kea-status-Pending { background:#fff3cd; color:#856404; }
-		.kea-status-Confirmed { background:#cce5ff; color:#004085; }
-		.kea-status-Preparing { background:#fff3cd; color:#856404; }
-		.kea-status-Ready { background:#d4edda; color:#155724; }
-		.kea-status-OutForDelivery { background:#cce5ff; color:#004085; }
-		.kea-status-Delivered { background:#d4edda; color:#155724; }
-		.kea-status-Cancelled { background:#f8d7da; color:#721c24; }
 	</style>
 
 	<!-- Page Banner -->
-	<div style="background:var(--primary);padding:70px 0 50px;text-align:center;">
+	<div class="bg-primary pt-[70px] pb-[50px] text-center">
 		<h1 class="font-lobster text-white" style="font-size:clamp(2rem,5vw,3rem);margin:0;">Track Your Order</h1>
-		<p style="color:rgba(255,255,255,0.85);margin-top:10px;font-size:15px;">Enter your Order ID to see live status updates</p>
+		<p class="text-white opacity-85 mt-[10px] text-[15px]">Enter your Order ID to see live status updates</p>
 	</div>
 
-	<section style="padding:60px 0 80px;background:#fff;">
+	<section class="lg:pt-[80px] sm:pt-[60px] pt-[40px] lg:pb-[100px] pb-[50px] bg-white">
 		<div class="container" style="max-width:760px;">
 
 			<!-- Search Form -->
 			<asp:Panel ID="pnlSearch" runat="server">
-				<div class="card" style="border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:36px;text-align:center;">
-					<i class="fa-solid fa-magnifying-glass" style="font-size:2.5rem;color:var(--primary);margin-bottom:16px;display:block;"></i>
-					<h4 style="margin-bottom:8px;">Track Your Order</h4>
-					<p style="color:#888;margin-bottom:24px;">Enter your Order ID below to check the status</p>
-					<div style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
-						<asp:TextBox ID="txtSearchId" runat="server" CssClass="h-[50px] py-[10px] px-5 w-full text-[15px] rounded-[6px] focus:border-primary duration-500" placeholder="Order ID (e.g. 42)" style="border:1px solid #ddd;flex:1;" />
-						<asp:Button ID="btnSearch" runat="server" Text="Track" CssClass="btn btn-primary" style="height:50px;padding:0 24px;white-space:nowrap;" OnClick="btnSearch_Click" CausesValidation="false" />
+				<div class="card rounded-[14px] shadow-[0_4px_24px_rgba(0,0,0,.08)] p-9 text-center">
+					<i class="fa-solid fa-magnifying-glass text-[2.5rem] text-primary block mb-4"></i>
+					<h4 class="mb-2">Track Your Order</h4>
+					<p class="text-[#888] mb-6">Enter your Order ID below to check the status</p>
+					<div class="flex gap-2.5 max-w-[420px] mx-auto">
+						<asp:TextBox ID="txtSearchId" runat="server" CssClass="h-[50px] py-[10px] px-5 w-full text-[15px] rounded-[6px] focus:border-primary duration-500 border border-[#ddd] outline-none flex-1" placeholder="Order ID (e.g. 42)" />
+						<asp:Button ID="btnSearch" runat="server" Text="Track" CssClass="btn btn-primary h-[50px] px-6 whitespace-nowrap" OnClick="btnSearch_Click" CausesValidation="false" />
 					</div>
-					<asp:Label ID="lblNotFound" runat="server" Visible="false" CssClass="alert alert-warning d-block mt-3" style="border-radius:8px;max-width:420px;margin:12px auto 0;"></asp:Label>
+					<asp:Label ID="lblNotFound" runat="server" Visible="false" CssClass="alert alert-warning d-block mt-3 rounded-[8px] max-w-[420px] mx-auto"></asp:Label>
 				</div>
 			</asp:Panel>
 
@@ -56,21 +44,20 @@
 			<asp:Panel ID="pnlOrder" runat="server" Visible="false">
 
 				<!-- Order ID Banner -->
-				<div style="background:#fff9f0;border:2px solid var(--primary);border-radius:14px;padding:20px 24px;margin-bottom:20px;text-align:center;">
-					<p style="margin:0 0 4px;font-size:12px;color:#aaa;text-transform:uppercase;letter-spacing:1px;">Your Order ID</p>
-					<div style="font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1;">#<asp:Label ID="lblOrderId" runat="server" /></div>
-					<p style="margin:6px 0 0;font-size:12px;color:#888;">Save this number &mdash; use it to track your order anytime</p>
+				<div class="bg-[#fff9f0] border-2 border-primary rounded-[14px] p-5 mb-5 text-center">
+					<p class="mb-1 text-xs text-[#aaa] uppercase tracking-[1px]">Your Order ID</p>
+					<div class="text-[2.4rem] font-extrabold text-primary leading-none">#<asp:Label ID="lblOrderId" runat="server" /></div>
+					<p class="mt-1.5 text-xs text-[#888]">Save this number &mdash; use it to track your order anytime</p>
 				</div>
 
 				<!-- Status Timeline -->
-				<div class="card" style="border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:32px;margin-bottom:20px;">
-					<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-						<h5 style="margin:0;">Order Status</h5>
+				<div class="card rounded-[14px] shadow-[0_4px_24px_rgba(0,0,0,.08)] p-8 mb-5">
+					<div class="flex items-center justify-between mb-6">
+						<h5 class="mb-0">Order Status</h5>
 						<asp:Label ID="lblStatusBadge" runat="server" />
 					</div>
 
-					<!-- Tracker steps -->
-					<div style="display:flex;padding:10px 0 20px;" id="trackerSteps">
+					<div class="flex py-2.5 pb-5" id="trackerSteps">
 						<div class="kea-tracker-step" id="step_pending">
 							<div class="kea-step-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
 							<div class="kea-step-label">Order<br/>Placed</div>
@@ -88,7 +75,7 @@
 							<div class="kea-step-label">Ready</div>
 						</div>
 						<div class="kea-tracker-step" id="step_outfordelivery">
-							<div class="kea-step-icon"><i class="flaticon-scooter" style="font-size:20px;"></i></div>
+							<div class="kea-step-icon"><i class="flaticon-scooter text-[20px]"></i></div>
 							<div class="kea-step-label">Out for<br/>Delivery</div>
 						</div>
 						<div class="kea-tracker-step" id="step_delivered">
@@ -101,42 +88,40 @@
 				</div>
 
 				<!-- Order Info -->
-				<div class="card" style="border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:28px;margin-bottom:20px;">
-					<h6 style="margin-bottom:16px;font-size:16px;border-bottom:2px solid #f5f5f5;padding-bottom:10px;">Delivery Details</h6>
-					<div class="kea-info-row"><span class="kea-info-label">Name</span><span class="kea-info-value"><asp:Label ID="lblCustomerName" runat="server" /></span></div>
-					<div class="kea-info-row"><span class="kea-info-label">Phone</span><span class="kea-info-value"><asp:Label ID="lblPhone" runat="server" /></span></div>
-					<div class="kea-info-row"><span class="kea-info-label">Address</span><span class="kea-info-value"><asp:Label ID="lblAddress" runat="server" /></span></div>
-					<div class="kea-info-row"><span class="kea-info-label">Payment</span><span class="kea-info-value"><asp:Label ID="lblPayment" runat="server" /></span></div>
-					<div class="kea-info-row"><span class="kea-info-label">Ordered On</span><span class="kea-info-value"><asp:Label ID="lblDate" runat="server" /></span></div>
+				<div class="card rounded-[14px] shadow-[0_4px_24px_rgba(0,0,0,.08)] p-7 mb-5">
+					<h6 class="text-[16px] mb-4 pb-2.5 border-b-2 border-[#f5f5f5]">Delivery Details</h6>
+					<div class="flex py-2.5 border-b border-[#f0f0f0]"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Name</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblCustomerName" runat="server" /></span></div>
+					<div class="flex py-2.5 border-b border-[#f0f0f0]"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Phone</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblPhone" runat="server" /></span></div>
+					<div class="flex py-2.5 border-b border-[#f0f0f0]"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Address</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblAddress" runat="server" /></span></div>
+					<div class="flex py-2.5 border-b border-[#f0f0f0]"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Payment</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblPayment" runat="server" /></span></div>
+					<div class="flex py-2.5 border-b border-[#f0f0f0]"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Ordered On</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblDate" runat="server" /></span></div>
 					<asp:Panel ID="pnlNotes" runat="server" Visible="false">
-						<div class="kea-info-row"><span class="kea-info-label">Notes</span><span class="kea-info-value"><asp:Label ID="lblNotes" runat="server" /></span></div>
+						<div class="flex py-2.5"><span class="min-w-[140px] font-semibold text-[13px] text-[#888]">Notes</span><span class="text-[14px] text-[#333]"><asp:Label ID="lblNotes" runat="server" /></span></div>
 					</asp:Panel>
 				</div>
 
 				<!-- Order Items -->
-				<div class="card" style="border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:28px;">
-					<h6 style="margin-bottom:16px;font-size:16px;border-bottom:2px solid #f5f5f5;padding-bottom:10px;">Ordered Items</h6>
+				<div class="card rounded-[14px] shadow-[0_4px_24px_rgba(0,0,0,.08)] p-7">
+					<h6 class="text-[16px] mb-4 pb-2.5 border-b-2 border-[#f5f5f5]">Ordered Items</h6>
 					<asp:Repeater ID="rptItems" runat="server">
 						<ItemTemplate>
-							<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f5f5f5;">
-								<div style="display:flex;align-items:center;gap:12px;">
-									<div>
-										<div style="font-weight:600;font-size:14px;"><%# Eval("ItemName") %></div>
-										<div style="font-size:12px;color:#888;">Qty: <%# Eval("Quantity") %></div>
-									</div>
+							<div class="flex items-center justify-between py-2.5 border-b border-[#f5f5f5]">
+								<div>
+									<div class="font-semibold text-sm"><%# Eval("ItemName") %></div>
+									<div class="text-xs text-[#888]">Qty: <%# Eval("Quantity") %></div>
 								</div>
-								<div style="font-weight:700;color:var(--primary);">Rs. <%# ((decimal)Eval("LineTotal")).ToString("0") %></div>
+								<div class="font-bold text-primary">Rs. <%# ((decimal)Eval("LineTotal")).ToString("0") %></div>
 							</div>
 						</ItemTemplate>
 					</asp:Repeater>
-					<div style="display:flex;justify-content:space-between;padding-top:14px;font-weight:700;font-size:16px;">
+					<div class="flex justify-between pt-3.5 font-bold text-[16px]">
 						<span>Total</span>
-						<span style="color:var(--primary);">Rs. <asp:Label ID="lblTotal" runat="server" /></span>
+						<span class="text-primary">Rs. <asp:Label ID="lblTotal" runat="server" /></span>
 					</div>
 				</div>
 
-				<div style="margin-top:20px;text-align:center;">
-					<a href="Menu.aspx" class="btn btn-primary btn-hover-1" style="margin-right:10px;"><span class="z-[2] relative block">Order More</span></a>
+				<div class="mt-5 text-center">
+					<a href="/Pages/Menu.aspx" class="btn btn-primary btn-hover-1 mr-2.5"><span class="z-[2] relative block">Order More</span></a>
 					<asp:Button ID="btnBackToSearch" runat="server" Text="Track Another Order" CssClass="btn btn-outline-secondary" OnClick="btnBackToSearch_Click" CausesValidation="false" />
 				</div>
 			</asp:Panel>
@@ -145,7 +130,6 @@
 	</section>
 
 	<script>
-		// Clear the cart if we arrived here directly from checkout (query string id present)
 		(function() {
 			if (window.location.search.indexOf('id=') !== -1 && typeof DzCart !== 'undefined') {
 				DzCart.clear();
@@ -163,7 +147,6 @@
 				'Ready':'ready','Out for Delivery':'outfordelivery','Delivered':'delivered'
 			};
 
-			// Reset all step classes before re-applying
 			stages.forEach(function(s) {
 				var el = document.getElementById('step_' + s);
 				if (el) el.classList.remove('done','active','cancelled');

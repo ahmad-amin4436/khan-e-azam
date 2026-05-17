@@ -2,9 +2,9 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 	<!-- Page Banner -->
-	<div style="background:var(--primary);padding:70px 0 50px;text-align:center;">
+	<div class="bg-primary pt-[70px] pb-[50px] text-center">
 		<h1 class="font-lobster text-white" style="font-size:clamp(2rem,5vw,3rem);margin:0;">Our Menu</h1>
-		<p style="color:rgba(255,255,255,0.85);margin-top:10px;font-size:15px;">Fresh ingredients &middot; Authentic flavors &middot; Every dish made with love</p>
+		<p class="text-white opacity-85 mt-[10px] text-[15px]">Fresh ingredients &middot; Authentic flavors &middot; Every dish made with love</p>
 	</div>
 
 	<!-- Menu Section -->
