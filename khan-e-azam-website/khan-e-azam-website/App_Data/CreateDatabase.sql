@@ -247,3 +247,26 @@ BEGIN
     ('The Art of Slow Cooking: How Our Nihari Is Made',             'Chef Ustad Farooq', '2024-02-24', 'assets/images/blog/grid2/pic2.jpg', NULL,                   0, 24, 3);
 END
 GO
+  CREATE TABLE Orders (
+      Id           INT PRIMARY KEY IDENTITY(1,1),
+      CustomerName    NVARCHAR(100) NOT NULL,
+      CustomerPhone   NVARCHAR(20)  NOT NULL,
+      CustomerAddress NVARCHAR(500) NOT NULL,
+      PaymentMethod   NVARCHAR(50)  NOT NULL,
+      Status          NVARCHAR(50)  NOT NULL DEFAULT 'Pending',
+      Notes           NVARCHAR(1000) NULL,
+      TotalAmount     DECIMAL(10,2) NOT NULL DEFAULT 0,
+      CreatedAt       DATETIME NOT NULL DEFAULT GETDATE(),
+      UpdatedAt       DATETIME NOT NULL DEFAULT GETDATE()
+  );
+
+  CREATE TABLE OrderItems (
+      Id        INT PRIMARY KEY IDENTITY(1,1),
+      OrderId   INT NOT NULL REFERENCES Orders(Id) ON DELETE CASCADE,
+      ItemName  NVARCHAR(200) NOT NULL,
+      ItemPrice DECIMAL(10,2) NOT NULL,
+      Quantity  INT NOT NULL DEFAULT 1,
+      Image     NVARCHAR(500) NULL,
+      ItemType  NVARCHAR(50)  NULL
+  );
+
