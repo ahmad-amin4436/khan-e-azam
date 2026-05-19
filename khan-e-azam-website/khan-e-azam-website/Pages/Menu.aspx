@@ -1,6 +1,38 @@
 <%@ Page Title="Our Menu" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Menu.aspx.cs" Inherits="khan_e_azam_website.Pages.Menu" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+	<style>
+		/* Menu page responsive tweaks */
+		.filters { display:flex; gap:8px; flex-wrap:wrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+		.filters li { flex:0 0 auto; }
+		.dz-img-box3 { min-height: auto !important; height: auto !important; padding:14px !important; }
+		.dz-img-box3 .dz-media { flex:0 0 60px; min-width:60px; width:60px; height:60px; }
+		.dz-img-box3 .dz-media img { width:100%; height:100%; object-fit:cover; display:block; border-radius:8px; min-width:0; }
+		.dz-img-box3 .dz-content .title { font-size:1rem; }
+		.menu-footer { max-width:120px; }
+
+		@media (max-width: 992px) {
+			.card-container { padding-left:10px; padding-right:10px; }
+			.card-container .dz-img-box3 { padding:12px; }
+		}
+
+		@media (max-width: 768px) {
+			/* Stack content if needed and allow price/footer to align */
+			.dz-img-box3 { display:flex; flex-direction:row; align-items:flex-start; gap:12px; }
+			.dz-img-box3 .dz-content { flex:1 1 auto; }
+			.dz-img-box3 .menu-footer { flex:0 0 auto; margin-left:8px; }
+			.dz-img-box3 { height:auto !important; }
+			.dz-content .title { font-size:1rem; }
+		}
+
+		@media (max-width: 480px) {
+			.filters { gap:6px; }
+			.dz-img-box3 { padding:10px !important; }
+			.dz-img-box3 .dz-media { flex:0 0 50px; min-width:50px; width:50px; height:50px; }
+			.dz-img-box3 .dz-content .title { font-size:0.95rem; }
+			.menu-footer { max-width:100%; margin-top:8px; }
+		}
+	</style>
 	<!-- Page Banner -->
 	<div class="bg-primary pt-[70px] pb-[50px] text-center">
 		<h1 class="font-lobster text-white" style="font-size:clamp(2rem,5vw,3rem);margin:0;">Our Menu</h1>
