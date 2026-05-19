@@ -1,6 +1,60 @@
 <%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="khan_e_azam_website._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+	<style>
+		/* Scoped responsive fixes for homepage (prevent horizontal overflow & shrink large hero elements) */
+		@media (max-width: 992px) {
+			.food-card { max-width: 100% !important; width: auto !important; }
+			.food-card .target-line { display: none !important; }
+			.banner-media img { max-width: 100% !important; min-width: 0 !important; width: auto !important; height: auto !important; }
+			.banner-inner1 { background-position: center !important; }
+			.swiper-bnr-pagination { right: 8px !important; left: auto !important; }
+		}
+		@media (max-width: 600px) {
+			/* reduce large hero font/spacing on small phones */
+			.banner-inner1 { padding-top: 30px !important; padding-bottom: 20px !important; }
+			.banner-content .title { font-size: 1.6rem !important; line-height: 1.15 !important; }
+			/* ensure list items and media don't force horizontal scroll */
+			.dz-media, .dz-media img, .dz-img-box3, .dz-img-box5 { min-width: 0 !important; }
+			/* clamp oversized elements inside sliders */
+			.target-line, .leaf { display: none !important; }
+		}
+
+		/* Additional small-screen fixes for feature lists, testimonials and blog cards */
+		@media (max-width: 768px) {
+			/* Feature/icon blocks */
+			.icon-bx-wraper, .icon-bx-wraper .icon-bx { align-items:flex-start; }
+			.icon-bx { flex:0 0 56px; min-width:56px; width:56px; height:56px; }
+			.icon-content { overflow-wrap:break-word; word-break:break-word; }
+
+			/* Testimonial adjustments (hide oversized decorative quote and prevent overlap) */
+			.testimonial-2 .quote { display:none !important; }
+			.testimonial-2 .dz-media { min-width:0 !important; }
+
+			/* Blog card fixes: make date badge flow and media scale */
+			.dz-card { min-height: auto !important; }
+			.dz-date { position:relative !important; top:auto !important; left:auto !important; margin-bottom:8px; display:inline-block; }
+			.dz-media video, .dz-media img { max-width:100% !important; height:auto !important; min-width:0 !important; }
+			.dz-card .dz-info { padding-bottom:16px !important; }
+
+			/* general safety clamp to avoid page-level horizontal scroll */
+			.page-wraper, .container, body { overflow-x: hidden !important; }
+		}
+
+		/* Strong overrides for very small screens to fix blog card/date overlap */
+		@media (max-width: 480px) {
+			.dz-card { overflow: hidden !important; border-radius: 10px !important; margin-bottom: 16px !important; }
+			.dz-card .dz-media { max-height: 160px !important; height: auto !important; min-height: 0 !important; overflow: hidden !important; }
+			.dz-card .dz-media img, .dz-card .dz-media video { width: 100% !important; height: auto !important; object-fit: cover !important; min-width: 0 !important; }
+			.dz-card .dz-info { padding: 12px !important; position: relative !important; z-index: 2 !important; }
+			/* make date flow inside card instead of absolute */
+			.dz-card .dz-date { position: static !important; transform: none !important; top: auto !important; left: auto !important; display: inline-block !important; margin-bottom: 8px !important; background: rgba(255,165,0,0.95) !important; color: #fff !important; padding: 6px 10px !important; border-radius: 6px !important; font-size: 12px !important; font-weight: 700 !important; }
+			/* ensure meta row doesn't wrap awkwardly */
+			.dz-card .dz-info .dz-meta, .dz-card .dz-info .dz-head { display: flex !important; flex-direction: column !important; gap: 6px !important; }
+			/* clip any decorative overlays that might intrude */
+			.target-line, .leaf, .dz-card .quote { display: none !important; }
+		}
+	</style>
 
 	<!-- Banner -->
 	<div class="main-bnr-2 overflow-hidden translate-y-[95px] max-xl:translate-y-[75px] mb-[90px] max-xl:mb-[75px] max-sm:mb-[60px]">
