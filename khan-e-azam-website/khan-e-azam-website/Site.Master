@@ -362,6 +362,27 @@
 	<script src="/assets/js/dznav-init.js"></script>
 <%--	<script src="/assets/vendor/switcher/switcher.js"></script>--%>
 	<script>
+		// Ensure the mobile nav toggle works even if jQuery handlers are lost or scripts load differently
+		(function(){
+			if (typeof document === 'undefined') return;
+			document.addEventListener('click', function(e){
+				var btn = e.target.closest('.togglebtn');
+				if (!btn) return;
+				btn.classList.toggle('open');
+				var headerNav = document.querySelector('.header-nav');
+				if (headerNav) headerNav.classList.toggle('open');
+				var backdrop = document.querySelector('.menu-backdrop');
+				if (backdrop) backdrop.classList.toggle('show');
+				var bar1 = document.querySelector('.bar1');
+				var bar2 = document.querySelector('.bar2');
+				var bar3 = document.querySelector('.bar3');
+				if (bar1) bar1.classList.toggle('rotate1');
+				if (bar2) bar2.classList.toggle('opacity0');
+				if (bar3) bar3.classList.toggle('rotate2');
+				var switchBtn = document.querySelector('.switch-btn');
+				if (switchBtn) switchBtn.classList.toggle('hidden');
+			});
+		})();
 		jQuery(document).ready(function(){
 			if (typeof dzSettings !== 'undefined' && typeof dzSettingsOptions !== 'undefined') {
 				dzSettingsOptions.themeFullColor_value = 'color_2';

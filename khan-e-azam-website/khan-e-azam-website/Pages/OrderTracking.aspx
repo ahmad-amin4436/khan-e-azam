@@ -27,6 +27,37 @@
 		.kea-status-OutForDelivery { background:#cce5ff; color:#004085; }
 		.kea-status-Delivered { background:#d4edda; color:#155724; }
 		.kea-status-Cancelled { background:#f8d7da; color:#721c24; }
+
+		.container { max-width:760px; width:100%; padding:0 16px; box-sizing:border-box; }
+		.search-input-group { display:flex; gap:10px; max-width:420px; margin:0 auto; }
+		.search-input-group .btn { flex:0 0 auto; }
+		#trackerSteps { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; }
+		.kea-tracker-step { flex:1 1 110px; min-width:100px; max-width:130px; }
+		.kea-tracker-step::before { content:none; }
+		.kea-info-row { display:flex; flex-wrap:wrap; gap:6px; padding:10px 0; border-bottom:1px solid #f0f0f0; }
+		.kea-info-label { width:100%; min-width:auto; font-weight:600; font-size:13px; color:#888; }
+		.kea-info-value { width:100%; font-size:14px; color:#333; }
+		.kea-item-row { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid #f5f5f5; }
+		.kea-item-row .item-details { flex:1 1 180px; min-width:140px; }
+		.kea-item-row .item-price { flex:0 0 auto; font-weight:700; color:var(--primary); }
+		.order-actions { margin-top:20px; text-align:center; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+		.order-actions .btn { min-width:180px; }
+
+		@media (max-width: 768px) {
+			.card { padding:24px !important; }
+			.search-input-group { flex-direction:column; max-width:100%; }
+			.search-input-group .btn { width:100%; }
+			#trackerSteps { justify-content:center; }
+			.kea-tracker-step { min-width:90px; max-width:100%; }
+			.kea-step-icon { width:44px; height:44px; }
+			.kea-step-label { font-size:10px; }
+			.kea-info-row { padding:10px 0; }
+			.kea-info-label, .kea-info-value { width:100%; }
+			.kea-item-row { padding:10px 0; }
+			.kea-item-row .item-price { width:100%; text-align:right; }
+			.order-actions { flex-direction:column; }
+			.order-actions .btn { width:100%; }
+		}
 	</style>
 
 	<!-- Page Banner -->
@@ -44,7 +75,7 @@
 					<i class="fa-solid fa-magnifying-glass" style="font-size:2.5rem;color:var(--primary);margin-bottom:16px;display:block;"></i>
 					<h4 style="margin-bottom:8px;">Track Your Order</h4>
 					<p style="color:#888;margin-bottom:24px;">Enter your Order ID below to check the status</p>
-					<div style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
+					<div class="search-input-group" style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
 						<asp:TextBox ID="txtSearchId" runat="server" CssClass="h-[50px] py-[10px] px-5 w-full text-[15px] rounded-[6px] focus:border-primary duration-500" placeholder="Order ID (e.g. 42)" style="border:1px solid #ddd;flex:1;" />
 						<asp:Button ID="btnSearch" runat="server" Text="Track" CssClass="btn btn-primary" style="height:50px;padding:0 24px;white-space:nowrap;" OnClick="btnSearch_Click" CausesValidation="false" />
 					</div>
@@ -118,14 +149,14 @@
 					<h6 style="margin-bottom:16px;font-size:16px;border-bottom:2px solid #f5f5f5;padding-bottom:10px;">Ordered Items</h6>
 					<asp:Repeater ID="rptItems" runat="server">
 						<ItemTemplate>
-							<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f5f5f5;">
-								<div style="display:flex;align-items:center;gap:12px;">
+							<div class="kea-item-row" style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f5f5f5;">
+								<div class="item-details" style="display:flex;align-items:center;gap:12px;">
 									<div>
 										<div style="font-weight:600;font-size:14px;"><%# Eval("ItemName") %></div>
 										<div style="font-size:12px;color:#888;">Qty: <%# Eval("Quantity") %></div>
 									</div>
 								</div>
-								<div style="font-weight:700;color:var(--primary);">Rs. <%# ((decimal)Eval("LineTotal")).ToString("0") %></div>
+								<div class="item-price" style="font-weight:700;color:var(--primary);">Rs. <%# ((decimal)Eval("LineTotal")).ToString("0") %></div>
 							</div>
 						</ItemTemplate>
 					</asp:Repeater>
@@ -135,7 +166,7 @@
 					</div>
 				</div>
 
-				<div style="margin-top:20px;text-align:center;">
+				<div class="order-actions" style="margin-top:20px;text-align:center;">
 					<a href="Menu.aspx" class="btn btn-primary btn-hover-1" style="margin-right:10px;"><span class="z-[2] relative block">Order More</span></a>
 					<asp:Button ID="btnBackToSearch" runat="server" Text="Track Another Order" CssClass="btn btn-outline-secondary" OnClick="btnBackToSearch_Click" CausesValidation="false" />
 				</div>
