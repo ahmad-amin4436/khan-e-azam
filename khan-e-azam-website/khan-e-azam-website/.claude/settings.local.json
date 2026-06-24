@@ -12,7 +12,9 @@
       "Bash(ls DAL/*.cs)",
       "Bash(grep -n \"main-bnr-2\\\\|banner-inner1\\\\|banner-media\\\\|swiper-bnr\" \"c:\\\\\\\\Users\\\\\\\\Administrator\\\\\\\\Documents\\\\\\\\GitHub\\\\\\\\khan-e-azam\\\\\\\\khan-e-azam-template\\\\\\\\swigo-tailwind.vercel.app\\\\\\\\index-2.html\")",
       "Bash(python3 -c ' *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\SHAMIM ABBAS\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-website\\\\khan-e-azam-website\" -Recurse -File | Where-Object {$_.Extension -in \".aspx\"} | Select-Object FullName)",
+      "PowerShell(sqlcmd -S \".\\\\SQLEXPRESS\" -U sa -P \"abcd@1234\" -i \"C:\\\\Users\\\\SHAMIM ABBAS\\\\Documents\\\\GitHub\\\\khan-e-azam\\\\khan-e-azam-website\\\\khan-e-azam-website\\\\App_Data\\\\SeedMenuItems.sql\" -b 2>&1)"
     ]
   }
 }
