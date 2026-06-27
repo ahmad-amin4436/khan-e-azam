@@ -54,6 +54,52 @@
 			/* clip any decorative overlays that might intrude */
 			.target-line, .leaf, .dz-card .quote { display: none !important; }
 		}
+
+		/* ===== Menu card symmetry (Browse Our Menu carousel + Our Menu grid) ===== */
+		/* Browse Our Menu: equal-height slides + aligned title/price */
+		.menu-swiper2 .swiper-wrapper { align-items: stretch; }
+		.menu-swiper2 .swiper-slide { height: auto; display: flex; }
+		.menu-swiper2 .dz-img-box3 {
+			width: 100%;
+			min-height: 170px;
+			height: auto !important;
+			display: flex; flex-direction: column;
+		}
+		.menu-swiper2 .dz-img-box3 .menu-detail { align-items: flex-start; }
+		.menu-swiper2 .dz-img-box3 .dz-media { flex: 0 0 60px; min-width: 60px; width: 60px; height: 60px; }
+		.menu-swiper2 .dz-img-box3 .dz-media img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+		.menu-swiper2 .dz-img-box3 .dz-content { flex: 1 1 auto; min-width: 0; }
+		.menu-swiper2 .dz-img-box3 .dz-content .title {
+			white-space: nowrap; overflow: hidden; text-overflow: ellipsis;   /* 1-line titles align */
+		}
+		.menu-swiper2 .dz-img-box3 .dz-content p {
+			display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+			overflow: hidden; margin-bottom: 0;
+		}
+		.menu-swiper2 .dz-img-box3 .menu-footer { margin-top: auto; }          /* price pinned to bottom */
+
+		/* Our Menu grid: equal-height rows across the 2 columns */
+		#masonry { align-items: stretch; }
+		#masonry .card-container { display: flex; }
+		#masonry .card-container .dz-img-box5 { width: 100%; min-height: 110px; }
+		/* Uniform, symmetric images: same square size + crop for every dish */
+		#masonry .card-container .dz-img-box5 .dz-media {
+			flex: 0 0 70px; width: 70px; min-width: 70px; height: 70px;
+			overflow: hidden; border-radius: 8px;
+		}
+		#masonry .card-container .dz-img-box5 .dz-media img {
+			width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 8px;
+		}
+		#masonry .card-container .dz-img-box5 .dz-content { display: flex; flex-direction: column; }
+		#masonry .card-container .dz-img-box5 .dz-body {
+			display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+			overflow: hidden; margin-bottom: 0;                                /* 2-line descriptions keep rows even */
+		}
+		@media (min-width: 640px) {
+			#masonry .card-container .dz-img-box5 .dz-media {
+				flex: 0 0 80px; width: 80px; min-width: 80px; height: 80px;     /* match sm:w-[80px] */
+			}
+		}
 	</style>
 
 	<!-- Banner -->
@@ -153,7 +199,7 @@
 					<asp:Repeater ID="rptBrowseMenu" runat="server">
 						<ItemTemplate>
 							<div class="swiper-slide">
-								<div class="dz-img-box3 box-hover group style-4 bg-white p-[18px] flex flex-col h-[160px] relative z-[1] overflow-hidden rounded-[10px]">
+								<div class="dz-img-box3 box-hover group style-4 bg-white p-[18px] flex flex-col relative z-[1] overflow-hidden rounded-[10px]">
 									<div class="menu-detail flex items-center mb-3">
 										<div class="dz-media mr-5 w-[60px] min-w-[60px] h-[60px]">
 											<img src='<%# Eval("Image") %>' alt="/">

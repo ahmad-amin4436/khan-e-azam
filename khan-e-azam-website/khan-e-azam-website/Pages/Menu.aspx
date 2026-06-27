@@ -5,23 +5,42 @@
 		/* Menu page responsive tweaks */
 		.filters { display:flex; gap:8px; flex-wrap:wrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
 		.filters li { flex:0 0 auto; }
-		.dz-img-box3 { min-height: auto !important; height: auto !important; padding:14px !important; }
+
+		/* --- Equal-height, symmetric cards --- */
+		#masonry { align-items: stretch; }                 /* every cell in a row stretches to the same height */
+		#masonry .card-container { display:flex; }         /* card fills the full cell height */
+		.dz-img-box3 {
+			width:100%;
+			min-height:170px;                              /* consistent baseline height across all cards */
+			height:auto !important;
+			padding:18px !important;
+			display:flex; flex-direction:column;
+		}
+		.dz-img-box3 .menu-detail { align-items:flex-start; }
 		.dz-img-box3 .dz-media { flex:0 0 60px; min-width:60px; width:60px; height:60px; }
 		.dz-img-box3 .dz-media img { width:100%; height:100%; object-fit:cover; display:block; border-radius:8px; min-width:0; }
-		.dz-img-box3 .dz-content .title { font-size:1rem; }
-		.menu-footer { max-width:120px; }
+		.dz-img-box3 .dz-content { flex:1 1 auto; min-width:0; }
+		.dz-img-box3 .dz-content .title {
+			font-size:1rem;
+			white-space:nowrap; overflow:hidden; text-overflow:ellipsis;   /* 1-line titles align */
+		}
+		.dz-img-box3 .dz-content p {
+			display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;  /* 2-line descriptions */
+			overflow:hidden; margin-bottom:0;
+		}
+		.menu-footer { max-width:120px; margin-top:auto; }  /* price pinned to bottom of every card */
 
 		@media (max-width: 992px) {
 			.card-container { padding-left:10px; padding-right:10px; }
-			.card-container .dz-img-box3 { padding:12px; }
+			.card-container .dz-img-box3 { padding:12px !important; }
 		}
 
 		@media (max-width: 768px) {
-			/* Stack content if needed and allow price/footer to align */
-			.dz-img-box3 { display:flex; flex-direction:row; align-items:flex-start; gap:12px; }
+			/* Single column: stack as a row (media left, content right) */
+			.dz-img-box3 { flex-direction:row; align-items:flex-start; gap:12px; min-height:auto; }
 			.dz-img-box3 .dz-content { flex:1 1 auto; }
-			.dz-img-box3 .menu-footer { flex:0 0 auto; margin-left:8px; }
-			.dz-img-box3 { height:auto !important; }
+			.dz-img-box3 .dz-content .title { white-space:normal; }   /* allow wrap when full-width */
+			.dz-img-box3 .menu-footer { flex:0 0 auto; margin-left:8px; margin-top:0; }
 			.dz-content .title { font-size:1rem; }
 		}
 
@@ -63,7 +82,7 @@
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-pizza-slice text-[25px] lg:mr-[10px] mr-[5px]"></i></span>PIZZA</a>
 							</li>
 							<li data-filter=".roll" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>RAP ROLL</a>
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>WRAP ROLL</a>
 							</li>
 							<li data-filter=".paratha" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-restaurant text-[25px] lg:mr-[10px] mr-[5px]"></i></span>PARATHA ROLL</a>
@@ -86,6 +105,12 @@
 							<li data-filter=".sweet" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cupcake text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SWEETS</a>
 							</li>
+							<li data-filter=".spicy" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-chili-pepper text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SPICY</a>
+							</li>
+							<li data-filter=".drink" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cocktail text-[25px] lg:mr-[10px] mr-[5px]"></i></span>COLD DRINK</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -100,7 +125,7 @@
 					<asp:Repeater ID="rptMenu" runat="server">
 						<ItemTemplate>
 							<li class='card-container xl:w-1/4 lg:w-1/3 sm:w-1/2 w-full px-[15px] pb-[30px] <%# Eval("FilterTags") %>'>
-								<div class="dz-img-box3 box-hover group style-4 bg-white p-[18px] flex flex-col h-[160px] relative z-[1] overflow-hidden rounded-[10px]">
+								<div class="dz-img-box3 box-hover group style-4 bg-white p-[18px] flex flex-col relative z-[1] overflow-hidden rounded-[10px]">
 									<div class="menu-detail flex items-center mb-3">
 										<div class="dz-media mr-5 w-[60px] min-w-[60px] h-[60px]">
 											<img src='<%# ResolveUrl("~/" + Eval("Image").ToString().TrimStart('/')) %>' alt='<%# System.Web.HttpUtility.HtmlAttributeEncode(Eval("Name").ToString()) %>' style="width:100%;height:100%;object-fit:cover;border-radius:8px;" onerror="this.style.display='none'">
