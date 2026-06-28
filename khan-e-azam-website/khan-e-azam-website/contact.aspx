@@ -1,130 +1,222 @@
 ﻿<%@ Page Title="Contact Us" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="contact.aspx.cs" Inherits="khan_e_azam_website.contact" %>
 
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<div class="h-20"></div>
-<!-- Hero Contact Section -->
-<section class="relative py-24 px-6 text-center bg-black">
-    <!-- Subtle Orange Glow at the bottom -->
-    <div class="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-[#2D220A] to-transparent"></div>
+    <style>
+        /* Responsive Overrides */
+        @media (max-width: 1024px) {
+            .contact-info-bx, .contact-form {
+                padding: 30px !important;
+            }
+        }
+    @media (max-width: 767px) {
+        /* Force the columns to 1/3 width to stay horizontal */
+        .mobile-row-fix > div {
+            width: 33.33% !important;
+            padding: 0 5px !important; /* Reduced padding for mobile fit */
+        }
+        
+        /* Reduce font/icon sizes slightly for small screens */
+        .mobile-row-fix .text-3xl {
+            font-size: 0.5rem !important;
+        }
+        
+        /* Hide text labels or buttons if they are too cramped, 
+           or make text smaller */
+        .mobile-row-fix span {
+            font-size: 7px !important;
+        }
+        
+        .mobile-row-fix .btn {
+            font-size: 10px !important;
+            padding: 5px 10px !important;
+        }
+    }
+     @keyframes kePulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.7;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 
-    <div class="mb-4 text-sm tracking-[0.2em] uppercase text-[#C89B3C]/70 font-bold">Get In Touch</div>
-    
-    <!-- Heading with Lobster Font and White Text -->
-    <h1 class="font-['Lobster'] text-5xl md:text-6xl text-white mb-6">
-        We'd Love to<br/>
-        <span class="text-[#C89B3C]">Hear From You</span>
-    </h1>
-    <!-- Heart placed under all text -->
-    <div class="text-[#C89B3C] text-3xl animate-pulse">
-        ❤
-    </div>
-  
-</section>
+    </style>
+     <div style="height: 80px;"></div>
 
-<!-- Action Strip -->
-<div class="bg-[#C89B3C] py-16 px-6">
-    <div class="max-w-6xl mx-auto">
-    
+    <div class="bg-white" style="width: 100%;">
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-[#1A1208]">
-            <!-- Action 1: Instant Reservation -->
-            <div class="flex flex-col items-center gap-4">
-                <span class="text-4xl">📅</span>
-                <span class="text-[10px] uppercase tracking-widest font-bold opacity-70">Book a Table</span>
-                <a href="#booking" class="px-6 py-2 border-2 border-[#1A1208] rounded-full font-bold transition-colors duration-300 hover:bg-[#1A1208] hover:text-white">Reserve Now</a>
+        <section class="content-inner text-center" style="background-image: url('/assets/images/banner/bnr1.jpg'); background-size: cover; background-position: center; background-color: #000;">
+            <div class="container">
+                <div>
+                    <span class="text-primary font-medium uppercase block mb-4" style="letter-spacing: 0.2em;">Get In Touch</span>
+                    <h1 class="font-lobster text-white mb-6">We'd Love to<br/><span class="text-primary">Hear From You</span></h1>
+                    <div class="text-primary text-3xl" style="animation: kePulse 1.6s ease-in-out infinite; display: inline-block;">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Action 2: Direct Navigation -->
-            <div class="flex flex-col items-center gap-4">
-                <span class="text-4xl">📍</span>
-                <span class="text-[10px] uppercase tracking-widest font-bold opacity-70">Find Us</span>
-                <a href="https://maps.google.com" target="_blank" class="px-6 py-2 border-2 border-[#1A1208] rounded-full font-bold transition-colors duration-300 hover:bg-[#1A1208] hover:text-white">Open Maps</a>
-            </div>
-            
-            <!-- Action 3: Order Online -->
-            <div class="flex flex-col items-center gap-4">
-                <span class="text-4xl">⚡</span>
-                <span class="text-[10px] uppercase tracking-widest font-bold opacity-70">Order Online</span>
-                <a href="/Menu" class="px-6 py-2 border-2 border-[#1A1208] rounded-full font-bold transition-colors duration-300 hover:bg-[#1A1208] hover:text-white">View Menu</a>
-            </div>
+        </section>
+
+        <div class="bg-primary py-[60px] px-[20px]">
+            <div class="container">
+                <div class="row flex-wrap mobile-row-fix" style="justify-content: center;">
+
+                    <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
+                        <div class="text-center">
+                            <a href="#booking" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
+                                <i class="fas fa-calendar-alt" style="color: #000000 !important; "></i>
+                            </a>
+                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Book a Table</span>
+                            <a href="#booking" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Reserve Now</a>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
+                        <div class="text-center">
+                            <a href="#location" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
+                                <i class="flaticon-placeholder" style="color: #000000 !important;"></i>
+                            </a>
+                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Find Us</span>
+                            <a href="#location" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Open Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
+                        <div class="text-center">
+                            <a href="/Menu" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
+                                <i class="flaticon-shopping-cart" style="color: #000000 !important;"></i>
+                            </a>
+                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Order Online</span>
+                            <a href="/Menu" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
+                        </div>
+                    </div>
+
+                </div> </div>
         </div>
+
+        <section class="content-inner">
+            <div class="container">
+                <div class="flex flex-wrap flex-col lg:flex-row items-start lg:gap-[60px]">
+
+                    <div class="w-full lg:w-5/12 px-[15px] mb-[30px]">
+                        <div class="contact-info-bx border border-[#eee] shadow-sm" style="padding: 50px;">
+                            <h3 class="font-lobster" style="margin-bottom: 30px;">Contact Information</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+                                    <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-map-marker-alt"></i></div>
+                                    <span>880 N Poonch Rd, Samnabad Town, Lahore, Punjab 54000 Pakistan</span>
+                                </li>
+                               <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+    <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-phone-alt"></i></div>
+    <div style="display: flex; flex-direction: column; gap: 5px; color: #000;">
+        <span>+92 42 3757 1100</span>
+        <span>+92 309 9406789 (Hotel, Event)</span>
+        <span>+92 308 9406789 (Restaurant)</span>
     </div>
+</li>
+                               <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+    <div class="text-xl text-primary" style="margin-right: 20px; width: 20px; flex-shrink: 0;"><i class="fas fa-envelope"></i></div>
+    <div style="display: flex; flex-direction: column; gap: 5px; color: #000; width: 100%; overflow: hidden;">
+        <span style="word-break: break-all;">khaneazamrestaurant@gmail.com</span>
+        <span style="word-break: break-all;">khaneazamhotelevents@gmail.com</span>
+    </div>
+</li>
+                                <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
+                                    <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-clock"></i></div>
+                                    <div>
+                                        <strong>Opening Hours:</strong><br/>
+                                        Daily: 12:00 PM - 12:00 AM
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+                                <h4 class="font-lobster mb-4">Follow Us</h4>
+                                <div style="display: flex; gap: 15px;">
+                                    <a href="#" style="font-size: 20px; color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
+                                    
+                                    <a href="#" style="font-size: 20px; color: #e1306c;"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-7/12 px-[15px]">
+                        <div class="contact-form bg-[#f8f8f8] shadow-sm border border-[#eee]" style="padding: 50px;">
+                            <h3 class="font-lobster mb-8 text-2xl">Send Us a Message</h3>
+                            <br />
+                            <div class="flex flex-wrap -mx-[10px]">
+                                <div class="w-full lg:w-1/2 px-[10px] mb-[25px]">
+                                    <asp:TextBox ID="txtName" runat="server" placeholder="Full Name" 
+                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
+                                        onmouseover="this.style.borderColor='#C89B3C'" 
+                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
+                                        onfocus="this.style.borderColor='#C89B3C'" 
+                                        onblur="this.style.borderColor='#ddd'" />
+                                </div>
+                                <div class="w-full lg:w-1/2 px-[10px] mb-[25px]">
+                                    <asp:TextBox ID="txtPhone" runat="server" placeholder="Phone Number" 
+                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
+                                        onmouseover="this.style.borderColor='#C89B3C'" 
+                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
+                                        onfocus="this.style.borderColor='#C89B3C'" 
+                                        onblur="this.style.borderColor='#ddd'" />
+                                </div>
+                                <div class="w-full px-[10px] mb-[25px]">
+                                    <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" placeholder="Email Address" 
+                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
+                                        onmouseover="this.style.borderColor='#C89B3C'" 
+                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
+                                        onfocus="this.style.borderColor='#C89B3C'" 
+                                        onblur="this.style.borderColor='#ddd'" />
+                                </div>
+                                <div class="w-full px-[10px] mb-[25px]">
+                                    <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine" Rows="5" placeholder="Your Message"
+                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
+                                        onmouseover="this.style.borderColor='#C89B3C'" 
+                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
+                                        onfocus="this.style.borderColor='#C89B3C'" 
+                                        onblur="this.style.borderColor='#ddd'" />
+                                </div>
+                                <div class="w-full text-center mt-[30px]">
+                                    <a href="Pages/Menu.aspx" class="btn btn-md btn-primary btn-hover-1"><span>Send Message</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visit Us Heading -->
+<div class="text-center" style="padding-bottom: 40px; padding-top: 20px;">
+    <span class="text-primary font-medium uppercase block mb-2" style="letter-spacing: 0.2em; font-size: 12px;">Visit Us</span>
+    <h2 class="font-lobster" style="font-size: 2.5rem; color: #1A1208;">Our Location</h2>
 </div>
 
-    <!-- Contact Section -->
-    <section class="py-20 px-6 bg-[#F8F5F0]">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            
-            <!-- LEFT COLUMN: Info Card + Hours Card -->
-            <div class="space-y-8">
-                <!-- Contact Info Card -->
-                <div class="bg-white p-10 rounded-[20px] shadow-sm border border-gray-100">
-                    <h3 class="font-serif text-2xl text-[#1A1208] mb-8">Contact <span class="text-[#C89B3C]">Information</span></h3>
-                    <div class="space-y-6">
-                        <div class="flex gap-4 items-start">
-                            <div class="w-12 h-12 flex items-center justify-center bg-[#FDFBF7] border border-amber-100 rounded-xl text-xl">📍</div>
-                            <div>
-                                <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Address</span>
-                                <p class="text-[#1A1208] font-medium">880 N Poonch Rd, Samnabad Town, Lahore, Punjab 54000 Pakistan</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="w-12 h-12 flex items-center justify-center bg-[#FDFBF7] border border-amber-100 rounded-xl text-xl">📞</div>
-                            <div>
-                                <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Phone</span>
-                                <a href="tel:+924237571100" class="block text-[#1A1208] font-medium hover:text-[#C89B3C]">+92 42 3757 1100</a>
-                                <a href="tel:+923089406789" class="block text-[#1A1208] font-medium hover:text-[#C89B3C]">+92 308 9406789 (Resturant)</a>
-                                <a href="tel:+923099406789" class="block text-[#1A1208] font-medium hover:text-[#C89B3C]">+92 309 9406789 (Hotel , Event)</a>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="w-12 h-12 flex items-center justify-center bg-[#FDFBF7] border border-amber-100 rounded-xl text-xl">✉️</div>
-                            <div>
-                                <span class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Email</span>
-                                <a href="mailto:hello@khaneazam.pk" class="block text-[#1A1208] font-medium hover:text-[#C89B3C]">khaneazamresturant@gmail.com</a>
-                                 <a href="mailto:hello@khaneazam.pk" class="block text-[#1A1208] font-medium hover:text-[#C89B3C]">khaneazamhotelevents@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hours Card -->
-                <div class="bg-[#1A1208] p-10 rounded-[20px] shadow-sm text-white">
-                    <h3 class="font-serif text-2xl mb-6">Opening <span class="text-[#C89B3C]">Hours</span></h3>
-                    <div class="space-y-4 text-sm">
-                        <div class="flex justify-between border-b border-gray-800 pb-2"><span>Monday – Thursday</span><span class="text-[#C89B3C]">12:00 PM – 1:00 AM</span></div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2"><span>Friday – Saturday</span><span class="text-[#C89B3C]">12:00 PM – 2:00 AM</span></div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2"><span>Sunday</span><span class="text-[#C89B3C]">1:00 PM – 1:00 AM</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT COLUMN: Form -->
-            <div class="bg-white p-10 rounded-[20px] shadow-lg border border-gray-100">
-                <h3 class="font-serif text-2xl text-[#1A1208] mb-2">Send Us a <span class="text-[#C89B3C]">Message</span></h3>
-                <p class="text-sm text-gray-500 mb-8">Fill in the form below and our team will respond within 24 hours.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <input type="text" placeholder="Full Name" class="w-full p-4 bg-[#FDFBF7] border border-amber-100 rounded-xl focus:border-[#C89B3C] outline-none" />
-                    <input type="tel" placeholder="Phone Number" class="w-full p-4 bg-[#FDFBF7] border border-amber-100 rounded-xl focus:border-[#C89B3C] outline-none" />
-                </div>
-                <input type="email" placeholder="Email Address" class="w-full p-4 bg-[#FDFBF7] border border-amber-100 rounded-xl mb-4 focus:border-[#C89B3C] outline-none" />
-                <textarea rows="5" class="w-full p-4 bg-[#FDFBF7] border border-amber-100 rounded-xl mb-6 focus:border-[#C89B3C] outline-none" placeholder="Write your message here..."></textarea>
-                <button class="w-full py-4 bg-[#1A1208] text-white rounded-full font-bold uppercase tracking-widest hover:bg-[#C89B3C] transition">
-                    Send Message
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Map Section -->
-    <section class="py-20 px-6 bg-[#FDFBF7]">
-        <div class="max-w-6xl mx-auto">
-            <h3 class="font-serif text-3xl text-[#1A1208] mb-8 text-center">Visit Our <span class="text-[#C89B3C]">Location</span></h3>
-            <div class="w-full h-[400px] rounded-[20px] overflow-hidden shadow-lg">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d54396.27395428604!2d74.28564735!3d31.5203696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904d0b9f29c67%3A0x2c2a2f5b1bf9bf6f!2sGulberg%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2sus!4v1700000000000" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section>
-
+<!-- Map Section -->
+<section id="location" class="content-inner-1 pt-0">
+    <div class="contact-map">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.3789452336694!2d74.30138237532392!3d31.51261384752538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904a081525043%3A0xe54d31846b95764d!2s880%20N%20Poonch%20Rd%2C%20Samanabad%20Town%2C%20Lahore%2C%20Punjab%2054000%2C%20Pakistan!5e0!3m2!1sen!2s!4v1719570000000!5m2!1sen!2s" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade" 
+            class="block w-full">
+        </iframe>
+    </div>
+</section>
+    </div>
+     <div style="height: 80px;"></div>
 </asp:Content>
