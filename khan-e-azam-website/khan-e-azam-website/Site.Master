@@ -304,9 +304,9 @@
 					</div>
 					<div class="lg:w-1/2 px-[15px]">
 						<ul class="footer-link mx-[-15px] lg:text-right text-center">
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="blog-standard.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Blog Detail</a></li>
+<%--							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="blog-standard.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Blog Detail</a></li>
 							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="about-us.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">About</a></li>
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="testimonial.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Testimonials</a></li>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="testimonial.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Testimonials</a></li>--%>
 						</ul>
 					</div>
 				</div>

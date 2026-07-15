@@ -69,16 +69,7 @@
             <div class="container">
                 <div class="row flex-wrap mobile-row-fix" style="justify-content: center;">
 
-                    <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
-                        <div class="text-center">
-                            <a href="#booking" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
-                                <i class="fas fa-calendar-alt" style="color: #000000 !important; "></i>
-                            </a>
-                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Book a Table</span>
-                            <a href="#booking" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Reserve Now</a>
-                        </div>
-                    </div>
-
+                   
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
                             <a href="#location" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
@@ -91,11 +82,11 @@
 
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
-                            <a href="/Menu" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
+                            <a href="Pages/Menu.aspx" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
                                 <i class="flaticon-shopping-cart" style="color: #000000 !important;"></i>
                             </a>
                             <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Order Online</span>
-                            <a href="/Menu" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
+                            <a href="Pages/Menu.aspx" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
                         </div>
                     </div>
 
@@ -151,59 +142,9 @@
 
                     <div class="w-full lg:w-7/12 px-[15px]">
                         <div class="contact-form bg-[#f8f8f8] shadow-sm border border-[#eee]" style="padding: 50px;">
-                            <h3 class="font-lobster mb-8 text-2xl">Send Us a Message</h3>
+                            <h3 class="font-lobster mb-8 text-2xl">Our Locations</h3>
                             <br />
-                            <div class="flex flex-wrap -mx-[10px]">
-                                <div class="w-full lg:w-1/2 px-[10px] mb-[25px]">
-                                    <asp:TextBox ID="txtName" runat="server" placeholder="Full Name" 
-                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
-                                        onmouseover="this.style.borderColor='#C89B3C'" 
-                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
-                                        onfocus="this.style.borderColor='#C89B3C'" 
-                                        onblur="this.style.borderColor='#ddd'" />
-                                </div>
-                                <div class="w-full lg:w-1/2 px-[10px] mb-[25px]">
-                                    <asp:TextBox ID="txtPhone" runat="server" placeholder="Phone Number" 
-                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
-                                        onmouseover="this.style.borderColor='#C89B3C'" 
-                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
-                                        onfocus="this.style.borderColor='#C89B3C'" 
-                                        onblur="this.style.borderColor='#ddd'" />
-                                </div>
-                                <div class="w-full px-[10px] mb-[25px]">
-                                    <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" placeholder="Email Address" 
-                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
-                                        onmouseover="this.style.borderColor='#C89B3C'" 
-                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
-                                        onfocus="this.style.borderColor='#C89B3C'" 
-                                        onblur="this.style.borderColor='#ddd'" />
-                                </div>
-                                <div class="w-full px-[10px] mb-[25px]">
-                                    <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine" Rows="5" placeholder="Your Message"
-                                        CssClass="w-full p-[15px] border border-[#ddd] transition-colors duration-300 focus:outline-none"
-                                        onmouseover="this.style.borderColor='#C89B3C'" 
-                                        onmouseout="if(document.activeElement!==this){this.style.borderColor='#ddd';}" 
-                                        onfocus="this.style.borderColor='#C89B3C'" 
-                                        onblur="this.style.borderColor='#ddd'" />
-                                </div>
-                                <div class="w-full text-center mt-[30px]">
-                                    <a href="Pages/Menu.aspx" class="btn btn-md btn-primary btn-hover-1"><span>Send Message</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Visit Us Heading -->
-<div class="text-center" style="padding-bottom: 40px; padding-top: 20px;">
-    <span class="text-primary font-medium uppercase block mb-2" style="letter-spacing: 0.2em; font-size: 12px;">Visit Us</span>
-    <h2 class="font-lobster" style="font-size: 2.5rem; color: #1A1208;">Our Location</h2>
-</div>
-
-<!-- Map Section -->
-<section id="location" class="content-inner-1 pt-0">
+                            <section id="location" class="content-inner-1 pt-0">
     <div class="contact-map">
         <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.3789452336694!2d74.30138237532392!3d31.51261384752538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904a081525043%3A0xe54d31846b95764d!2s880%20N%20Poonch%20Rd%2C%20Samanabad%20Town%2C%20Lahore%2C%20Punjab%2054000%2C%20Pakistan!5e0!3m2!1sen!2s!4v1719570000000!5m2!1sen!2s" 
@@ -217,6 +158,10 @@
         </iframe>
     </div>
 </section>
-    </div>
-     <div style="height: 80px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 </asp:Content>
