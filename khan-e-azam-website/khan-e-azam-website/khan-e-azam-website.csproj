@@ -129,7 +129,6 @@
     <Content Include="assets\icons\line-awesome\fonts\la-brands-400.svg" />
     <Content Include="assets\icons\line-awesome\fonts\la-regular-400.svg" />
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900.svg" />
-    <Content Include="assets\images\9966545b-c76d-45d5-b835-e6480c8ab4ee.png" />
     <Content Include="assets\images\adv-media.jpg" />
     <Content Include="assets\images\adv\label.png" />
     <Content Include="assets\images\adv\pic1.png" />
@@ -413,6 +412,7 @@
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900.woff2" />
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900d41d.eot" />
     <Content Include="assets\json\coming-soon.json" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\background\pic10.html" />
     <Content Include="Pages\Cart.aspx" />
