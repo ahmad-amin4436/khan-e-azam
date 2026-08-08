@@ -1,0 +1,110 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Blank.master.cs" Inherits="khan_e_azam_website.Blank" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Khan E Azam | Restaurant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+<style>
+    .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-description {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+}
+
+@media (max-width: 639px) {
+    .hero-buttons {
+        width: 100%;
+    }
+
+    .hero-buttons .button {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+}
+</style>
+</head>
+<body class="home-teaser-page">
+    <form id="form1" runat="server">
+        <div class="home-ambience" aria-hidden="true">
+            <div class="home-ambience-orb home-ambience-orb--top"></div>
+            <div class="home-ambience-orb home-ambience-orb--left"></div>
+            <div class="home-ambience-orb home-ambience-orb--right"></div>
+            <span class="home-ambience-particle" style="left: 8%; top: 82%; animation-duration: 15s; animation-delay: 0s"></span>
+            <span class="home-ambience-particle" style="left: 21%; top: 34%; animation-duration: 19s; animation-delay: 3s"></span>
+            <span class="home-ambience-particle" style="left: 33%; top: 68%; animation-duration: 13s; animation-delay: 6s"></span>
+            <span class="home-ambience-particle" style="left: 45%; top: 12%; animation-duration: 21s; animation-delay: 2s"></span>
+            <span class="home-ambience-particle" style="left: 57%; top: 91%; animation-duration: 16s; animation-delay: 8s"></span>
+            <span class="home-ambience-particle" style="left: 64%; top: 45%; animation-duration: 23s; animation-delay: 1s"></span>
+            <span class="home-ambience-particle" style="left: 72%; top: 24%; animation-duration: 14s; animation-delay: 5s"></span>
+            <span class="home-ambience-particle" style="left: 81%; top: 74%; animation-duration: 18s; animation-delay: 4s"></span>
+            <span class="home-ambience-particle" style="left: 88%; top: 38%; animation-duration: 20s; animation-delay: 7s"></span>
+            <span class="home-ambience-particle" style="left: 94%; top: 60%; animation-duration: 15s; animation-delay: 2s"></span>
+            <span class="home-ambience-particle" style="left: 14%; top: 55%; animation-duration: 17s; animation-delay: 9s"></span>
+            <span class="home-ambience-particle" style="left: 39%; top: 88%; animation-duration: 22s; animation-delay: 5s"></span>
+        </div>
+
+        <header class="site-header-teaser" id="siteHeader">
+            <div class="site-header-teaser__inner">
+                <a href="#home" class="site-header-teaser__brand">
+                    <span class="site-header-teaser__mark font-display">K</span>
+                    <span class="site-header-teaser__name font-display">Khan E Azam</span>
+                </a>
+
+                <nav aria-label="Primary" class="site-header-teaser__nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#launch">Launch</a></li>
+                    </ul>
+                </nav>
+
+                <div class="site-header-teaser__actions">
+                    <a href="#launch" class="site-header-teaser__cta">Coming Soon</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="home-teaser-main">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+    </form>
+
+    <script>
+        (function () {
+            const header = document.getElementById('siteHeader');
+            function onScroll() {
+                header.classList.toggle('site-header-teaser--scrolled', window.scrollY > 24);
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+    </script>
+</body>
+</html>

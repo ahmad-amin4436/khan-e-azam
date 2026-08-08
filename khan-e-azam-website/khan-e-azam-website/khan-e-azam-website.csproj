@@ -119,7 +119,17 @@
     <Content Include="assets\ajax\blog-list.html" />
     <Content Include="assets\ajax\blog-standard.html" />
     <Content Include="assets\ajax\testimonial.html" />
+    <Content Include="assets\card-burger.jpg" />
+    <Content Include="assets\card-more.jpg" />
+    <Content Include="assets\card-pasta.jpg" />
+    <Content Include="assets\card-pizza.jpg" />
+    <Content Include="assets\card-sandwich.jpg" />
     <Content Include="assets\css\style.css" />
+    <Content Include="assets\experience.jpg" />
+    <Content Include="assets\hero-1.jpg" />
+    <Content Include="assets\hero-2.jpg" />
+    <Content Include="assets\hero-3.jpg" />
+    <Content Include="assets\css\home.css" />
     <Content Include="assets\icons\feather\css\iconfont.css" />
     <Content Include="assets\icons\feather\fonts\feathere8ab.svg" />
     <Content Include="assets\icons\flaticon\flaticon_swigo.css" />
@@ -356,7 +366,10 @@
     <Content Include="assets\vendor\switcher\switcher.css" />
     <Content Include="assets\vendor\switcher\switcher.js" />
     <Content Include="assets\vendor\wnumb\wNumb.js" />
+    <Content Include="assets\video\background.mp4" />
+    <Content Include="assets\video\side.mp4" />
     <Content Include="assets\video\video.mp4" />
+    <Content Include="assets\js\home-teaser.js" />
     <Content Include="App_Data\CreateDatabase.sql" />
     <Content Include="Admin\Web.config" />
     <Content Include="Admin\Admin.Master" />
@@ -374,6 +387,7 @@
     <Content Include="Admin\Orders.aspx" />
     <Content Include="contact.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Home.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -412,6 +426,7 @@
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900.woff2" />
     <Content Include="assets\icons\line-awesome\fonts\la-solid-900d41d.eot" />
     <Content Include="assets\json\coming-soon.json" />
+    <Content Include="Blank.Master" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="images\background\pic10.html" />
@@ -458,6 +473,13 @@
     </Compile>
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Blank.Master.cs">
+      <DependentUpon>Blank.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Blank.Master.designer.cs">
+      <DependentUpon>Blank.Master</DependentUpon>
     </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>
@@ -552,6 +574,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
