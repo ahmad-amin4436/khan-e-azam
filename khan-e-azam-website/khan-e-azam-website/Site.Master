@@ -179,6 +179,16 @@
 		/* The footer card used the template's flat gray (#222) instead of the page's actual dark
 		   background, so it read as a separate floating panel rather than the page continuing. */
 		.footer-bg-wrapper.bg-black2 { background-color: var(--dark-1) !important; }
+		/* The footer's own text/icons were hardcoded for a permanently-dark footer (text-white,
+		   #CCCCCC links, a #ffffff1a highlight circle) — now that its background follows the
+		   theme too, those same hardcoded colors wash out to near-invisible in light mode. */
+		.site-footer .text-white { color: var(--light-text) !important; }
+		.site-footer .widget_getintuch ul li p,
+		.site-footer .widget_services ul li,
+		.site-footer .widget_services ul li a { color: var(--muted-text) !important; }
+		.site-footer .widget_services ul li a:hover { color: var(--primary) !important; }
+		html[data-theme="light"] .site-footer .bg-\[\#ffffff1a\] { background-color: rgba(16,12,8,0.06) !important; }
+		html[data-theme="light"] .site-footer .border-\[\#ffffff1a\] { border-color: rgba(16,12,8,0.12) !important; }
 		.main-bar .header-nav .navbar > li.active > a,
 		.main-bar .header-nav .navbar > li:hover > a { color: var(--secondary) !important; }
 		.main-bar { padding-top: 10px; padding-bottom: 10px; }
@@ -206,8 +216,10 @@
 		.dz-fab:hover { transform:scale(1.08); box-shadow:0 8px 22px rgba(0,0,0,.4); }
 		.dz-fab-wa { background:#25D366; }
 		.dz-fab-cart { background:var(--primary); position:relative; }
-		.dz-fab-call { background: var(--dark-card, #1f1a14); border-color: rgba(255,255,255,0.25); }
-		.dz-fab-checkout { background: var(--dark-card, #1f1a14); border-color: rgba(255,255,255,0.25); }
+		/* Fixed brand-dark background (not the theme-toggling --dark-card) — these two carry a
+		   hardcoded white icon, so in light mode --dark-card (now white) made the icon invisible. */
+		.dz-fab-call { background: #100C08; border-color: rgba(255,255,255,0.25); }
+		.dz-fab-checkout { background: #100C08; border-color: rgba(255,255,255,0.25); }
 		#dz-cart-badge { position:absolute; top:-4px; right:-4px; background:var(--accent-red); color:#fff; font-size:11px; font-weight:700; min-width:20px; height:20px; border-radius:10px; display:none; align-items:center; justify-content:center; padding:0 4px; }
 		#dz-toast { position:fixed; bottom:110px; right:24px; background:rgba(30,30,30,.92); color:#fff; padding:10px 18px; border-radius:8px; font-size:13px; z-index:999999; opacity:0; transform:translateY(16px); transition:opacity .3s, transform .3s; pointer-events:none; max-width:260px; }
 	</style>

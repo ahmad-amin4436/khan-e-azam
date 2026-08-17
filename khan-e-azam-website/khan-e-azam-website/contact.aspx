@@ -72,21 +72,21 @@
                    
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
-                            <a href="#location" class="inline-block" style="font-size: 3rem; color: #100C08; transition: color 0.3s ease;" onmouseover="this.style.color='#0D5B3E'" onmouseout="this.style.color='#100C08'">
-                                <i class="flaticon-placeholder" style="color: #100C08 !important;"></i>
+                            <a href="#location" class="inline-block" style="font-size: 3rem; color: #fff; transition: color 0.3s ease;" onmouseover="this.style.color='#FFD200'" onmouseout="this.style.color='#fff'">
+                                <i class="flaticon-placeholder" style="color: #fff !important;"></i>
                             </a>
-                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Find Us</span>
-                            <a href="#location" class="btn btn-primary" style="background: transparent; border: 1px solid #100C08; color: #100C08; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Open Maps</a>
+                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.9; margin-top: 12px; color: #fff;">Find Us</span>
+                            <a href="#location" class="btn btn-primary" style="background: transparent; border: 1px solid #fff; color: #fff; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Open Maps</a>
                         </div>
                     </div>
 
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
-                            <a href="Pages/Menu.aspx" class="inline-block" style="font-size: 3rem; color: #100C08; transition: color 0.3s ease;" onmouseover="this.style.color='#0D5B3E'" onmouseout="this.style.color='#100C08'">
-                                <i class="flaticon-shopping-cart" style="color: #100C08 !important;"></i>
+                            <a href="Pages/Menu.aspx" class="inline-block" style="font-size: 3rem; color: #fff; transition: color 0.3s ease;" onmouseover="this.style.color='#FFD200'" onmouseout="this.style.color='#fff'">
+                                <i class="flaticon-shopping-cart" style="color: #fff !important;"></i>
                             </a>
-                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Order Online</span>
-                            <a href="Pages/Menu.aspx" class="btn btn-primary" style="background: transparent; border: 1px solid #100C08; color: #100C08; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
+                            <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.9; margin-top: 12px; color: #fff;">Order Online</span>
+                            <a href="Pages/Menu.aspx" class="btn btn-primary" style="background: transparent; border: 1px solid #fff; color: #fff; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
                         </div>
                     </div>
 
