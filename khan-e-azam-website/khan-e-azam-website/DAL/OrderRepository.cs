@@ -6,6 +6,7 @@
       CustomerName    NVARCHAR(100) NOT NULL,
       CustomerPhone   NVARCHAR(20)  NOT NULL,
       CustomerAddress NVARCHAR(500) NOT NULL,
+      OrderType       NVARCHAR(30)  NOT NULL DEFAULT 'Fast Delivery',
       PaymentMethod   NVARCHAR(50)  NOT NULL,
       Status          NVARCHAR(50)  NOT NULL DEFAULT 'Pending',
       Notes           NVARCHAR(1000) NULL,
@@ -45,8 +46,8 @@ namespace KhanEAzam.DAL
                     try
                     {
                         const string sql = @"
-                            INSERT INTO Orders (CustomerName,CustomerPhone,CustomerAddress,PaymentMethod,Status,Notes,TotalAmount,CreatedAt,UpdatedAt)
-                            VALUES (@Name,@Phone,@Address,@Payment,'Pending',@Notes,@Total,GETDATE(),GETDATE());
+                            INSERT INTO Orders (CustomerName,CustomerPhone,CustomerAddress,OrderType,PaymentMethod,Status,Notes,TotalAmount,CreatedAt,UpdatedAt)
+                            VALUES (@Name,@Phone,@Address,@OrderType,@Payment,'Pending',@Notes,@Total,GETDATE(),GETDATE());
                             SELECT SCOPE_IDENTITY();";
 
                         int orderId;
@@ -55,6 +56,7 @@ namespace KhanEAzam.DAL
                             cmd.Parameters.AddWithValue("@Name", order.CustomerName);
                             cmd.Parameters.AddWithValue("@Phone", order.CustomerPhone);
                             cmd.Parameters.AddWithValue("@Address", order.CustomerAddress);
+                            cmd.Parameters.AddWithValue("@OrderType", string.IsNullOrEmpty(order.OrderType) ? "Fast Delivery" : order.OrderType);
                             cmd.Parameters.AddWithValue("@Payment", order.PaymentMethod);
                             cmd.Parameters.AddWithValue("@Notes", (object)order.Notes ?? DBNull.Value);
                             cmd.Parameters.AddWithValue("@Total", order.TotalAmount);
@@ -197,6 +199,7 @@ namespace KhanEAzam.DAL
             CustomerName = dr["CustomerName"].ToString(),
             CustomerPhone = dr["CustomerPhone"].ToString(),
             CustomerAddress = dr["CustomerAddress"].ToString(),
+            OrderType = dr["OrderType"].ToString(),
             PaymentMethod = dr["PaymentMethod"].ToString(),
             Status = dr["Status"].ToString(),
             Notes = dr["Notes"] == DBNull.Value ? null : dr["Notes"].ToString(),

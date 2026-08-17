@@ -51,7 +51,7 @@
     </style>
      <div style="height: 80px;"></div>
 
-    <div class="bg-white" style="width: 100%;">
+    <div class="kea-stars" style="width: 100%; background-color: var(--dark-1);">
 
         <section class="content-inner text-center" style="background-image: url('/assets/images/banner/bnr1.jpg'); background-size: cover; background-position: center; background-color: #000;">
             <div class="container">
@@ -72,21 +72,21 @@
                    
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
-                            <a href="#location" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
-                                <i class="flaticon-placeholder" style="color: #000000 !important;"></i>
+                            <a href="#location" class="inline-block" style="font-size: 3rem; color: #100C08; transition: color 0.3s ease;" onmouseover="this.style.color='#0D5B3E'" onmouseout="this.style.color='#100C08'">
+                                <i class="flaticon-placeholder" style="color: #100C08 !important;"></i>
                             </a>
                             <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Find Us</span>
-                            <a href="#location" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Open Maps</a>
+                            <a href="#location" class="btn btn-primary" style="background: transparent; border: 1px solid #100C08; color: #100C08; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">Open Maps</a>
                         </div>
                     </div>
 
                     <div class="lg:w-1/3 w-full" style="padding: 0 40px; margin-bottom: 30px;">
                         <div class="text-center">
-                            <a href="Pages/Menu.aspx" class="inline-block" style="font-size: 3rem; color: #000000; transition: color 0.3s ease;" onmouseover="this.style.color='#C89B3C'" onmouseout="this.style.color='#000000'">
-                                <i class="flaticon-shopping-cart" style="color: #000000 !important;"></i>
+                            <a href="Pages/Menu.aspx" class="inline-block" style="font-size: 3rem; color: #100C08; transition: color 0.3s ease;" onmouseover="this.style.color='#0D5B3E'" onmouseout="this.style.color='#100C08'">
+                                <i class="flaticon-shopping-cart" style="color: #100C08 !important;"></i>
                             </a>
                             <span class="block uppercase font-bold mb-4" style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; margin-top: 12px;">Order Online</span>
-                            <a href="Pages/Menu.aspx" class="btn btn-primary" style="background: transparent; border: 1px solid #1A1208; color: #1A1208; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
+                            <a href="Pages/Menu.aspx" class="btn btn-primary" style="background: transparent; border: 1px solid #100C08; color: #100C08; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">View Menu</a>
                         </div>
                     </div>
 
@@ -98,16 +98,16 @@
                 <div class="flex flex-wrap flex-col lg:flex-row items-start lg:gap-[60px]">
 
                     <div class="w-full lg:w-5/12 px-[15px] mb-[30px]">
-                        <div class="contact-info-bx border border-[#eee] shadow-sm" style="padding: 50px;">
-                            <h3 class="font-lobster" style="margin-bottom: 30px;">Contact Information</h3>
+                        <div class="contact-info-bx" style="padding: 50px; background-color: var(--dark-card); border: 1px solid var(--dark-border);">
+                            <h3 class="font-lobster" style="margin-bottom: 30px; color: var(--light-text);">Contact Information</h3>
                             <ul style="list-style: none; padding: 0;">
                                 <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
                                     <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-map-marker-alt"></i></div>
-                                    <span>880 N Poonch Rd, Samnabad Town, Lahore, Punjab 54000 Pakistan</span>
+                                    <span style="color: var(--muted-text);">880 N Poonch Rd, Samnabad Town, Lahore, Punjab 54000 Pakistan</span>
                                 </li>
                                <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
     <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-phone-alt"></i></div>
-    <div style="display: flex; flex-direction: column; gap: 5px; color: #000;">
+    <div style="display: flex; flex-direction: column; gap: 5px; color: var(--muted-text);">
         <span>+92 42 3757 1100</span>
         <span>+92 309 9406789 (Hotel, Event)</span>
         <span>+92 308 9406789 (Restaurant)</span>
@@ -115,34 +115,36 @@
 </li>
                                <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
     <div class="text-xl text-primary" style="margin-right: 20px; width: 20px; flex-shrink: 0;"><i class="fas fa-envelope"></i></div>
-    <div style="display: flex; flex-direction: column; gap: 5px; color: #000; width: 100%; overflow: hidden;">
+    <div style="display: flex; flex-direction: column; gap: 5px; color: var(--muted-text); width: 100%; overflow: hidden;">
         <span style="word-break: break-all;">khaneazamrestaurant@gmail.com</span>
         <span style="word-break: break-all;">khaneazamhotelevents@gmail.com</span>
     </div>
 </li>
                                 <li style="margin-bottom: 25px; display: flex; align-items: flex-start;">
                                     <div class="text-xl text-primary" style="margin-right: 20px; width: 20px;"><i class="fas fa-clock"></i></div>
-                                    <div>
-                                        <strong>Opening Hours:</strong><br/>
-                                        Daily: 12:00 PM - 12:00 AM
+                                    <div style="color: var(--muted-text);">
+                                        <strong style="color: var(--light-text);">Opening Hours:</strong><br/>
+                                        Mon &ndash; Fri: 2:00 PM &ndash; 2:00 AM<br/>
+                                        Saturday: 2:00 PM &ndash; 2:00 AM<br/>
+                                        Sunday: 2:00 PM &ndash; 2:00 AM
                                     </div>
                                 </li>
                             </ul>
 
-                            <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-                                <h4 class="font-lobster mb-4">Follow Us</h4>
+                            <div style="margin-top: 30px; border-top: 1px solid var(--dark-border); padding-top: 20px;">
+                                <h4 class="font-lobster mb-4" style="color: var(--light-text);">Follow Us</h4>
                                 <div style="display: flex; gap: 15px;">
-                                    <a href="#" style="font-size: 20px; color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
-                                    
-                                    <a href="#" style="font-size: 20px; color: #e1306c;"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://www.facebook.com/khaneazamrestaurant" target="_blank" rel="noopener" style="font-size: 20px; color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
+
+                                    <a href="https://www.instagram.com/khaneazamrestaurant" target="_blank" rel="noopener" style="font-size: 20px; color: #e1306c;"><i class="fab fa-instagram"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="w-full lg:w-7/12 px-[15px]">
-                        <div class="contact-form bg-[#f8f8f8] shadow-sm border border-[#eee]" style="padding: 50px;">
-                            <h3 class="font-lobster mb-8 text-2xl">Our Locations</h3>
+                        <div class="contact-form" style="padding: 50px; background-color: var(--dark-card); border: 1px solid var(--dark-border);">
+                            <h3 class="font-lobster mb-8 text-2xl" style="color: var(--light-text);">Our Locations</h3>
                             <br />
                             <section id="location" class="content-inner-1 pt-0">
     <div class="contact-map">

@@ -57,6 +57,7 @@ namespace KhanEAzam.Admin
 
             Session["AdminId"] = user.Id;
             Session["AdminUsername"] = user.Username;
+            Session["AdminRole"] = user.Role;
             Response.Redirect("~/Admin/Dashboard.aspx");
         }
     }

@@ -13,7 +13,7 @@ namespace KhanEAzam.Admin
         protected GridView gvSlides;
         protected Label lblMsg, lblFormTitle, lblUploadError;
         protected HiddenField hfId, hfBgImagePath, hfFoodImagePath, hfChefImagePath;
-        protected TextBox txtTagLine, txtHeading, txtDescription;
+        protected TextBox txtTagLine, txtHeading, txtDescription, txtVideoUrl;
         protected TextBox txtFoodCardName, txtPrice, txtCardDescription, txtChefName, txtChefRole, txtSortOrder;
         protected CheckBox chkIsActive;
         protected FileUpload fuBgImage, fuFoodImage, fuChefImage;
@@ -61,6 +61,7 @@ namespace KhanEAzam.Admin
                 txtTagLine.Text = s.TagLine;
                 txtHeading.Text = s.Heading;
                 txtDescription.Text = s.Description;
+                txtVideoUrl.Text = s.VideoUrl;
                 txtFoodCardName.Text = s.FoodCardName;
                 txtPrice.Text = s.Price;
                 txtCardDescription.Text = s.CardDescription;
@@ -122,6 +123,7 @@ namespace KhanEAzam.Admin
                 Heading = txtHeading.Text.Trim(),
                 Description = txtDescription.Text.Trim(),
                 BgImage = bgImage,
+                VideoUrl = string.IsNullOrWhiteSpace(txtVideoUrl.Text) ? null : txtVideoUrl.Text.Trim(),
                 FoodImage = foodImage,
                 FoodCardName = txtFoodCardName.Text.Trim(),
                 Price = txtPrice.Text.Trim(),
@@ -152,7 +154,7 @@ namespace KhanEAzam.Admin
 
         private void ClearForm()
         {
-            txtTagLine.Text = txtHeading.Text = txtDescription.Text = "";
+            txtTagLine.Text = txtHeading.Text = txtDescription.Text = txtVideoUrl.Text = "";
             txtFoodCardName.Text = txtPrice.Text = txtCardDescription.Text = "";
             txtChefName.Text = txtChefRole.Text = "";
             txtSortOrder.Text = "0";

@@ -7,8 +7,14 @@
 		.filters li { flex:0 0 auto; }
 
 		/* --- Equal-height, symmetric cards --- */
-		#masonry { align-items: stretch; }                 /* every cell in a row stretches to the same height */
-		#masonry .card-container { display:flex; }         /* card fills the full cell height */
+		/* Renamed off the "masonry" id on purpose: the vendor isotope.pkgd bundle auto-binds a
+		   broken filter handler to any #masonry/.masonry element (it initializes via .masonry()
+		   but then tries to filter via .isotope() without ever isotope-initializing, and fights
+		   our own filter script below) — keeping the id off its selector list makes that vendor
+		   binding a no-op while our JS does the real filtering. */
+		#keaMenuGrid { align-items: stretch; }              /* every cell in a row stretches to the same height */
+		#keaMenuGrid.row { width: auto !important; }
+		#keaMenuGrid .card-container { display:flex; }      /* card fills the full cell height */
 		.dz-img-box3 {
 			width:100%;
 			min-height:170px;                              /* consistent baseline height across all cards */
@@ -59,7 +65,7 @@
 	</div>
 
 	<!-- Menu Section -->
-	<section class="lg:pt-[80px] sm:pt-[60px] pt-[40px] lg:pb-[100px] pb-[50px] overflow-hidden relative bg-white">
+	<section class="lg:pt-[80px] sm:pt-[60px] pt-[40px] lg:pb-[100px] pb-[50px] overflow-hidden relative kea-stars" style="background-color: var(--dark-1);">
 		<div class="container">
 			<!-- Filter Buttons -->
 			<div class="row justify-between mb-[30px] sm:mb-[40px]">
@@ -121,17 +127,17 @@
 
 			<!-- Items Grid -->
 			<div class="clearfix" id="lightgallery">
-				<ul id="masonry" class="row dlab-gallery-listing gallery">
+				<ul id="keaMenuGrid" class="row dlab-gallery-listing gallery">
 					<asp:Repeater ID="rptMenu" runat="server">
 						<ItemTemplate>
 							<li class='card-container xl:w-1/4 lg:w-1/3 sm:w-1/2 w-full px-[15px] pb-[30px] <%# Eval("FilterTags") %>'>
-								<div class="dz-img-box3 box-hover group style-4 bg-white p-[18px] flex flex-col relative z-[1] overflow-hidden rounded-[10px]">
+								<div class="dz-img-box3 box-hover group style-4 p-[18px] flex flex-col relative z-[1] overflow-hidden rounded-[10px]" style="background-color: var(--dark-card); border: 1px solid var(--dark-border);">
 									<div class="menu-detail flex items-center mb-3">
 										<div class="dz-media mr-5 w-[60px] min-w-[60px] h-[60px]">
 											<img src='<%# ResolveUrl("~/" + Eval("Image").ToString().TrimStart('/')) %>' alt='<%# System.Web.HttpUtility.HtmlAttributeEncode(Eval("Name").ToString()) %>' style="width:100%;height:100%;object-fit:cover;border-radius:8px;" onerror="this.style.display='none'">
 										</div>
 										<div class="dz-content">
-											<h6 class="title mb-[3px] duration-500"><%# Eval("Name") %></h6>
+											<h6 class="title mb-[3px] duration-500 text-black2"><%# Eval("Name") %></h6>
 											<p class="text-sm text-bodycolor"><%# Eval("Description") %></p>
 										</div>
 									</div>
@@ -154,9 +160,9 @@
 
 				<!-- Empty State -->
 				<asp:Panel ID="pnlEmpty" runat="server" Visible="false" CssClass="w-full text-center py-[80px]">
-					<i class="flaticon-fast-food" style="font-size:4rem;color:#ddd;display:block;margin-bottom:20px;"></i>
-					<h4 style="color:#999;">No menu items available at the moment.</h4>
-					<p style="color:#bbb;">Check back soon - the chef is working on it!</p>
+					<i class="flaticon-fast-food" style="font-size:4rem;color:var(--dark-border);display:block;margin-bottom:20px;"></i>
+					<h4 style="color:var(--light-text);">No menu items available at the moment.</h4>
+					<p style="color:var(--muted-text);">Check back soon - the chef is working on it!</p>
 				</asp:Panel>
 			</div>
 		</div>
@@ -164,7 +170,7 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			var btns = document.querySelectorAll('.filters li');
-			var items = document.querySelectorAll('#masonry .card-container');
+			var items = document.querySelectorAll('#keaMenuGrid .card-container');
 			btns.forEach(function (btn) {
 				btn.addEventListener('click', function () {
 					btns.forEach(function (b) { b.classList.remove('active'); });
@@ -180,6 +186,13 @@
 					});
 				});
 			});
+
+			// Deep-link support: /Pages/Menu.aspx?category=drink pre-selects the matching filter
+			var category = new URLSearchParams(window.location.search).get('category');
+			if (category) {
+				var match = document.querySelector('.filters li[data-filter=".' + category + '"]');
+				if (match) match.click();
+			}
 		});
 	</script>
 </asp:Content>

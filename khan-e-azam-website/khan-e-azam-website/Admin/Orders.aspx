@@ -29,6 +29,7 @@
                         <asp:BoundField DataField="Id" HeaderText="#" />
                         <asp:BoundField DataField="CustomerName" HeaderText="Customer" />
                         <asp:BoundField DataField="CustomerPhone" HeaderText="Phone" />
+                        <asp:BoundField DataField="OrderType" HeaderText="Type" />
                         <asp:BoundField DataField="PaymentMethod" HeaderText="Payment" />
                         <asp:TemplateField HeaderText="Total">
                             <ItemTemplate>Rs. <%# ((decimal)Eval("TotalAmount")).ToString("0") %></ItemTemplate>
@@ -71,6 +72,7 @@
                         <table class="table table-sm table-borderless mb-0">
                             <tr><td class="font-weight-bold text-muted" style="width:120px;">Name</td><td><asp:Label ID="lblDetailName" runat="server" /></td></tr>
                             <tr><td class="font-weight-bold text-muted">Phone</td><td><asp:Label ID="lblDetailPhone" runat="server" /></td></tr>
+                            <tr><td class="font-weight-bold text-muted">Order Type</td><td><asp:Label ID="lblDetailType" runat="server" /></td></tr>
                             <tr><td class="font-weight-bold text-muted">Address</td><td><asp:Label ID="lblDetailAddress" runat="server" /></td></tr>
                             <tr><td class="font-weight-bold text-muted">Payment</td><td><asp:Label ID="lblDetailPayment" runat="server" /></td></tr>
                             <tr><td class="font-weight-bold text-muted">Date</td><td><asp:Label ID="lblDetailDate" runat="server" /></td></tr>

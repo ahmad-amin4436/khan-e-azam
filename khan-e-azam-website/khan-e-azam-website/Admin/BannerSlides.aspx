@@ -53,6 +53,10 @@
                         <asp:FileUpload ID="fuBgImage" runat="server" CssClass="form-control-file" accept=".jpg,.jpeg,.png,.gif,.webp" />
                         <small class="form-text text-muted">JPG, PNG, GIF or WEBP · Max 5 MB.</small>
                     </div>
+                    <div class="col-md-12 form-group">
+                        <label>Background Video URL (optional)</label>
+                        <asp:TextBox ID="txtVideoUrl" runat="server" CssClass="form-control" placeholder="assets/video/video.mp4 — plays instead of the background image when set" />
+                    </div>
                     <div class="col-md-6 form-group">
                         <label>Food Image</label>
                         <asp:HiddenField ID="hfFoodImagePath" runat="server" />

@@ -16,6 +16,7 @@ namespace khan_e_azam_website.Pages {
         protected global::System.Web.UI.WebControls.HiddenField hfStatus;
         protected global::System.Web.UI.WebControls.Label lblCustomerName;
         protected global::System.Web.UI.WebControls.Label lblPhone;
+        protected global::System.Web.UI.WebControls.Label lblOrderType;
         protected global::System.Web.UI.WebControls.Label lblAddress;
         protected global::System.Web.UI.WebControls.Label lblPayment;
         protected global::System.Web.UI.WebControls.Label lblDate;

@@ -11,8 +11,15 @@ namespace khan_e_azam_website
     public partial class _Default : Page
     {
         protected Repeater rptBanner, rptBrowseMenu, rptTodaySpecial, rptMenuFilter;
-        protected Repeater rptIconFeatures, rptChefs, rptTestimonials;
+        protected Repeater rptIconFeatures, rptTestimonials;
         protected Repeater rptBlogSmall, rptBlogLarge;
+
+        protected TextBox txtQuickName, txtQuickPhone;
+        protected DropDownList ddlQuickOrderType;
+        protected Button btnQuickSubmit;
+        protected Label lblQuickMsg;
+
+        private const int HomepageMenuPreviewCount = 6;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,14 +34,11 @@ namespace khan_e_azam_website
                 rptTodaySpecial.DataSource = new TodaysSpecialRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
                 rptTodaySpecial.DataBind();
 
-                rptMenuFilter.DataSource = new MenuFilterRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
+                rptMenuFilter.DataSource = new MenuFilterRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).Take(HomepageMenuPreviewCount).ToList();
                 rptMenuFilter.DataBind();
 
                 rptIconFeatures.DataSource = new IconFeatureRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
                 rptIconFeatures.DataBind();
-
-                rptChefs.DataSource = new ChefRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
-                rptChefs.DataBind();
 
                 rptTestimonials.DataSource = new TestimonialRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
                 rptTestimonials.DataBind();
@@ -51,6 +55,43 @@ namespace khan_e_azam_website
         {
             if (dt == null || dt == DBNull.Value) return "";
             return ((DateTime)dt).ToString("dd MMM yyyy");
+        }
+
+        protected string RenderBannerVideo(object videoUrl)
+        {
+            string url = videoUrl as string;
+            if (string.IsNullOrWhiteSpace(url)) return "";
+            return "<video autoplay loop muted playsinline class=\"absolute top-0 left-0 w-full h-full object-cover z-0\"><source src=\"" +
+                System.Web.HttpUtility.HtmlAttributeEncode(url) + "\" type=\"video/mp4\"></video>";
+        }
+
+        protected void btnQuickSubmit_Click(object sender, EventArgs e)
+        {
+            string name = txtQuickName.Text.Trim();
+            string phone = txtQuickPhone.Text.Trim();
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone))
+            {
+                lblQuickMsg.CssClass = "alert alert-danger d-block mb-4";
+                lblQuickMsg.Text = "Please fill in your full name and contact number.";
+                lblQuickMsg.Visible = true;
+                return;
+            }
+
+            new QuickRequestRepository().Insert(new QuickRequest
+            {
+                FullName = name,
+                ContactNumber = phone,
+                OrderType = ddlQuickOrderType.SelectedValue
+            });
+
+            txtQuickName.Text = "";
+            txtQuickPhone.Text = "";
+            ddlQuickOrderType.SelectedIndex = 0;
+
+            lblQuickMsg.CssClass = "alert alert-success d-block mb-4";
+            lblQuickMsg.Text = "Thanks! We've received your request and will call you back shortly.";
+            lblQuickMsg.Visible = true;
         }
     }
 }

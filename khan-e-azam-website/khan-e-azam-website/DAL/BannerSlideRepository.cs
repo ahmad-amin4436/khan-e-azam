@@ -13,6 +13,7 @@ namespace KhanEAzam.DAL
             Heading = r["Heading"].ToString(),
             Description = r["Description"].ToString(),
             BgImage = r["BgImage"].ToString(),
+            VideoUrl = r["VideoUrl"].ToString(),
             FoodImage = r["FoodImage"].ToString(),
             FoodCardName = r["FoodCardName"].ToString(),
             ChefName = r["ChefName"].ToString(),
@@ -53,12 +54,13 @@ namespace KhanEAzam.DAL
             using (var conn = Database.GetConnection())
             {
                 conn.Open();
-                var cmd = new SqlCommand(@"INSERT INTO BannerSlides (TagLine,Heading,Description,BgImage,FoodImage,FoodCardName,ChefName,ChefRole,ChefImage,Price,CardDescription,SortOrder,IsActive)
-                    VALUES (@tl,@h,@d,@bg,@fi,@fcn,@cn,@cr,@ci,@p,@cd,@so,@ia)", conn);
+                var cmd = new SqlCommand(@"INSERT INTO BannerSlides (TagLine,Heading,Description,BgImage,VideoUrl,FoodImage,FoodCardName,ChefName,ChefRole,ChefImage,Price,CardDescription,SortOrder,IsActive)
+                    VALUES (@tl,@h,@d,@bg,@vu,@fi,@fcn,@cn,@cr,@ci,@p,@cd,@so,@ia)", conn);
                 cmd.Parameters.AddWithValue("@tl", s.TagLine ?? "");
                 cmd.Parameters.AddWithValue("@h", s.Heading ?? "");
                 cmd.Parameters.AddWithValue("@d", s.Description ?? "");
                 cmd.Parameters.AddWithValue("@bg", s.BgImage ?? "");
+                cmd.Parameters.AddWithValue("@vu", (object)s.VideoUrl ?? System.DBNull.Value);
                 cmd.Parameters.AddWithValue("@fi", s.FoodImage ?? "");
                 cmd.Parameters.AddWithValue("@fcn", s.FoodCardName ?? "");
                 cmd.Parameters.AddWithValue("@cn", s.ChefName ?? "");
@@ -77,13 +79,14 @@ namespace KhanEAzam.DAL
             using (var conn = Database.GetConnection())
             {
                 conn.Open();
-                var cmd = new SqlCommand(@"UPDATE BannerSlides SET TagLine=@tl,Heading=@h,Description=@d,BgImage=@bg,FoodImage=@fi,
+                var cmd = new SqlCommand(@"UPDATE BannerSlides SET TagLine=@tl,Heading=@h,Description=@d,BgImage=@bg,VideoUrl=@vu,FoodImage=@fi,
                     FoodCardName=@fcn,ChefName=@cn,ChefRole=@cr,ChefImage=@ci,Price=@p,CardDescription=@cd,SortOrder=@so,IsActive=@ia
                     WHERE Id=@id", conn);
                 cmd.Parameters.AddWithValue("@tl", s.TagLine ?? "");
                 cmd.Parameters.AddWithValue("@h", s.Heading ?? "");
                 cmd.Parameters.AddWithValue("@d", s.Description ?? "");
                 cmd.Parameters.AddWithValue("@bg", s.BgImage ?? "");
+                cmd.Parameters.AddWithValue("@vu", (object)s.VideoUrl ?? System.DBNull.Value);
                 cmd.Parameters.AddWithValue("@fi", s.FoodImage ?? "");
                 cmd.Parameters.AddWithValue("@fcn", s.FoodCardName ?? "");
                 cmd.Parameters.AddWithValue("@cn", s.ChefName ?? "");

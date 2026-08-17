@@ -18,13 +18,25 @@ namespace khan_e_azam_website.Pages
             string phone = txtPhone.Text.Trim();
             string address = txtAddress.Text.Trim();
             string notes = txtNotes.Text.Trim();
+            string orderType = Request.Form["orderType"] ?? "Dine-In";
             string payMethod = Request.Form["payMethod"] ?? "Cash on Delivery";
             string cartJson = hfCartJson.Value;
 
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(address))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone))
             {
-                ShowError("Please fill in your Name, Phone Number, and Delivery Address.");
+                ShowError("Please fill in your Name and Phone Number.");
                 return;
+            }
+
+            if (orderType == "Fast Delivery" && string.IsNullOrEmpty(address))
+            {
+                ShowError("Please fill in your Delivery Address.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(address))
+            {
+                address = "N/A (" + orderType + ")";
             }
 
             List<CartItemDto> cartItems;
@@ -48,6 +60,7 @@ namespace khan_e_azam_website.Pages
                 CustomerName = name,
                 CustomerPhone = phone,
                 CustomerAddress = address,
+                OrderType = orderType,
                 PaymentMethod = payMethod,
                 Notes = string.IsNullOrEmpty(notes) ? null : notes
             };

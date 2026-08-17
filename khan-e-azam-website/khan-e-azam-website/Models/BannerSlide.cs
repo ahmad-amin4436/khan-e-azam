@@ -7,6 +7,7 @@ namespace KhanEAzam.Models
         public string Heading { get; set; }
         public string Description { get; set; }
         public string BgImage { get; set; }
+        public string VideoUrl { get; set; }
         public string FoodImage { get; set; }
         public string FoodCardName { get; set; }
         public string ChefName { get; set; }

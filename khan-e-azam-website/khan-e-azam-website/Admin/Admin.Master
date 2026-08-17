@@ -38,6 +38,7 @@
             <nav>
                 <div class="nav-section">Main</div>
                 <a href="Dashboard.aspx" class='<%= GetActiveClass("Dashboard") %>'><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <% if (CanManageContent) { %>
                 <div class="nav-section">Content</div>
                 <a href="BannerSlides.aspx" class='<%= GetActiveClass("BannerSlides") %>'><i class="fas fa-images"></i> Banner Slides</a>
                 <a href="BrowseMenu.aspx" class='<%= GetActiveClass("BrowseMenu") %>'><i class="fas fa-hamburger"></i> Browse Menu</a>
@@ -47,9 +48,14 @@
                 <a href="Chefs.aspx" class='<%= GetActiveClass("Chefs") %>'><i class="fas fa-user-chef"></i> Chefs</a>
                 <a href="Testimonials.aspx" class='<%= GetActiveClass("Testimonials") %>'><i class="fas fa-comment-dots"></i> Testimonials</a>
                 <a href="BlogPosts.aspx" class='<%= GetActiveClass("BlogPosts") %>'><i class="fas fa-newspaper"></i> Blog Posts</a>
+                <% } %>
                 <div class="nav-section">Orders</div>
                 <a href="Orders.aspx" class='<%= GetActiveClass("Orders") %>'><i class="fas fa-receipt"></i> Manage Orders</a>
+                <a href="QuickRequests.aspx" class='<%= GetActiveClass("QuickRequests") %>'><i class="fas fa-phone-volume"></i> Quick Requests</a>
                 <div class="nav-section">Account</div>
+                <% if (IsSuperAdmin) { %>
+                <a href="Users.aspx" class='<%= GetActiveClass("Users") %>'><i class="fas fa-user-shield"></i> Admin Users</a>
+                <% } %>
                 <a href="Logout.aspx"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
         </div>

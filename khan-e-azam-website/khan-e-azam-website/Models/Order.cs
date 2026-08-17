@@ -9,6 +9,7 @@ namespace KhanEAzam.Models
         public string CustomerName { get; set; }
         public string CustomerPhone { get; set; }
         public string CustomerAddress { get; set; }
+        public string OrderType { get; set; }
         public string PaymentMethod { get; set; }
         public string Status { get; set; }
         public string Notes { get; set; }

@@ -15,6 +15,7 @@ namespace KhanEAzam.Admin {
         protected global::System.Web.UI.WebControls.Button btnBackToList;
         protected global::System.Web.UI.WebControls.Label lblDetailName;
         protected global::System.Web.UI.WebControls.Label lblDetailPhone;
+        protected global::System.Web.UI.WebControls.Label lblDetailType;
         protected global::System.Web.UI.WebControls.Label lblDetailAddress;
         protected global::System.Web.UI.WebControls.Label lblDetailPayment;
         protected global::System.Web.UI.WebControls.Label lblDetailDate;

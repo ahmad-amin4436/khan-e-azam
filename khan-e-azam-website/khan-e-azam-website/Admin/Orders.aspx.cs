@@ -47,6 +47,7 @@ namespace KhanEAzam.Admin
             lblDetailId.Text = id.ToString();
             lblDetailName.Text = Server.HtmlEncode(order.CustomerName);
             lblDetailPhone.Text = Server.HtmlEncode(order.CustomerPhone);
+            lblDetailType.Text = Server.HtmlEncode(order.OrderType);
             lblDetailAddress.Text = Server.HtmlEncode(order.CustomerAddress);
             lblDetailPayment.Text = Server.HtmlEncode(order.PaymentMethod);
             lblDetailDate.Text = order.CreatedAt.ToString("dd MMM yyyy, hh:mm tt");

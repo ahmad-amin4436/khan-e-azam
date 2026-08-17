@@ -77,6 +77,7 @@ namespace khan_e_azam_website.Pages
 
             lblCustomerName.Text = Server.HtmlEncode(order.CustomerName);
             lblPhone.Text = Server.HtmlEncode(order.CustomerPhone);
+            lblOrderType.Text = Server.HtmlEncode(order.OrderType);
             lblAddress.Text = Server.HtmlEncode(order.CustomerAddress);
             lblPayment.Text = Server.HtmlEncode(order.PaymentMethod);
             lblDate.Text = order.CreatedAt.ToString("dd MMM yyyy, hh:mm tt");

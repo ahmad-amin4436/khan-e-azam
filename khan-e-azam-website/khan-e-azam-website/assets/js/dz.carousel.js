@@ -1,7 +1,9 @@
 /* JavaScript Document */
 jQuery(window).on('load', function() {
     'use strict';
-	
+
+	var kePrefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
 	// menu-swiper
 	if(jQuery('.menu-swiper').length > 0){
 		var swiper = new Swiper(".menu-swiper", {
@@ -175,31 +177,22 @@ jQuery(window).on('load', function() {
 	
 		// Banner 3
 		if(jQuery('.main-slider-3').length > 0){
-			var swiper = new Swiper(".main-slider-3", {
-				speed: 1000,
-				parallax: true,
+			new Swiper(".main-slider-3", {
+				speed: 800,
 				spaceBetween: 0,
 				freeMode: false,
-				direction: 'vertical',
-				scrollbar: '.swiper-scrollbar',
-				autoplay: {
-				delay: 2500,
+				autoplay: kePrefersReducedMotion ? false : {
+					delay: 3200,
+					pauseOnMouseEnter: true,
 				},
 				navigation: {
-					nextEl: '.main-button-next',
-					prevEl: '.main-button-prev',
+					nextEl: '.hero-nav-next',
+					prevEl: '.hero-nav-prev',
 				},
 				pagination: {
-					el: ".main-swiper3-pagination",
+					el: ".hero-dots",
 					clickable: true,
-					renderBullet: function (index, className) {
-						return '<span class="' + className + '">' +"0"+ (index + 1) + "</span>";
-					},
 				},
-			});
-			swiper.on('onSlideNextStart', function (){
-				$('.swiper-slide .banner-inner1').attr('data-swiper-parallax-duration','');
-				$('.swiper-slide-prev .banner-inner1').attr('data-swiper-parallax-duration','4000');
 			});
 		}
 	
@@ -211,8 +204,9 @@ jQuery(window).on('load', function() {
 				spaceBetween: 30,
 				parallax: true,
 				loop:true,
-				autoplay: {
-				   delay: 2000,
+				autoplay: kePrefersReducedMotion ? false : {
+					delay: 2800,
+					pauseOnMouseEnter: true,
 				},
 				navigation: {
 					nextEl: '.menu-button-next1',
@@ -220,8 +214,8 @@ jQuery(window).on('load', function() {
 				},
 				breakpoints: {
 					1280: {
-						slidesPerView: 4,
-						spaceBetween: 20,
+						slidesPerView: 3,
+						spaceBetween: 30,
 					},
 					991: {
 						slidesPerView: 3,
@@ -242,13 +236,20 @@ jQuery(window).on('load', function() {
 		// testimonial2
 		if(jQuery('.testimonial-two-swiper').length > 0){
 			var swiper = new Swiper('.testimonial-two-swiper', {
-				speed: 2000,
+				speed: kePrefersReducedMotion ? 400 : 900,
 				slidesPerView: 1,
 				spaceBetween: 30,
-				parallax: true,
+				effect: kePrefersReducedMotion ? 'slide' : 'cards',
+				grabCursor: !kePrefersReducedMotion,
+				cardsEffect: {
+					perSlideOffset: 10,
+					perSlideRotate: 3,
+					slideShadows: false,
+				},
 				loop:true,
-				autoplay: {
-				delay: 2000,
+				autoplay: kePrefersReducedMotion ? false : {
+					delay: 3800,
+					pauseOnMouseEnter: true,
 				},
 				navigation: {
 					nextEl: '.testimonial-2-button-next',

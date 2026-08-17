@@ -46,30 +46,124 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 	<link rel="stylesheet" href="/assets/vendor/rangeslider/rangeslider.css">
     <link rel="stylesheet" href="/assets/vendor/switcher/switcher.css">
+	<!-- niceSelect JS is loaded sitewide (near the closing </body>) and drives every <select>,
+	     but its base CSS was never linked — only style.css's theme OVERRIDES on top of it were,
+	     so the dropdown wrapper never got position:relative (or any of its other base structural
+	     rules) and its open list fell back to positioning against the nearest positioned ancestor
+	     it could find, wherever that happened to be, instead of the dropdown itself. -->
+	<link rel="stylesheet" href="/assets/vendor/niceselect/css/nice-select.css">
 	<style>
+		html { scroll-behavior: smooth; }
+		/* ===== Sitewide dark premium theme ===== */
+		:root {
+			--dark-1: #100C08;    /* base page/section background */
+			--dark-2: #17130f;    /* alternating section background */
+			--dark-card: #1f1a14; /* card & panel surfaces */
+			--dark-border: rgba(255,255,255,0.1);
+			--light-text: #f2efe9;
+			--muted-text: #b7b0a4;
+		}
+		body, .page-wraper { background: var(--dark-1) !important; }
+		.text-black2 { color: var(--light-text) !important; }
+		.text-bodycolor { color: var(--muted-text) !important; }
+		/* .btn-prev/.btn-next used a pale cream glow (var(--primary-light)) tuned for a white
+		   page — on the dark theme it bloomed into a soft halo around the arrow buttons. */
+		.btn-next, .btn-prev { box-shadow: 0 6px 16px rgba(0,0,0,0.35) !important; }
+		/* The compiled Tailwind "xl:block" utility (display:block) sits later in style.css than
+		   the .btn-prev/.btn-next component rule (display:flex) and wins the cascade at desktop
+		   widths, so the arrow icon loses its centering and sticks to the top-left of the circle. */
+		.btn-next, .btn-prev { display: flex !important; align-items: center !important; justify-content: center !important; }
+		/* Menu filter pills (homepage + Menu.aspx) default to near-black text — invisible on dark */
+		.filters > li > a { color: var(--light-text) !important; }
+		.filters > li.active > a, .filters > li:hover > a { color: var(--secondary) !important; }
+
+		/* Subtle twinkling starfield for the premium dark look — respects reduced-motion.
+		   The dot pattern + its opacity animation live on a ::before overlay (z-index:-1),
+		   never on the element's own opacity — kea-stars is applied to .page-wraper and to
+		   whole page sections, so animating opacity on the element itself faded the entire
+		   page/section content in and out every 5s instead of just the decorative dots. */
+		.kea-stars { position: relative; }
+		.kea-stars::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			pointer-events: none;
+			/* opacity-only animation so this promotes to its own compositor layer — animating
+			   background-position here repainted every kea-stars section on every scroll frame
+			   (the homepage alone stacks several of them), which is what made scrolling feel janky. */
+			will-change: opacity;
+			background-image:
+				radial-gradient(1.4px 1.4px at 10% 20%, rgba(255,255,255,0.85), transparent 60%),
+				radial-gradient(1px 1px at 30% 75%, rgba(255,255,255,0.6), transparent 60%),
+				radial-gradient(1.4px 1.4px at 52% 35%, rgba(255,210,0,0.55), transparent 60%),
+				radial-gradient(1px 1px at 74% 85%, rgba(255,255,255,0.7), transparent 60%),
+				radial-gradient(1.4px 1.4px at 92% 15%, rgba(255,255,255,0.5), transparent 60%),
+				radial-gradient(1px 1px at 15% 92%, rgba(255,210,0,0.4), transparent 60%),
+				radial-gradient(1.4px 1.4px at 86% 55%, rgba(255,255,255,0.6), transparent 60%);
+			background-repeat: repeat;
+			background-size: 340px 220px;
+			animation: kea-twinkle 5s ease-in-out infinite alternate;
+		}
+		@keyframes kea-twinkle {
+			0%   { opacity: 0.55; }
+			50%  { opacity: 0.9; }
+			100% { opacity: 0.6; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.kea-stars::before { animation: none; opacity: 0.7; }
+		}
+		body.kea-stars, .page-wraper.kea-stars { background-color: var(--dark-1); }
+
 		/* Page loader */
 		@keyframes dz-spin { to { transform: rotate(360deg); } }
 		.dz-spinner { width:44px; height:44px; border-radius:50%; border:4px solid rgba(255,255,255,0.25); border-top-color:#fff; animation:dz-spin .65s linear infinite; margin-top:18px; }
 		#dzPageLoader { transition:opacity .35s ease, visibility .35s ease; }
 		#dzPageLoader.loaded { opacity:0; visibility:hidden; pointer-events:none; }
+		/* Header utility icons */
+		.header-icon-link { color:#fff; font-size:18px; opacity:.85; transition:opacity .2s, color .2s; }
+		.header-icon-link:hover { opacity:1; color:var(--secondary); }
+		/* Fallback rules for Tailwind arbitrary-value classes not present in the precompiled style.css */
+		.bg-\[\#ffffff1a\] { background-color: #ffffff1a; }
+		.rounded-\[16px\] { border-radius: 16px; }
+		/* Header: a separate, dark-elegant bar — not a transparent overlay on the hero */
+		.site-header { position: sticky !important; top: 0; background: var(--smoky-black); z-index: 999; }
+		.site-header.is-fixed { background: var(--smoky-black) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+		.main-bar .header-nav .navbar > li > a { color: #fff !important; }
+		.main-bar .header-nav .navbar > li.active > a,
+		.main-bar .header-nav .navbar > li:hover > a { color: var(--secondary) !important; }
+		.main-bar { padding-top: 10px; padding-bottom: 10px; }
+		/* Mobile nav drawer defaults to a white panel — the nav links above are forced white
+		   for the dark desktop header, which made them invisible (white-on-white) on mobile. */
+		@media (max-width: 991px) {
+			.main-bar .header-nav { background-color: var(--dark-card) !important; box-shadow: 4px 0 30px rgba(0,0,0,0.4); }
+			.main-bar .header-nav .navbar > li { border-bottom-color: var(--dark-border) !important; }
+		}
+		@media (min-width: 768px) { .main-bar { padding-top: 22px; padding-bottom: 22px; } }
+		/* Footer: keep widget icons aligned with their text regardless of how many lines it wraps to */
+		.widget_getintuch ul li, .widget_services ul li { display: flex !important; align-items: flex-start; gap: 12px; }
+		.widget_getintuch ul li i, .widget_services ul li i { flex-shrink: 0; margin-top: 4px; }
+		.widget_getintuch ul li p, .widget_services ul li p { margin: 0; }
 		/* Contact sidebar */
-		#contactDrawer { position:fixed; top:0; left:-300px; width:300px; height:100%; z-index:999999; background:#fff; overflow-y:auto; transition:left .5s ease; padding:30px; }
+		#contactDrawer { position:fixed; top:0; left:-300px; width:300px; height:100%; z-index:999999; background:var(--dark-card); overflow-y:auto; transition:left .5s ease; padding:30px; border-right:1px solid var(--dark-border); }
 		#contactDrawer.open { left:0; }
-		/* FABs */
+		#contactDrawer .contact-text p, #contactDrawer .icon-content p { color:var(--muted-text); }
+		#contactDrawer .icon-content h6.tilte { color:var(--light-text); }
+		/* FABs — a soft neutral shadow reads fine on both the light pages and the dark homepage;
+		   the old per-button colored glow (esp. WhatsApp's green) bloomed into a visible smear
+		   once the homepage background went dark, so it's replaced with one consistent shadow. */
 		.dz-fab-stack { position:fixed; bottom:24px; right:24px; z-index:99998; display:flex; flex-direction:column-reverse; align-items:center; gap:12px; }
-		.dz-fab { width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 4px 18px rgba(0,0,0,.25); transition:transform .2s, box-shadow .2s;  }
-		.dz-fab:hover { transform:scale(1.1); box-shadow:0 6px 24px rgba(0,0,0,.35); }
-		.dz-fab-wa  { background:#25D366; box-shadow:0 4px 18px rgba(37,211,102,.45); }
+		.dz-fab { width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 6px 16px rgba(0,0,0,.3); transition:transform .2s, box-shadow .2s; border:1px solid rgba(255,255,255,0.12); }
+		.dz-fab:hover { transform:scale(1.08); box-shadow:0 8px 22px rgba(0,0,0,.4); }
+		.dz-fab-wa { background:#25D366; }
 		.dz-fab-cart { background:var(--primary); position:relative; }
-		.dz-fab-checkout { background:#222; }
-		#dz-cart-badge { position:absolute; top:-4px; right:-4px; background:#e74c3c; color:#fff; font-size:11px; font-weight:700; min-width:20px; height:20px; border-radius:10px; display:none; align-items:center; justify-content:center; padding:0 4px; }
+		.dz-fab-call { background: var(--dark-card, #1f1a14); border-color: rgba(255,255,255,0.25); }
+		.dz-fab-checkout { background: var(--dark-card, #1f1a14); border-color: rgba(255,255,255,0.25); }
+		#dz-cart-badge { position:absolute; top:-4px; right:-4px; background:var(--accent-red); color:#fff; font-size:11px; font-weight:700; min-width:20px; height:20px; border-radius:10px; display:none; align-items:center; justify-content:center; padding:0 4px; }
 		#dz-toast { position:fixed; bottom:110px; right:24px; background:rgba(30,30,30,.92); color:#fff; padding:10px 18px; border-radius:8px; font-size:13px; z-index:999999; opacity:0; transform:translateY(16px); transition:opacity .3s, transform .3s; pointer-events:none; max-width:260px; }
-		#cursor, #cursor-border { opacity:0; transition:opacity .2s; }
 	</style>
 </head>
 <body id="bg" class="box-border m-0 selection:bg-primary selection:text-white font-poppins">
-    	<div id="cursor" class="sm:block hidden"></div>
-	<div id="cursor-border" class="sm:block hidden"></div>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -96,7 +190,7 @@
 	<!-- Pointer ring -->
 
 
-	<div class="page-wraper">
+	<div class="page-wraper kea-stars">
 	
 
 	<!-- Header -->
@@ -106,7 +200,7 @@
 				<!-- Website Logo -->
 				<div class="logo-header w-[180px] h-[64px] items-center relative flex">
 					<a runat="server" href="Default.aspx" class="">
-						<img runat="server" src="~/assets/images/logo.png" alt="/">
+						<img runat="server" src="~/assets/images/logo2.png" alt="/">
 					</a>
 				</div>
 				
@@ -117,43 +211,36 @@
 					<div class="bar3"></div>
 				</button>	
 
-				<!-- EXTRA NAV -->
-				<div class="extra-nav items-center h-[64px] lg:flex relative hidden pl-[25px] order-2">
-					<div class="extra-cell flex items-center gap-5">
-						
-						
-					</div>
-				</div> 
-				<!-- EXTRA NAV -->
-				
 				<!-- Header Nav -->
 				<div class="header-nav lg:justify-end lg:grow lg:flex-row flex-col lg:gap-0 gap-5 flex lg:relative">
 					<div class="logo-header lg:hidden">
 						<a runat="server" href="Default.aspx" class="">
-							<img runat="server" src="~/assets/images/logo.png" alt="/">
+							<img runat="server" src="~/assets/images/logo2.png" alt="/">
 						</a>
 					</div>
 					<ul class="nav navbar-nav navbar lg:flex items-center">
-						
+
 						<li>
 							<a runat="server" href="Default.aspx">Home</a>
 						</li>
                         	<li>
-							<a runat="server" href="about.aspx">About us</a>
+							<a runat="server" href="about.aspx">About Us</a>
+						</li>
+                        	<li>
+							<a runat="server" href="~/Pages/Menu.aspx">Menu</a>
 						</li>
                         	<li>
 							<a runat="server" href="~/Pages/OrderTracking.aspx">Order Tracking</a>
 						</li>
                         	<li>
-							<a runat="server" href="~/Pages/Menu.aspx">Our Menu</a>
+							<a runat="server" href="Reservation.aspx">Reservation</a>
 						</li>
                         	<li>
 							<a runat="server" href="contact.aspx">Contact Us</a>
 						</li>
 
 					</ul>
-					
-				</div>	
+				</div>
 			</div>
 		</div>
 	</header>
@@ -164,15 +251,15 @@
 		<div class="contact-box">
 			<div class="logo-contact mb-[30px] h-[65px]">
 				<a runat="server" href="Default.aspx" class="">
-					<img runat="server" src="~/assets/images/logo.png" alt="/" class="">
+					<img runat="server" src="~/assets/images/logo2.png" alt="/" class="">
 				</a>
 			</div>
 			<div class="mb-[50px] contact-text">
 				<div class="title text-black2 mb-[12px]">
-					<h4 class="text-2xl">About us</h4>
+					<h4 class="text-2xl">About Us</h4>
 				</div>
-				<p class="mb-4 text-lg">Every dish is prepared using hand-picked, farm-fresh ingredients sourced locally to guarantee authentic flavors.</p>
-				<a href="about-us.html" class="btn btn-primary btn-hover-2"><span>READ MORE</span></a>
+				<p class="mb-4 text-lg">Luxury dining with rooftop &mdash; every dish at Khan-e-Azam is prepared using hand-picked, authentic ingredients and time-honoured recipes.</p>
+				<a href="about.aspx" class="btn btn-primary btn-hover-2"><span>READ MORE</span></a>
 			</div>
 			<div class="title  text-black2">
 				<h4 class="mb-5">Contact Info</h4>
@@ -180,32 +267,32 @@
 			<div class="icon-bx-wraper relative mb-5">
 				<div class="icon-md">
 					<span class="icon-cell">
-						<i class="las la-phone-volume text-2xl"></i>
-					</span> 
+						<i class="las la-map-marker text-2xl"></i>
+					</span>
 				</div>
 				<div class="icon-content">
 					<h6 class="tilte mb-[5px]">Location</h6>
-					<p>15/B Miranda House, New York, US</p>
+					<p>880 N Poonch Rd, Samanabad Town, Lahore, Punjab 54000, Pakistan</p>
 				</div>
 			</div>
 			<div class="icon-bx-wraper relative mb-5">
 				<div class="icon-md">
 					<span class="icon-cell">
 						<i class="las la-envelope-open text-2xl"></i>
-					</span> 
+					</span>
 				</div>
 				<div class="icon-content">
 					<h6 class="tilte mb-[5px]">Email Now</h6>
-					<p>info@gmail.com, services@gmail.com</p>
+					<p>khaneazamrestaurant@gmail.com</p>
 				</div>
 			</div>
 			<div class="icon-bx-wraper relative mb-5">
 				<div class="icon-md">
-					<span class="icon-cell"><i class="las la-map-marker text-2xl"></i></span>  
+					<span class="icon-cell"><i class="las la-phone-volume text-2xl"></i></span>
 				</div>
 				<div class="icon-content">
 					<h6 class="tilte mb-[5px]">Call Now</h6>
-					<p>+91 123 456 7890,<br> +91 987 654 3210</p>
+					<p>0308-9406789</p>
 				</div>
 			</div>
 		</div>
@@ -216,66 +303,66 @@
 	<!--Footer-->
 	<footer class="site-footer style-2 relative" id="footer">
 		<div class="footer-bg-wrapper max-2xl:mx-0 mx-[100px] max-2xl:rounded-none rounded-[30px] bg-black2 relative z-[1]" id="app-banner">
-			<div class="footer-top pt-[45px] pb-[30px] relative z-[2]">
+			<div class="footer-top pt-[80px] pb-[50px] relative z-[2]">
 				<div class="container">
-					<div class="footer-subscribe-wrapper lg:mb-[60px] sm:mb-[40px] sm:pb-[40px] pb-[30px] mb-[30px] border-b border-[#ffffff1a]">
+					<div class="footer-subscribe-wrapper lg:mb-[70px] sm:mb-[50px] sm:pb-[50px] pb-[30px] mb-[40px] border-b border-[#ffffff1a]">
 						<div class="wrapper-inner">
 							<div class="row justify-between">
-								<div class="lg:w-4/12 px-[15px] lg:m-0 mb-5">
+								<div class="lg:w-5/12 px-[15px] lg:m-0 mb-5">
 									<div class="footer-logo mb-[15px]">
 										<a runat="server" href="Default.aspx" class="pt-[5px] relative inline-block">
 											<img runat="server" src="~/assets/images/logo2.png" alt="/">
 										</a>
 									</div>
-									<p class="text-white mb-0 text-sm">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+									<p class="text-white mb-0 text-sm">Khan-e-Azam &mdash; luxury dining with rooftop. Authentic flavours, crafted with tradition, served with pride.</p>
+									<ul class="flex items-center gap-3 mt-4">
+										<li><a href="https://www.facebook.com/khaneazamrestaurant" target="_blank" rel="noopener" title="Facebook" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-facebook-f"></i></a></li>
+										<li><a href="https://www.instagram.com/khaneazamrestaurant" target="_blank" rel="noopener" title="Instagram" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-instagram"></i></a></li>
+										<li><a href="https://wa.me/923089406789" target="_blank" rel="noopener" title="WhatsApp" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-whatsapp"></i></a></li>
+									</ul>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="xl:w-3/12 lg:w-4/12 sm:w-6/12 px-[15px]">
+						<div class="xl:w-4/12 lg:w-4/12 sm:w-6/12 px-[15px]">
 							<div class="widget widget_getintuch mb-[30px]">
 								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Contact</h5>
 								<ul>
 									<li>
 										<i class="flaticon-placeholder"></i>
-										<p>1247/Plot No. 39, 15th Phase, Colony, Kkatpally, Hyderabad</p>
+										<p>880 N Poonch Rd, Samanabad Town,<br>Lahore, Punjab 54000, Pakistan</p>
 									</li>
 									<li>
 										<i class="flaticon-telephone"></i>
-										<p>+91 987-654-3210<br>
-											+91 123-456-7890</p>
+										<p>0308-9406789</p>
 									</li>
 									<li>
 										<i class="flaticon-email-1"></i>
-										<p>info@example.com<br>
-										info@example.com</p>
+										<p>khaneazamrestaurant@gmail.com</p>
 									</li>
 								</ul>
 							</div>
 						</div>
-						<div class="xl:w-3/12 lg:w-2/12 sm:w-6/12 w-full px-[15px]">
+						<div class="xl:w-2/12 lg:w-2/12 sm:w-6/12 w-full px-[15px]">
 							<div class="widget widget_services mb-[30px]">
-								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Our Links</h5>
+								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Quick Links</h5>
 								<ul>
-									<li><a href="index.html"><span>Home</span></a></li>
-									<li><a href="about-us.html"><span>About Us</span></a></li>
-									<li><a href="services.html"><span>Services</span></a></li>
-									<li><a href="team.html"><span>Team</span></a></li>
-									<li><a href="blog-standard.html"><span>Blog</span></a></li>
+									<li><a runat="server" href="Default.aspx"><span>Home</span></a></li>
+									<li><a runat="server" href="~/Pages/Menu.aspx"><span>Menu</span></a></li>
+									<li><a runat="server" href="about.aspx"><span>About</span></a></li>
+									<li><a runat="server" href="Reservation.aspx"><span>Reservation</span></a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="xl:w-3/12 lg:w-3/12 sm:w-6/12 w-full px-[15px]">
 							<div class="widget widget_services mb-[30px]">
-								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">OUR SERVICES</h5>
+								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Opening Hours</h5>
 								<ul>
-									<li><a href="blog-open-gutenberg.html"><span>Strategy & Research</span></a></li>
-									<li><a href="services.html"><span>Fast Delivery</span></a></li>
-									<li><a href="contact-us.html"><span>Seat Reservation</span></a></li>
-									<li><a href="shop-style-1.html"><span>Pickup In Store</span></a></li>
-									<li><a href="our-menu-1.html"><span>Our Menu</span></a></li>
+									<li><i class="flaticon-clock"></i><p>Mon &ndash; Fri: 2:00 PM &ndash; 2:00 AM</p></li>
+									<li><i class="flaticon-clock"></i><p>Saturday: 2:00 PM &ndash; 2:00 AM</p></li>
+									<li><i class="flaticon-clock"></i><p>Sunday: 2:00 PM &ndash; 2:00 AM</p></li>
 								</ul>
 							</div>
 						</div>
@@ -283,11 +370,10 @@
 							<div class="widget widget_services mb-[30px]">
 								<h5 class="footer-title mb-[30px] xl:text-2xl text-xl font-semibold text-white uppercase leading-[1.1]">Help Center</h5>
 								<ul>
-									<li><a href="faq.html"><span>FAQ</span></a></li>
-									<li><a href="shop-style-1.html"><span>Shop</span></a></li>
-									<li><a href="shop-style-2.html"><span>Category Filter</span></a></li>
-									<li><a href="testimonial.html"><span>Testimonials</span></a></li>
-									<li><a href="contact-us.html"><span>Contact Us</span></a></li>
+									<li><a runat="server" href="~/Pages/OrderTracking.aspx"><span>Track Order</span></a></li>
+									<li><a runat="server" href="contact.aspx"><span>Contact Us</span></a></li>
+									<li><a runat="server" href="Privacy-Policy.aspx"><span>Privacy Policy</span></a></li>
+									<li><a runat="server" href="Terms-Of-Use.aspx"><span>Terms of Use</span></a></li>
 								</ul>
 							</div>
 						</div>
@@ -300,13 +386,12 @@
 			<div class="footer-bottom py-5 border-t border-[#ffffff1a] relative z-[1]">
 				<div class="lg:flex lg:justify-between">
 					<div class="lg:w-1/2 px-[15px] lg:text-left text-center">
-						<span class="text-sm text-[#666666]">Crafted With <span class="bg-heart w-[60px] h-[60px] inline-block my-[-25px] mx-[-18px]"></span> by <a href="https://devnet.solutions" target="_blank" class="text-primary">DEVNET Solutions</a></span>
+						<span class="text-sm text-[#666666]">Copyright &copy; <%: DateTime.Now.Year %> Khan-e-Azam Restaurant. All rights reserved.</span>
 					</div>
 					<div class="lg:w-1/2 px-[15px]">
 						<ul class="footer-link mx-[-15px] lg:text-right text-center">
-<%--							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="blog-standard.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Blog Detail</a></li>
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="about-us.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">About</a></li>
-							<li class="inline-block sm:px-[15px] px-[5px] relative"><a href="testimonial.html" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Testimonials</a></li>--%>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a runat="server" href="Privacy-Policy.aspx" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Privacy Policy</a></li>
+							<li class="inline-block sm:px-[15px] px-[5px] relative"><a runat="server" href="Terms-Of-Use.aspx" class="text-[#666666] sm:text-sm text-[13px] tracking-[0.01em] font-normal">Terms of Use</a></li>
 						</ul>
 					</div>
 				</div>
@@ -319,7 +404,10 @@
 
 	<!-- Floating Action Buttons -->
 	<div class="dz-fab-stack">
-		<a href="https://wa.me/923464436525" target="_blank" rel="noopener" title="Chat on WhatsApp" class="dz-fab dz-fab-wa">
+		<a href="tel:03089406789" title="Call Khan-e-Azam" class="dz-fab dz-fab-call">
+			<i class="fa-solid fa-phone" style="font-size:20px;color:#fff;"></i>
+		</a>
+		<a href="https://wa.me/923089406789" target="_blank" rel="noopener" title="Chat on WhatsApp" class="dz-fab dz-fab-wa">
 			<i class="fab fa-whatsapp" style="font-size:26px;color:#fff;"></i>
 		</a>
 		<a runat="server" href="~/Pages/Cart.aspx" title="View Cart" class="dz-fab dz-fab-cart">
@@ -343,11 +431,11 @@
 		<div class="dz-spinner"></div>
 	</div>
 	
-	<div class="progress-wrap">
-		<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-		</svg>
-	</div>
+	    <%--<div class="progress-wrap" hidden>
+		    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+			    <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+		    </svg>
+	    </div>--%>
 <script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/vendor/niceselect/js/jquery.nice-select.min.js"></script>
 	<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -383,41 +471,22 @@
 				if (switchBtn) switchBtn.classList.toggle('hidden');
 			});
 		})();
-		jQuery(document).ready(function(){
-			if (typeof dzSettings !== 'undefined' && typeof dzSettingsOptions !== 'undefined') {
-				dzSettingsOptions.themeFullColor_value = 'color_2';
-				new dzSettings(dzSettingsOptions);
-			}
-		});
-		// Custom cursor tracking — bypasses minified JS variable conflicts
-		(function() {
-			var cur = document.getElementById('cursor');
-			var curBorder = document.getElementById('cursor-border');
-			if (!cur || !curBorder) return;
-			var mx = 0, my = 0, bx = 0, by = 0, revealed = false;
-			document.addEventListener('mousemove', function(e) {
-				mx = e.clientX;
-				my = e.clientY;
-				cur.style.transform = 'translate(' + mx + 'px, ' + my + 'px)';
-				if (!revealed) {
-					cur.style.opacity = '1';
-					curBorder.style.opacity = '1';
-					revealed = true;
-				}
-			});
-			(function rafLoop() {
-				bx += (mx - bx) * 0.15;
-				by += (my - by) * 0.15;
-				curBorder.style.transform = 'translate(' + bx + 'px, ' + by + 'px)';
-				requestAnimationFrame(rafLoop);
-			})();
-		})();
 	</script>
 	<script>
-		window.addEventListener('load', function () {
+		(function () {
 			var loader = document.getElementById('dzPageLoader');
-			if (loader) { loader.classList.add('loaded'); }
-		});
+			if (!loader) return;
+			var released = false;
+			function releaseLoader() {
+				if (released) return;
+				released = true;
+				loader.classList.add('loaded');
+			}
+			window.addEventListener('load', releaseLoader);
+			// Safety net: never let the loader block the page indefinitely
+			// (e.g. a slow/hanging resource delaying the window "load" event).
+			setTimeout(releaseLoader, 3000);
+		})();
 
 		// Fires after every UpdatePanel async postback
 		function pageLoad() {
