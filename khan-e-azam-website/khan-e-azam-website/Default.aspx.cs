@@ -19,8 +19,6 @@ namespace khan_e_azam_website
         protected Button btnQuickSubmit;
         protected Label lblQuickMsg;
 
-        private const int HomepageMenuPreviewCount = 6;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -34,7 +32,7 @@ namespace khan_e_azam_website
                 rptTodaySpecial.DataSource = new TodaysSpecialRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
                 rptTodaySpecial.DataBind();
 
-                rptMenuFilter.DataSource = new MenuFilterRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).Take(HomepageMenuPreviewCount).ToList();
+                rptMenuFilter.DataSource = GetMenuPreviewItems();
                 rptMenuFilter.DataBind();
 
                 rptIconFeatures.DataSource = new IconFeatureRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
@@ -49,6 +47,26 @@ namespace khan_e_azam_website
                 rptBlogLarge.DataSource = blogs.Where(x => x.IsLarge).ToList();
                 rptBlogLarge.DataBind();
             }
+        }
+
+        // The homepage "Our Menu" filter pills only make sense if every non-"All" category has
+        // at least one item to show — picking the first N items by SortOrder (as before) meant
+        // they were all "sandwich", so every other filter button always showed an empty grid.
+        // One representative item per filter category guarantees each button has a match.
+        private List<MenuFilterItem> GetMenuPreviewItems()
+        {
+            string[] previewCategories = { "drink", "pizza", "salad", "sweet", "spicy", "burger" };
+            var allItems = new MenuFilterRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
+
+            var preview = new List<MenuFilterItem>();
+            foreach (var category in previewCategories)
+            {
+                var match = allItems.FirstOrDefault(x =>
+                    (x.FilterTags ?? "").Split(' ').Contains(category) && !preview.Contains(x));
+                if (match != null) preview.Add(match);
+            }
+
+            return preview.OrderBy(x => x.SortOrder).ToList();
         }
 
         protected string FormatDate(object dt)
