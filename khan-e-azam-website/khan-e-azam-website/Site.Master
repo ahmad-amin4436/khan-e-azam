@@ -64,6 +64,27 @@
 	<link rel="stylesheet" href="/assets/vendor/niceselect/css/nice-select.css">
 	<style>
 		html { scroll-behavior: smooth; }
+		/* Reusable section-spacing classes (style.css is a static precompiled Tailwind build, not
+		   a live compiler — large arbitrary-value classes like lg:py-[130px] have no generated CSS
+		   and silently no-op). These were previously defined only inside Default.aspx's own scoped
+		   scoped style block, so any OTHER page using them (e.g. Reservation.aspx) got zero padding —
+		   moved here so every page gets the same guaranteed-working spacing. */
+		.sp-y   { padding-top: 45px; padding-bottom: 45px; }
+		.sp-t   { padding-top: 45px; }
+		.sp-b   { padding-bottom: 45px; }
+		.sp-mb  { margin-bottom: 30px; }
+		@media (min-width: 1024px) {
+			.sp-y  { padding-top: 90px; padding-bottom: 90px; }
+			.sp-t  { padding-top: 90px; }
+			.sp-b  { padding-bottom: 90px; }
+			.sp-mb { margin-bottom: 50px; }
+		}
+		@media (min-width: 640px) and (max-width: 1023px) {
+			.sp-y  { padding-top: 70px; padding-bottom: 70px; }
+			.sp-t  { padding-top: 70px; }
+			.sp-b  { padding-bottom: 70px; }
+			.sp-mb { margin-bottom: 40px; }
+		}
 		/* ===== Sitewide dark premium theme ===== */
 		:root {
 			--dark-1: #100C08;    /* base page/section background */
@@ -199,9 +220,13 @@
 			.main-bar .header-nav .navbar > li { border-bottom-color: var(--dark-border) !important; }
 		}
 		@media (min-width: 768px) { .main-bar { padding-top: 22px; padding-bottom: 22px; } }
-		/* Footer: keep widget icons aligned with their text regardless of how many lines it wraps to */
-		.widget_getintuch ul li, .widget_services ul li { display: flex !important; align-items: flex-start; gap: 12px; }
-		.widget_getintuch ul li i, .widget_services ul li i { flex-shrink: 0; margin-top: 4px; }
+		/* Footer: keep widget icons aligned with their text regardless of how many lines it wraps to.
+		   .widget_getintuch ul li i is position:absolute in the base stylesheet, which takes it out
+		   of flex flow entirely — the earlier flex/gap rule here never actually reached it, so the
+		   icon stayed pinned at its old fixed left/top while the text (a real flex item) moved,
+		   drifting apart. Un-absolving it so both are laid out by the same flex row. */
+		.widget_getintuch ul li, .widget_services ul li { display: flex !important; align-items: flex-start; gap: 12px; padding-left: 0 !important; }
+		.widget_getintuch ul li i, .widget_services ul li i { position: static !important; flex-shrink: 0; margin-top: 4px; width: auto; height: auto; }
 		.widget_getintuch ul li p, .widget_services ul li p { margin: 0; }
 		/* Contact sidebar */
 		#contactDrawer { position:fixed; top:0; left:-300px; width:300px; height:100%; z-index:999999; background:var(--dark-card); overflow-y:auto; transition:left .5s ease; padding:30px; border-right:1px solid var(--dark-border); }

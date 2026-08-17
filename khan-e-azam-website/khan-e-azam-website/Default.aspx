@@ -81,26 +81,8 @@
 			.banner-inner1 { min-height: auto !important; padding-top: 90px !important; padding-bottom: 30px !important; }
 		}
 
-		/* ===== Section spacing system =====
-		   (assets/css/style.css is a static precompiled Tailwind build, not a live compiler —
-		   large arbitrary-value padding/margin classes like lg:py-[130px] have no generated CSS
-		   and silently no-op. These guaranteed-working classes replace them everywhere below.) */
-		.sp-y   { padding-top: 45px; padding-bottom: 45px; }
-		.sp-t   { padding-top: 45px; }
-		.sp-b   { padding-bottom: 45px; }
-		.sp-mb  { margin-bottom: 30px; }
-		@media (min-width: 1024px) {
-			.sp-y  { padding-top: 90px; padding-bottom: 90px; }
-			.sp-t  { padding-top: 90px; }
-			.sp-b  { padding-bottom: 90px; }
-			.sp-mb { margin-bottom: 50px; }
-		}
-		@media (min-width: 640px) and (max-width: 1023px) {
-			.sp-y  { padding-top: 70px; padding-bottom: 70px; }
-			.sp-t  { padding-top: 70px; }
-			.sp-b  { padding-bottom: 70px; }
-			.sp-mb { margin-bottom: 40px; }
-		}
+		/* Section spacing system (.sp-y/.sp-t/.sp-b/.sp-mb) now lives globally in Site.Master so
+		   every page can use it, not just this one. */
 
 		/* ===== Browse Our Menu: large editorial dish cards ===== */
 		.menu-swiper2 .swiper-wrapper { align-items: stretch; }
