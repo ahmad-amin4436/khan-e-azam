@@ -268,7 +268,7 @@
 												<span class="font-medium sm:text-xl text-base text-primary block mb-2"><%# Eval("TagLine") %></span>
 												<h1 class="title mb-4 font-lobster text-white 2xl:text-[80px] xl:text-[70px] lg:text-[60px] md:text-[50px] sm:text-[36px] text-[28px] leading-tight"><%# Eval("Heading") %></h1>
 												<p class="lg:max-w-[580px] md:max-w-[350px] max-w-full font-light lg:text-lg sm:text-base text-sm leading-[27px] text-[#ffffffb3] max-sm:hidden"><%# Eval("Description") %></p>
-												<div class="banner-btn flex flex-wrap items-center lg:mt-10 sm:mt-[40px] mt-4 gap-[14px] sm:gap-[20px]">
+												<div class="banner-btn flex flex-wrap items-center lg:mt-10 sm:mt-[40px] mt-4" style="gap:16px;">
 													<a href="Reservation.aspx" class="btn btn-lg btn-primary btn-hover-1"><span>Book a Reservation</span></a>
 													<a href="Pages/Menu.aspx" class="btn btn-lg btn-hero-outline"><span>View Menu</span></a>
 												</div>
@@ -372,7 +372,7 @@
 					</asp:Repeater>
 				</div>
 			</div>
-			<div class="w-full text-center mt-[45px]">
+			<div class="w-full text-center" style="margin-top:45px;">
 				<a href="Pages/Menu.aspx" class="btn btn-lg btn-primary btn-hover-1"><span>View All</span></a>
 			</div>
 		</div>
@@ -632,7 +632,7 @@
 	<!-- Order Now -->
 
 	<!-- Testimonials -->
-	<section class="content-inner-2 overflow-hidden sp-t">
+	<section class="content-inner-2 overflow-hidden sp-y">
 		<div class="container">
 			<div class="sp-mb relative mx-auto text-center">
 				<span class="font-medium text-base text-primary block mb-3 uppercase" style="letter-spacing:0.2em;">In Their Words</span>

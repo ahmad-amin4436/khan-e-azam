@@ -171,6 +171,9 @@
 		.site-header { position: sticky !important; top: 0; background: var(--dark-1); z-index: 999; }
 		.site-header.is-fixed { background: var(--dark-1) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
 		.main-bar .header-nav .navbar > li > a { color: var(--light-text) !important; }
+		/* The footer card used the template's flat gray (#222) instead of the page's actual dark
+		   background, so it read as a separate floating panel rather than the page continuing. */
+		.footer-bg-wrapper.bg-black2 { background-color: var(--dark-1) !important; }
 		.main-bar .header-nav .navbar > li.active > a,
 		.main-bar .header-nav .navbar > li:hover > a { color: var(--secondary) !important; }
 		.main-bar { padding-top: 10px; padding-bottom: 10px; }
