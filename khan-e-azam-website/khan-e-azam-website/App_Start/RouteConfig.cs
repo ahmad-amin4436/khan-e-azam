@@ -17,9 +17,9 @@ namespace khan_e_azam_website
 
             // Redirect root URL to Home.aspx
             routes.MapPageRoute(
-                "Home",
+                "Default",
                 "",
-                "~/Home.aspx"
+                "~/Default.aspx"
             );
         }
     }
