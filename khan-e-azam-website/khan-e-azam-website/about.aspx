@@ -131,59 +131,39 @@
         </div>
     </section>
 
-    <!-- Milestones / Journey Section -->
+    <!-- Reviews Section -->
     <section class="kea-stars" style="padding: 80px 0; background-color: var(--dark-2);">
-        <div class="container mx-auto text-center px-6" style="margin-bottom: 64px;">
-            <h6 class="uppercase mb-2" style="color: #0D5B3E; letter-spacing: 3px; font-size: 12px;">Our Journey</h6>
-            <h2 class="font-lobster" style="font-size: 2.5rem; color: var(--light-text);">Milestones That <span style="color: #0D5B3E;">Shaped Us</span></h2>
+        <div class="container mx-auto text-center px-6" style="margin-bottom: 40px;">
+            <h6 class="uppercase mb-2" style="color: #0D5B3E; letter-spacing: 3px; font-size: 12px;">In Their Words</h6>
+            <h2 class="font-lobster" style="font-size: 2.5rem; color: var(--light-text);">What Our <span style="color: #0D5B3E;">Guests Say</span></h2>
         </div>
 
-        <div class="container mx-auto relative px-6" style="max-width: 900px;">
-
-            <!-- Vertical line -->
-            <div class="absolute" style="left: 20px; top: 0; bottom: 0; width: 2px; background-color: var(--dark-border);"></div>
-
-            <div style="display: flex; flex-direction: column; gap: 48px;">
-
-                <!-- 1987 -->
-                <div class="relative" style="padding-left: 48px;">
-                    <div class="absolute top-1 rounded-full" style="left: 12px; width: 16px; height: 16px; background-color: #0D5B3E; border: 4px solid var(--dark-2); transform: translateX(-50%);"></div>
-
-                    <div style="background-color: var(--dark-card); border-radius: 15px; padding: 32px; border: 1px solid var(--dark-border); box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: all 0.5s ease;"
-                         onmouseover="this.style.boxShadow='0 20px 25px -5px rgba(0,0,0,0.4)'; this.style.transform='translateY(-4px)'; this.style.borderColor='#0D5B3E';"
-                         onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.2)'; this.style.transform='translateY(0)'; this.style.borderColor='var(--dark-border)';">
-                        <h4 class="font-lobster font-bold" style="color: #0D5B3E;">1987</h4>
-                        <h6 class="font-bold" style="margin: 8px 0; color: var(--light-text);">A Dream Takes Shape</h6>
-                        <p style="font-size: 14px; color: var(--muted-text); margin: 0;">Our founder, Ustad Rahim Khan, opens the first Khan-e-Azam dhaba in the walled city of Lahore.</p>
-                    </div>
+        <div class="container">
+            <div class="swiper testimonial-two-swiper swiper-btn-lr swiper-single overflow-visible swiper-visible">
+                <div class="swiper-wrapper">
+                    <asp:Repeater ID="rptAboutTestimonials" runat="server">
+                        <ItemTemplate>
+                            <div class="swiper-slide">
+                                <div class="testimonial-noimg relative rounded-lg mx-auto text-center" style="max-width:760px; background:var(--dark-card); border:1px solid var(--dark-border);">
+                                    <div class="p-8 sm:p-[55px] relative w-full flex flex-col items-center">
+                                        <i class="flaticon-right-quote text-primary" style="font-size:38px; margin-bottom:20px;"></i>
+                                        <div class="testimonial-text relative mb-[22px] text-base">
+                                            <p class="xl:text-[19px] sm:text-lg text-base leading-[30px] sm:leading-[34px] font-medium text-black2"><%# Eval("ReviewText") %></p>
+                                        </div>
+                                        <div class="testimonial-info relative z-[1]">
+                                            <h5 class="testimonial-name font-bold leading-[32px] lg:text-[22px] sm:text-xl text-lg mb-1 text-black2"><%# Eval("ReviewerName") %></h5>
+                                            <span class="testimonial-position leading-[21px] text-sm block text-primary"><%# Eval("ReviewerPosition") %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </div>
-
-                <!-- 1998 -->
-                <div class="relative" style="padding-left: 48px;">
-                    <div class="absolute top-1 rounded-full" style="left: 12px; width: 16px; height: 16px; background-color: #0D5B3E; border: 4px solid var(--dark-2); transform: translateX(-50%);"></div>
-
-                    <div style="background-color: var(--dark-card); border-radius: 15px; padding: 32px; border: 1px solid var(--dark-border); box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: all 0.5s ease;"
-                         onmouseover="this.style.boxShadow='0 20px 25px -5px rgba(0,0,0,0.4)'; this.style.transform='translateY(-4px)'; this.style.borderColor='#0D5B3E';"
-                         onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.2)'; this.style.transform='translateY(0)'; this.style.borderColor='var(--dark-border)';">
-                        <h4 class="font-lobster font-bold" style="color: #0D5B3E;">1998</h4>
-                        <h6 class="font-bold" style="margin: 8px 0; color: var(--light-text);">The First Restaurant</h6>
-                        <p style="font-size: 14px; color: var(--muted-text); margin: 0;">After a decade of acclaim, the first full-service restaurant opens in Gulberg, bringing tradition indoors.</p>
-                    </div>
+                <div class="pagination">
+                    <div class="testimonial-2-button-prev btn-prev rounded-full top-[50%] absolute left-[-100px] max-xl:left-[-60px] hidden xl:block"><i class="fa-solid fa-arrow-left"></i></div>
+                    <div class="testimonial-2-button-next btn-next rounded-full top-[50%] absolute right-[-100px] max-xl:right-[-60px] hidden xl:block"><i class="fa-solid fa-arrow-right"></i></div>
                 </div>
-
-                <!-- 2008 -->
-                <div class="relative" style="padding-left: 48px;">
-                    <div class="absolute top-1 rounded-full" style="left: 12px; width: 16px; height: 16px; background-color: #0D5B3E; border: 4px solid var(--dark-2); transform: translateX(-50%);"></div>
-
-                    <div style="background-color: var(--dark-card); border-radius: 15px; padding: 32px; border: 1px solid var(--dark-border); box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: all 0.5s ease;"
-                         onmouseover="this.style.boxShadow='0 20px 25px -5px rgba(0,0,0,0.4)'; this.style.transform='translateY(-4px)'; this.style.borderColor='#0D5B3E';"
-                         onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.2)'; this.style.transform='translateY(0)'; this.style.borderColor='var(--dark-border)';">
-                        <h4 class="font-lobster font-bold" style="color: #0D5B3E;">2008</h4>
-                        <h6 class="font-bold" style="margin: 8px 0; color: var(--light-text);">Award &amp; Recognition</h6>
-                        <p style="font-size: 14px; color: var(--muted-text); margin: 0;">Recognised as Lahore's Best Traditional Restaurant by the Punjab Food Authority.</p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>

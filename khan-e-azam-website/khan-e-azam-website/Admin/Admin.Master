@@ -52,6 +52,7 @@
                 <div class="nav-section">Orders</div>
                 <a href="Orders.aspx" class='<%= GetActiveClass("Orders") %>'><i class="fas fa-receipt"></i> Manage Orders</a>
                 <a href="QuickRequests.aspx" class='<%= GetActiveClass("QuickRequests") %>'><i class="fas fa-phone-volume"></i> Quick Requests</a>
+                <a href="TableReservations.aspx" class='<%= GetActiveClass("TableReservations") %>'><i class="fas fa-calendar-check"></i> Table Reservations</a>
                 <div class="nav-section">Account</div>
                 <% if (IsSuperAdmin) { %>
                 <a href="Users.aspx" class='<%= GetActiveClass("Users") %>'><i class="fas fa-user-shield"></i> Admin Users</a>

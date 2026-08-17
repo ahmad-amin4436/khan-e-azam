@@ -8,7 +8,7 @@ namespace KhanEAzam.Admin
     {
         // Pages the "Staff" role may open. Everything else (content management, Admin Users)
         // needs at least "Manager"; Admin Users itself needs "SuperAdmin" (checked below too).
-        private static readonly string[] StaffAllowedPages = { "Dashboard", "Orders", "QuickRequests", "Logout" };
+        private static readonly string[] StaffAllowedPages = { "Dashboard", "Orders", "QuickRequests", "TableReservations", "Logout" };
 
         protected void Page_Load(object sender, EventArgs e)
         {

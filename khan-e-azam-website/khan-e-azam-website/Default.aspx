@@ -787,7 +787,7 @@
 	<!-- Our Blog End -->
 
 	<!-- Quick Order Request -->
-	<section class="content-inner-1 sp-b kea-stars" style="background-color:var(--dark-2);">
+	<section class="content-inner-1 sp-y kea-stars" style="background-color:var(--dark-2);">
 		<div class="container">
 			<div class="mx-auto" style="max-width:640px;">
 				<div class="rounded-lg" style="background:var(--dark-card); border:1px solid var(--dark-border); padding:40px;">

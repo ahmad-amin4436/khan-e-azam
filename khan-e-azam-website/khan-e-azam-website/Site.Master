@@ -6,7 +6,17 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Khan E Azam | Restaurant</title>   
+    <!-- Applied before anything paints, so a returning visitor's saved theme choice never
+         flashes the wrong theme for a frame. -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('kea_theme');
+                if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+            } catch (e) {}
+        })();
+    </script>
+    <title><%: Page.Title %> - Khan E Azam | Restaurant</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="author" content="DEVNET Solutions">
 	<meta name="robots" content="">
@@ -63,6 +73,21 @@
 			--light-text: #f2efe9;
 			--muted-text: #b7b0a4;
 		}
+		/* Light theme: every one of these variables drives the same rules that already paint the
+		   whole site (backgrounds, cards, borders, text) — redefining them here re-themes the
+		   entire site without touching individual pages. Brand colors (--primary/--secondary/
+		   --smoky-black) stay fixed across both themes on purpose; only the neutral surfaces flip. */
+		html[data-theme="light"] {
+			--dark-1: #FAF7F2;
+			--dark-2: #F1EAE0;
+			--dark-card: #FFFFFF;
+			--dark-border: rgba(16,12,8,0.12);
+			--light-text: #1a1611;
+			--muted-text: #6b6459;
+		}
+		/* The twinkling starfield is a dark-theme-only flourish — it reads as noise on a light bg */
+		html[data-theme="light"] .kea-stars::before { display: none; }
+		html[data-theme="light"] .dz-spinner { border-color: rgba(16,12,8,0.15); border-top-color: var(--primary); }
 		body, .page-wraper { background: var(--dark-1) !important; }
 		.text-black2 { color: var(--light-text) !important; }
 		.text-bodycolor { color: var(--muted-text) !important; }
@@ -128,13 +153,24 @@
 		/* Header utility icons */
 		.header-icon-link { color:#fff; font-size:18px; opacity:.85; transition:opacity .2s, color .2s; }
 		.header-icon-link:hover { opacity:1; color:var(--secondary); }
+		/* Light/dark theme toggle */
+		.kea-theme-toggle {
+			width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+			background: var(--dark-card); border: 1px solid var(--dark-border); color: var(--light-text);
+			cursor: pointer; transition: background .2s, transform .2s; flex-shrink: 0; font-size: 15px;
+		}
+		.kea-theme-toggle:hover { transform: scale(1.08); color: var(--secondary); }
+		.kea-theme-toggle .kea-theme-icon-light { display: none; }
+		html[data-theme="light"] .kea-theme-toggle .kea-theme-icon-dark { display: none; }
+		html[data-theme="light"] .kea-theme-toggle .kea-theme-icon-light { display: block; }
 		/* Fallback rules for Tailwind arbitrary-value classes not present in the precompiled style.css */
 		.bg-\[\#ffffff1a\] { background-color: #ffffff1a; }
 		.rounded-\[16px\] { border-radius: 16px; }
-		/* Header: a separate, dark-elegant bar — not a transparent overlay on the hero */
-		.site-header { position: sticky !important; top: 0; background: var(--smoky-black); z-index: 999; }
-		.site-header.is-fixed { background: var(--smoky-black) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
-		.main-bar .header-nav .navbar > li > a { color: #fff !important; }
+		/* Header: a separate, elegant bar — not a transparent overlay on the hero. Uses the same
+		   theme variables as the rest of the page, so it flips with the light/dark toggle too. */
+		.site-header { position: sticky !important; top: 0; background: var(--dark-1); z-index: 999; }
+		.site-header.is-fixed { background: var(--dark-1) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+		.main-bar .header-nav .navbar > li > a { color: var(--light-text) !important; }
 		.main-bar .header-nav .navbar > li.active > a,
 		.main-bar .header-nav .navbar > li:hover > a { color: var(--secondary) !important; }
 		.main-bar { padding-top: 10px; padding-bottom: 10px; }
@@ -209,12 +245,18 @@
 					</a>
 				</div>
 				
-				<!-- Toggle button -->
-				<button type="button" class="togglebtn lg:hidden block bg-primary w-[45px] h-[45px] relative rounded-md mt-2">
-					<div class="bar1"></div>
-					<div class="bar2"></div>
-					<div class="bar3"></div>
-				</button>	
+				<!-- Utility controls: theme toggle (always visible) + mobile menu toggle -->
+				<div class="flex items-center" style="gap:12px;">
+					<button type="button" id="kea-theme-toggle" class="kea-theme-toggle" title="Switch light/dark theme" aria-label="Switch light and dark theme">
+						<i class="fa-solid fa-sun kea-theme-icon-light"></i>
+						<i class="fa-solid fa-moon kea-theme-icon-dark"></i>
+					</button>
+					<button type="button" class="togglebtn lg:hidden block bg-primary w-[45px] h-[45px] relative rounded-md">
+						<div class="bar1"></div>
+						<div class="bar2"></div>
+						<div class="bar3"></div>
+					</button>
+				</div>
 
 				<!-- Header Nav -->
 				<div class="header-nav lg:justify-end lg:grow lg:flex-row flex-col lg:gap-0 gap-5 flex lg:relative">
@@ -525,6 +567,13 @@
 				jQuery('.menu-btn').off('click.kea').on('click.kea', function () {
 					jQuery('.contact-sidebar').toggleClass('open');
 					jQuery('.menu-backdrop').toggleClass('show');
+				});
+				jQuery('#kea-theme-toggle').off('click.kea').on('click.kea', function () {
+					var html = document.documentElement;
+					var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+					if (next === 'light') html.setAttribute('data-theme', 'light');
+					else html.removeAttribute('data-theme');
+					try { localStorage.setItem('kea_theme', next); } catch (e) {}
 				});
 				DzCart.badge();
 			}

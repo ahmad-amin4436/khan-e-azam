@@ -60,8 +60,80 @@
 	</section>
 	<!-- Reserve CTAs -->
 
+	<!-- Table Reservation Form -->
+	<section class="content-inner-1 sp-y kea-stars" style="background-color:var(--dark-2);">
+		<div class="container">
+			<div class="mx-auto" style="max-width:720px;">
+				<div class="rounded-lg" style="background:var(--dark-card); border:1px solid var(--dark-border); padding:40px;">
+					<div class="text-center mb-8">
+						<span class="font-medium text-base text-primary block mb-3 uppercase" style="letter-spacing:0.2em;">Prefer to Book Online?</span>
+						<h2 class="font-lobster text-black2 lg:text-[36px] sm:text-4xl text-3xl mb-2">Table Reservation</h2>
+						<p class="text-bodycolor mb-0">Fill in your details and we'll confirm your table by phone.</p>
+					</div>
+
+					<asp:Label ID="lblReserveMsg" runat="server" Visible="false" CssClass="kea-reserve-alert alert"></asp:Label>
+
+					<div class="row">
+						<div class="lg:w-1/2 w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Full Name</label>
+							<asp:TextBox ID="txtReserveName" runat="server" CssClass="kea-reserve-input" placeholder="Enter your full name" MaxLength="100" />
+						</div>
+						<div class="lg:w-1/2 w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Contact Number</label>
+							<asp:TextBox ID="txtReservePhone" runat="server" CssClass="kea-reserve-input" placeholder="03xx-xxxxxxx" MaxLength="20" />
+						</div>
+						<div class="lg:w-1/3 w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Date</label>
+							<asp:TextBox ID="txtReserveDate" runat="server" CssClass="kea-reserve-input" TextMode="Date" />
+						</div>
+						<div class="lg:w-1/3 w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Time</label>
+							<asp:TextBox ID="txtReserveTime" runat="server" CssClass="kea-reserve-input" TextMode="Time" />
+						</div>
+						<div class="lg:w-1/3 w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Party Size</label>
+							<asp:DropDownList ID="ddlReservePartySize" runat="server" CssClass="kea-reserve-input">
+								<asp:ListItem Text="1 Guest" Value="1" />
+								<asp:ListItem Text="2 Guests" Value="2" />
+								<asp:ListItem Text="3 Guests" Value="3" />
+								<asp:ListItem Text="4 Guests" Value="4" Selected="True" />
+								<asp:ListItem Text="5 Guests" Value="5" />
+								<asp:ListItem Text="6 Guests" Value="6" />
+								<asp:ListItem Text="7 Guests" Value="7" />
+								<asp:ListItem Text="8+ Guests" Value="8" />
+							</asp:DropDownList>
+						</div>
+						<div class="w-full px-[15px] mb-[20px]">
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Special Requests <span style="color:var(--muted-text); font-weight:400;">(optional)</span></label>
+							<asp:TextBox ID="txtReserveNotes" runat="server" CssClass="kea-reserve-input kea-reserve-textarea" TextMode="MultiLine" Rows="3" placeholder="Birthday setup, window seating, dietary needs, etc." MaxLength="500" />
+						</div>
+					</div>
+
+					<asp:Button ID="btnReserveSubmit" runat="server" Text="Request Reservation" CssClass="btn btn-primary btn-hover-1 w-full" style="width:100%; height:52px; font-size:16px;" OnClick="btnReserveSubmit_Click" />
+				</div>
+			</div>
+		</div>
+
+		<style>
+			.kea-reserve-input {
+				height: 50px; padding: 10px 20px; width: 100%; font-size: 15px;
+				border: 1px solid var(--dark-border); border-radius: 6px; outline: none;
+				background: var(--dark-1); color: var(--light-text); transition: border-color .3s;
+			}
+			.kea-reserve-input:focus { border-color: var(--primary); }
+			.kea-reserve-input::placeholder { color: var(--muted-text); }
+			.kea-reserve-textarea { height: auto; resize: none; }
+			.kea-reserve-alert {
+				display: block; width: 100%; box-sizing: border-box;
+				margin-bottom: 24px; border-radius: 8px; font-size: 14px; line-height: 1.6;
+				word-wrap: break-word; overflow-wrap: break-word;
+			}
+		</style>
+	</section>
+	<!-- Table Reservation Form -->
+
 	<!-- Opening Hours + Location -->
-	<section class="content-inner-1 lg:pb-[100px] pb-[50px] kea-stars" style="background-color:var(--dark-2);">
+	<section class="content-inner-1 lg:pb-[100px] pb-[50px] kea-stars" style="background-color:var(--dark-1);">
 		<div class="container">
 			<div class="row items-stretch">
 				<div class="lg:w-5/12 w-full px-[15px] mb-[25px] lg:mb-0">

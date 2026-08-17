@@ -389,6 +389,7 @@
     <Content Include="Admin\BlogPosts.aspx" />
     <Content Include="Admin\Orders.aspx" />
     <Content Include="Admin\QuickRequests.aspx" />
+    <Content Include="Admin\TableReservations.aspx" />
     <Content Include="Admin\Users.aspx" />
     <Content Include="contact.aspx" />
     <Content Include="Default.aspx" />
@@ -519,8 +520,10 @@
     <Compile Include="DAL\BlogPostRepository.cs" />
     <Compile Include="DAL\OrderRepository.cs" />
     <Compile Include="DAL\QuickRequestRepository.cs" />
+    <Compile Include="DAL\TableReservationRepository.cs" />
     <Compile Include="Models\AdminUser.cs" />
     <Compile Include="Models\QuickRequest.cs" />
+    <Compile Include="Models\TableReservation.cs" />
     <Compile Include="Models\BannerSlide.cs" />
     <Compile Include="Models\BrowseMenuItem.cs" />
     <Compile Include="Models\TodaysSpecial.cs" />
@@ -587,6 +590,10 @@
     </Compile>
     <Compile Include="Admin\QuickRequests.aspx.cs">
       <DependentUpon>QuickRequests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\TableReservations.aspx.cs">
+      <DependentUpon>TableReservations.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Users.aspx.cs">
