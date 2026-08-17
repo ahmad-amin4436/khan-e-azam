@@ -398,7 +398,10 @@
             </asp:ContentPlaceHolder>
 	<!--Footer-->
 	<footer class="site-footer style-2 relative" id="footer">
-		<div class="footer-bg-wrapper max-2xl:mx-0 mx-[100px] max-2xl:rounded-none rounded-[30px] bg-black2 relative z-[1]" id="app-banner">
+		<!-- id="app-banner" removed on purpose: particles-app.js targets that exact id and was
+		     spawning 60 drifting green circles ("floating bubbles") across the footer — it's a
+		     leftover template hook, not anything this footer actually needs. -->
+		<div class="footer-bg-wrapper max-2xl:mx-0 mx-[100px] max-2xl:rounded-none rounded-[30px] bg-black2 relative z-[1]">
 			<div class="footer-top pt-[80px] pb-[50px] relative z-[2]">
 				<div class="container">
 					<div class="footer-subscribe-wrapper lg:mb-[70px] sm:mb-[50px] sm:pb-[50px] pb-[30px] mb-[40px] border-b border-[#ffffff1a]">
