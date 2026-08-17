@@ -72,7 +72,7 @@ namespace khan_e_azam_website
 
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone))
             {
-                lblQuickMsg.CssClass = "alert alert-danger d-block mb-4";
+                lblQuickMsg.CssClass = "kea-quick-alert alert alert-danger";
                 lblQuickMsg.Text = "Please fill in your full name and contact number.";
                 lblQuickMsg.Visible = true;
                 return;
@@ -89,7 +89,7 @@ namespace khan_e_azam_website
             txtQuickPhone.Text = "";
             ddlQuickOrderType.SelectedIndex = 0;
 
-            lblQuickMsg.CssClass = "alert alert-success d-block mb-4";
+            lblQuickMsg.CssClass = "kea-quick-alert alert alert-success";
             lblQuickMsg.Text = "Thanks! We've received your request and will call you back shortly.";
             lblQuickMsg.Visible = true;
         }

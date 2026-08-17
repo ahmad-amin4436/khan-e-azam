@@ -66,6 +66,11 @@
 		body, .page-wraper { background: var(--dark-1) !important; }
 		.text-black2 { color: var(--light-text) !important; }
 		.text-bodycolor { color: var(--muted-text) !important; }
+		/* .alert (used for every inline success/error message on public pages) only sets color
+		   via CSS vars — it relies on Bootstrap's "d-block" utility for its own block box, which
+		   isn't loaded here, so asp:Label's default inline <span> rendering let these overlap
+		   whatever followed them instead of reserving their own space. Fixed once, globally. */
+		.alert { display: block !important; width: 100%; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
 		/* .btn-prev/.btn-next used a pale cream glow (var(--primary-light)) tuned for a white
 		   page — on the dark theme it bloomed into a soft halo around the arrow buttons. */
 		.btn-next, .btn-prev { box-shadow: 0 6px 16px rgba(0,0,0,0.35) !important; }

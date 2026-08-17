@@ -797,7 +797,7 @@
 						<p class="text-bodycolor mb-0">Leave your details and how you'd like to order &mdash; our team will call you back to confirm.</p>
 					</div>
 
-					<asp:Label ID="lblQuickMsg" runat="server" Visible="false" CssClass="alert d-block mb-4" style="border-radius:8px;"></asp:Label>
+					<asp:Label ID="lblQuickMsg" runat="server" Visible="false" CssClass="kea-quick-alert alert"></asp:Label>
 
 					<div class="row">
 						<div class="lg:w-1/2 w-full px-[15px] mb-[20px]">
@@ -831,6 +831,15 @@
 			}
 			.kea-quick-input:focus { border-color: var(--primary); }
 			.kea-quick-input::placeholder { color: var(--muted-text); }
+			/* .alert/.alert-success only set color via CSS vars — the "d-block"/"mb-4" Bootstrap
+			   classes that were supposed to give this its own block box don't exist on this page,
+			   so the label stayed inline (default for asp:Label) and visually overlapped the
+			   fields right after it instead of pushing them down. */
+			.kea-quick-alert {
+				display: block; width: 100%; box-sizing: border-box;
+				margin-bottom: 24px; border-radius: 8px; font-size: 14px; line-height: 1.6;
+				word-wrap: break-word; overflow-wrap: break-word;
+			}
 			/* jQuery niceSelect copies the select's classes onto the wrapper it builds — style that
 			   wrapper explicitly so the Order Type field matches the other dark inputs instead of
 			   rendering as a narrow, unstyled, floated box. */
