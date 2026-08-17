@@ -200,6 +200,10 @@
 		/* The footer card used the template's flat gray (#222) instead of the page's actual dark
 		   background, so it read as a separate floating panel rather than the page continuing. */
 		.footer-bg-wrapper.bg-black2 { background-color: var(--dark-1) !important; }
+		/* .site-footer itself has no background — it's transparent around the inset rounded card
+		   (the mx-[100px] gutters either side), so .page-wraper's kea-stars twinkle layer behind
+		   it showed through as loose dots floating in that margin. Opaque match hides it. */
+		.site-footer { background-color: var(--dark-1); }
 		/* The footer's own text/icons were hardcoded for a permanently-dark footer (text-white,
 		   #CCCCCC links, a #ffffff1a highlight circle) — now that its background follows the
 		   theme too, those same hardcoded colors wash out to near-invisible in light mode. */
