@@ -165,6 +165,11 @@
 		html[data-theme="light"] .kea-theme-toggle .kea-theme-icon-light { display: block; }
 		/* Fallback rules for Tailwind arbitrary-value classes not present in the precompiled style.css */
 		.bg-\[\#ffffff1a\] { background-color: #ffffff1a; }
+		/* mb-[20px]/mt-[40px] have no generated CSS either — used across several form field rows
+		   and CTA buttons (Quick Order Request, Table Reservation, etc.), so those all silently
+		   lost their spacing. Global fallback fixes every current and future use at once. */
+		.mb-\[20px\] { margin-bottom: 20px; }
+		.mt-\[40px\] { margin-top: 40px; }
 		.rounded-\[16px\] { border-radius: 16px; }
 		/* Header: a separate, elegant bar — not a transparent overlay on the hero. Uses the same
 		   theme variables as the rest of the page, so it flips with the light/dark toggle too. */

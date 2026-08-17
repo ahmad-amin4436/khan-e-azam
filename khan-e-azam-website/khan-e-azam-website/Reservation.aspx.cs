@@ -8,8 +8,7 @@ namespace khan_e_azam_website
 {
     public partial class Reservation : System.Web.UI.Page
     {
-        protected TextBox txtReserveName, txtReservePhone, txtReserveDate, txtReserveTime, txtReserveNotes;
-        protected DropDownList ddlReservePartySize;
+        protected TextBox txtReserveName, txtReservePhone, txtReserveDate, txtReserveTime, txtReservePartySize, txtReserveNotes;
         protected Button btnReserveSubmit;
         protected Label lblReserveMsg;
 
@@ -43,7 +42,7 @@ namespace khan_e_azam_website
                 ContactNumber = phone,
                 ReservationDate = reservationDate,
                 ReservationTime = timeText,
-                PartySize = int.TryParse(ddlReservePartySize.SelectedValue, out int size) ? size : 1,
+                PartySize = int.TryParse(txtReservePartySize.Text.Trim(), out int size) && size > 0 ? size : 1,
                 SpecialRequests = string.IsNullOrWhiteSpace(txtReserveNotes.Text) ? null : txtReserveNotes.Text.Trim()
             });
 
@@ -52,7 +51,7 @@ namespace khan_e_azam_website
             txtReserveDate.Text = "";
             txtReserveTime.Text = "";
             txtReserveNotes.Text = "";
-            ddlReservePartySize.SelectedValue = "4";
+            txtReservePartySize.Text = "4";
 
             ShowReserveMessage("Thanks! Your reservation request has been received — we'll call you back to confirm.", true);
         }

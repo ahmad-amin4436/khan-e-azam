@@ -91,17 +91,8 @@
 							<asp:TextBox ID="txtReserveTime" runat="server" CssClass="kea-reserve-input" TextMode="Time" />
 						</div>
 						<div class="lg:w-1/3 w-full px-[15px] mb-[20px]">
-							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Party Size</label>
-							<asp:DropDownList ID="ddlReservePartySize" runat="server" CssClass="kea-reserve-input">
-								<asp:ListItem Text="1 Guest" Value="1" />
-								<asp:ListItem Text="2 Guests" Value="2" />
-								<asp:ListItem Text="3 Guests" Value="3" />
-								<asp:ListItem Text="4 Guests" Value="4" Selected="True" />
-								<asp:ListItem Text="5 Guests" Value="5" />
-								<asp:ListItem Text="6 Guests" Value="6" />
-								<asp:ListItem Text="7 Guests" Value="7" />
-								<asp:ListItem Text="8+ Guests" Value="8" />
-							</asp:DropDownList>
+							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">No. of Guests</label>
+							<asp:TextBox ID="txtReservePartySize" runat="server" CssClass="kea-reserve-input" TextMode="Number" placeholder="e.g. 4" Text="4" />
 						</div>
 						<div class="w-full px-[15px] mb-[20px]">
 							<label class="block mb-2" style="color:var(--muted-text); font-size:13px; font-weight:600;">Special Requests <span style="color:var(--muted-text); font-weight:400;">(optional)</span></label>
