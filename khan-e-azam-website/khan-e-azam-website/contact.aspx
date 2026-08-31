@@ -131,12 +131,13 @@
                                 </li>
                             </ul>
 
-                            <div style="margin-top: 30px; border-top: 1px solid var(--dark-border); padding-top: 20px;">
-                                <h4 class="font-lobster mb-4" style="color: var(--light-text);">Follow Us</h4>
-                                <div style="display: flex; gap: 15px;">
-                                    <a href="https://www.facebook.com/khaneazamrestaurant" target="_blank" rel="noopener" style="font-size: 20px; color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
-
-                                    <a href="https://www.instagram.com/khaneazamrestaurant" target="_blank" rel="noopener" style="font-size: 20px; color: #e1306c;"><i class="fab fa-instagram"></i></a>
+                            <div class="kea-social-block" style="border-top: 1px solid var(--dark-border);">
+                                <span class="kea-social-title">Follow Us</span>
+                                <span class="kea-social-handle">@khaneazamrestaurant</span>
+                                <div style="display: flex; gap: 12px;">
+                                    <a href="https://web.facebook.com/profile.php?id=61593105446463" target="_blank" rel="noopener" title="Facebook" class="kea-social-link kea-social-link--card"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.instagram.com/khaneazamrestaurant/?hl=en" target="_blank" rel="noopener" title="Instagram" class="kea-social-link kea-social-link--card"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://www.tiktok.com/@khaneazamrestaurant" target="_blank" rel="noopener" title="TikTok" class="kea-social-link kea-social-link--card"><i class="fab fa-tiktok"></i></a>
                                 </div>
                             </div>
                         </div>

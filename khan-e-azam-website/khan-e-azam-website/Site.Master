@@ -50,7 +50,7 @@
 	<!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Lobster&amp;family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&amp;family=Poppins:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&amp;family=Poppins:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 	
 	<!-- Custom Stylesheet -->
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -251,6 +251,36 @@
 		.dz-fab-checkout { background: #100C08; border-color: rgba(255,255,255,0.25); }
 		#dz-cart-badge { position:absolute; top:-4px; right:-4px; background:var(--accent-red); color:#fff; font-size:11px; font-weight:700; min-width:20px; height:20px; border-radius:10px; display:none; align-items:center; justify-content:center; padding:0 4px; }
 		#dz-toast { position:fixed; bottom:110px; right:24px; background:rgba(30,30,30,.92); color:#fff; padding:10px 18px; border-radius:8px; font-size:13px; z-index:999999; opacity:0; transform:translateY(16px); transition:opacity .3s, transform .3s; pointer-events:none; max-width:260px; }
+		/* Logo: the new wordmark's aspect ratio (~2.3:1) differs from the old one (~4:1), so each
+		   placement gets its own explicit rendered height instead of relying on the surrounding
+		   box's width/height and the browser's default height:auto — that way the display size
+		   stays correct and consistent no matter what pixel size a future logo file happens to be. */
+		.logo-header img { height: 44px; width: auto; }
+		.footer-logo img { height: 50px; width: auto; }
+		.logo-contact img { height: 54px; width: auto; }
+		/* Typography system: Playfair Display for headings, Poppins for everything else (already
+		   the sitewide default via body.font-poppins). .font-lobster was the old decorative
+		   cursive "heading" utility class applied to every h1/h2 across every page — retargeting
+		   it here retires that look everywhere in one place instead of touching every .aspx file. */
+		.font-lobster { font-family: 'Playfair Display', serif !important; }
+		h1, h2 { font-family: 'Playfair Display', serif; }
+		h1 { font-weight: 700 !important; }
+		h2 { font-weight: 600 !important; }
+		.main-bar .header-nav .navbar > li > a { font-weight: 500 !important; }
+		/* Social links: style.css never compiled bg-[#ffffff1a]/w-9/h-9 for this exact combination
+		   (arbitrary-value classes with no matching source elsewhere in the template), so these
+		   icons were rendering as bare, uncircled glyphs — replaced with a real class. */
+		.kea-social-block { padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--dark-border); }
+		.kea-social-title { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-text); margin-bottom: 4px; }
+		.kea-social-handle { display: block; font-weight: 600; color: var(--secondary); font-size: 15px; margin-bottom: 14px; }
+		.kea-social-link { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); color: #fff; font-size: 18px; text-decoration: none; transition: background .3s, transform .3s, color .3s; }
+		.kea-social-link:hover { background: var(--primary); transform: translateY(-3px); }
+		/* On a theme-aware card (contact.aspx's Contact Information box uses --dark-card, which
+		   flips from dark to white with the theme) the footer's fixed light-on-dark background
+		   above would vanish on a white card, so this variant reuses the theme-aware border/text
+		   tokens instead of a fixed color. */
+		.kea-social-link--card { background: var(--dark-border); color: var(--light-text); }
+		.kea-social-link--card:hover { background: var(--primary); color: #fff; }
 	</style>
 </head>
 <body id="bg" class="box-border m-0 selection:bg-primary selection:text-white font-poppins">
@@ -414,11 +444,16 @@
 										</a>
 									</div>
 									<p class="text-white mb-0 text-sm">Khan-e-Azam &mdash; luxury dining with rooftop. Authentic flavours, crafted with tradition, served with pride.</p>
-									<ul class="flex items-center gap-3 mt-4">
-										<li><a href="https://www.facebook.com/khaneazamrestaurant" target="_blank" rel="noopener" title="Facebook" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-facebook-f"></i></a></li>
-										<li><a href="https://www.instagram.com/khaneazamrestaurant" target="_blank" rel="noopener" title="Instagram" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-instagram"></i></a></li>
-										<li><a href="https://wa.me/923089406789" target="_blank" rel="noopener" title="WhatsApp" class="w-9 h-9 flex items-center justify-center rounded-full bg-[#ffffff1a] text-white hover:bg-primary duration-300"><i class="fab fa-whatsapp"></i></a></li>
-									</ul>
+									<div class="kea-social-block">
+										<span class="kea-social-title">Follow Us</span>
+										<span class="kea-social-handle">@khaneazamrestaurant</span>
+										<ul class="flex items-center gap-3" style="list-style:none;padding:0;margin:0;">
+											<li><a href="https://web.facebook.com/profile.php?id=61593105446463" target="_blank" rel="noopener" title="Facebook" class="kea-social-link"><i class="fab fa-facebook-f"></i></a></li>
+											<li><a href="https://www.instagram.com/khaneazamrestaurant/?hl=en" target="_blank" rel="noopener" title="Instagram" class="kea-social-link"><i class="fab fa-instagram"></i></a></li>
+											<li><a href="https://www.tiktok.com/@khaneazamrestaurant" target="_blank" rel="noopener" title="TikTok" class="kea-social-link"><i class="fab fa-tiktok"></i></a></li>
+											<li><a href="https://wa.me/923089406789" target="_blank" rel="noopener" title="WhatsApp" class="kea-social-link"><i class="fab fa-whatsapp"></i></a></li>
+										</ul>
+									</div>
 								</div>
 
 							</div>
