@@ -618,7 +618,7 @@
 		<div class="container">
 			<div class="sp-mb relative mx-auto text-center">
 				<span class="font-medium text-base text-primary block mb-3 uppercase" style="letter-spacing:0.2em;">In Their Words</span>
-				<h2 class="font-lobster lg:text-[46px] sm:text-5xl text-4xl text-black2">Customer's Comment</h2>
+				<h2 class="font-lobster lg:text-[46px] sm:text-5xl text-4xl text-black2">Customer's Reviews</h2>
 			</div>
 			<div class="swiper testimonial-two-swiper swiper-btn-lr swiper-single overflow-visible swiper-visible">
 				<div class="swiper-wrapper">
