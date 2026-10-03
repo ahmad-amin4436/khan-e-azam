@@ -638,6 +638,8 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderFilter.cs" />
     <Compile Include="Models\PagedResult.cs" />
+    <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="Models\OrderStatusHistoryEntry.cs" />
     <Compile Include="Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

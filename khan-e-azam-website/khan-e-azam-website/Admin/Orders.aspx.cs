@@ -201,6 +201,16 @@ namespace KhanEAzam.Admin
             BindOrders();
         }
 
+        /// <summary>Mutes cancelled rows in the list so they read as inactive at a glance.</summary>
+        protected void gvOrders_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow) return;
+
+            var order = e.Row.DataItem as Order;
+            if (order != null && OrderStatus.IsCancelled(order.Status))
+                e.Row.CssClass = (e.Row.CssClass + " row-cancelled").Trim();
+        }
+
         protected void gvOrders_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int id;
@@ -208,6 +218,17 @@ namespace KhanEAzam.Admin
             {
                 LoadDetail(id);
             }
+        }
+
+        /// <summary>Role of the signed-in admin, used for the cancellation permission checks.</summary>
+        private string CurrentRole
+        {
+            get { return Session["AdminRole"] as string; }
+        }
+
+        private string CurrentUsername
+        {
+            get { return Session["AdminUsername"] as string; }
         }
 
         private void LoadDetail(int id)
@@ -235,18 +256,209 @@ namespace KhanEAzam.Admin
 
             gvItems.DataSource = order.Items;
             gvItems.DataBind();
+
+            ConfigureCancellationUi(order);
+            BindHistory(id);
+        }
+
+        /// <summary>
+        /// Shows the cancel or reopen affordance according to the order's state and the
+        /// signed-in role. Hiding is presentation only — the click handlers re-check.
+        /// </summary>
+        private void ConfigureCancellationUi(Order order)
+        {
+            bool cancelled = OrderStatus.IsCancelled(order.Status);
+            bool mayCancel = OrderStatus.CanCancel(CurrentRole);
+
+            // A cancelled order is locked: hide the normal status controls and say why.
+            pnlStatusControls.Visible = !cancelled;
+            pnlCancelledBanner.Visible = cancelled;
+
+            if (cancelled)
+            {
+                var last = _repo.GetStatusHistory(order.Id)
+                                .FindLast(h => OrderStatus.IsCancelled(h.NewStatus));
+                lblCancelledDetail.Text = last == null
+                    ? "Reopen it below to make further status changes."
+                    : Server.HtmlEncode(string.Format("Cancelled by {0} on {1}{2}",
+                        last.ChangedByDisplay,
+                        last.ChangedAt.ToString("dd MMM yyyy, hh:mm tt"),
+                        string.IsNullOrEmpty(last.Reason) ? "." : " — " + last.Reason));
+            }
+
+            // The whole cancellation card is hidden from anyone who cannot use it.
+            pnlCancel.Visible = mayCancel;
+            if (!mayCancel) return;
+
+            pnlCancelForm.Visible = !cancelled;
+            pnlReopen.Visible = cancelled;
+            litCancelHeading.Text = cancelled ? "Reopen Cancelled Order" : "Cancel Order";
+
+            if (!cancelled)
+            {
+                // Cancelling after the food has gone out usually means money must move.
+                bool sensitive = OrderStatus.IsRefundSensitiveCancellation(order.Status);
+                lblCancelWarning.Visible = sensitive;
+                if (sensitive)
+                    lblCancelWarning.Text = "This order is already <strong>" + Server.HtmlEncode(order.Status)
+                        + "</strong>. Cancelling it now may require a refund — check with the customer first.";
+            }
+        }
+
+        private void BindHistory(int orderId)
+        {
+            gvHistory.DataSource = _repo.GetStatusHistory(orderId);
+            gvHistory.DataBind();
+        }
+
+        /// <summary>Re-renders the detail panel after a status change, keeping messages visible.</summary>
+        private void ReloadDetailPreservingMessages(int id)
+        {
+            bool msg = lblStatusMsg.Visible, err = lblStatusError.Visible;
+            string msgText = lblStatusMsg.Text, errText = lblStatusError.Text;
+
+            LoadDetail(id);
+
+            lblStatusMsg.Visible = msg; lblStatusMsg.Text = msgText;
+            lblStatusError.Visible = err; lblStatusError.Text = errText;
         }
 
         protected void btnUpdateStatus_Click(object sender, EventArgs e)
         {
             int id;
             if (!int.TryParse(hfDetailOrderId.Value, out id)) return;
-            string newStatus = ddlNewStatus.SelectedValue;
-            _repo.UpdateStatus(id, newStatus);
 
-            lblDetailStatus.Text = newStatus;
-            lblStatusMsg.Text = "Status updated to <strong>" + Server.HtmlEncode(newStatus) + "</strong>.";
+            Order order = _repo.GetById(id);
+            if (order == null) return;
+
+            string newStatus = ddlNewStatus.SelectedValue;
+
+            // Server-side gate: the dropdown no longer offers Cancelled, and a cancelled
+            // order hides these controls, but neither is a security boundary on its own.
+            string refusal;
+            if (!OrderStatus.CanTransition(CurrentRole, order.Status, newStatus, out refusal))
+            {
+                ShowError(refusal);
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            if (_repo.UpdateStatus(id, newStatus, CurrentUsername, CurrentRole, null))
+                ShowSuccess("Status updated to <strong>" + Server.HtmlEncode(newStatus) + "</strong>.");
+            else
+                ShowError("The status could not be updated. Please reload and try again.");
+
+            ReloadDetailPreservingMessages(id);
+        }
+
+        /// <summary>
+        /// Cancels an order. This is not a separate mechanism — it goes through the same
+        /// UpdateStatus path as every other transition, which writes the audit row.
+        /// </summary>
+        protected void btnCancelOrder_Click(object sender, EventArgs e)
+        {
+            int id;
+            if (!int.TryParse(hfDetailOrderId.Value, out id)) return;
+
+            Order order = _repo.GetById(id);
+            if (order == null) return;
+
+            if (!OrderStatus.CanCancel(CurrentRole))
+            {
+                ShowError("Only a Super Admin can cancel an order.");
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            string reason = (txtCancelReason.Text ?? "").Trim();
+            if (reason.Length == 0)
+            {
+                ShowError("Please give a reason for the cancellation — it is kept in the order history.");
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            string refusal;
+            if (!OrderStatus.CanTransition(CurrentRole, order.Status, OrderStatus.Cancelled, out refusal))
+            {
+                ShowError(refusal);
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            if (_repo.UpdateStatus(id, OrderStatus.Cancelled, CurrentUsername, CurrentRole, reason))
+            {
+                txtCancelReason.Text = "";
+                ShowSuccess("Order <strong>#" + id + "</strong> has been cancelled. "
+                          + "The customer will see this status when tracking the order.");
+            }
+            else
+            {
+                ShowError("The order could not be cancelled. Please reload and try again.");
+            }
+
+            ReloadDetailPreservingMessages(id);
+        }
+
+        /// <summary>Moves a cancelled order back to an active status, recorded like any other change.</summary>
+        protected void btnReopenOrder_Click(object sender, EventArgs e)
+        {
+            int id;
+            if (!int.TryParse(hfDetailOrderId.Value, out id)) return;
+
+            Order order = _repo.GetById(id);
+            if (order == null) return;
+
+            if (!OrderStatus.CanCancel(CurrentRole))
+            {
+                ShowError("Only a Super Admin can reopen a cancelled order.");
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            string reason = (txtReopenReason.Text ?? "").Trim();
+            if (reason.Length == 0)
+            {
+                ShowError("Please give a reason for reopening this order.");
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            string newStatus = ddlReopenStatus.SelectedValue;
+            string refusal;
+            if (!OrderStatus.CanTransition(CurrentRole, order.Status, newStatus, out refusal))
+            {
+                ShowError(refusal);
+                ReloadDetailPreservingMessages(id);
+                return;
+            }
+
+            if (_repo.UpdateStatus(id, newStatus, CurrentUsername, CurrentRole, reason))
+            {
+                txtReopenReason.Text = "";
+                ShowSuccess("Order <strong>#" + id + "</strong> reopened as <strong>"
+                          + Server.HtmlEncode(newStatus) + "</strong>.");
+            }
+            else
+            {
+                ShowError("The order could not be reopened. Please reload and try again.");
+            }
+
+            ReloadDetailPreservingMessages(id);
+        }
+
+        private void ShowSuccess(string html)
+        {
+            lblStatusMsg.Text = html;
             lblStatusMsg.Visible = true;
+            lblStatusError.Visible = false;
+        }
+
+        private void ShowError(string html)
+        {
+            lblStatusError.Text = html;
+            lblStatusError.Visible = true;
+            lblStatusMsg.Visible = false;
         }
 
         protected void btnBackToList_Click(object sender, EventArgs e)

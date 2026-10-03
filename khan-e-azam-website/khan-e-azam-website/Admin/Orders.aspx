@@ -73,7 +73,8 @@
                 <asp:Label ID="lblMsg" runat="server" Visible="false" CssClass="alert alert-success m-3 d-block"></asp:Label>
                 <div class="table-responsive-wrap">
                 <asp:GridView ID="gvOrders" runat="server" AutoGenerateColumns="false" CssClass="table table-hover mb-0"
-                    DataKeyNames="Id" OnRowCommand="gvOrders_RowCommand" AllowSorting="true" OnSorting="gvOrders_Sorting">
+                    DataKeyNames="Id" OnRowCommand="gvOrders_RowCommand" AllowSorting="true" OnSorting="gvOrders_Sorting"
+                    OnRowDataBound="gvOrders_RowDataBound">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="#" SortExpression="id" />
                         <asp:BoundField DataField="CustomerName" HeaderText="Customer" SortExpression="customer" />
@@ -167,22 +168,113 @@
                     <div class="card-body">
                         <p class="text-muted small mb-2">Current Status: <strong><asp:Label ID="lblDetailStatus" runat="server" /></strong></p>
                         <asp:HiddenField ID="hfDetailOrderId" runat="server" />
-                        <div class="input-group">
-                            <asp:DropDownList ID="ddlNewStatus" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="Pending">Pending</asp:ListItem>
-                                <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
-                                <asp:ListItem Value="Preparing">Preparing</asp:ListItem>
-                                <asp:ListItem Value="Ready">Ready</asp:ListItem>
-                                <asp:ListItem Value="Out for Delivery">Out for Delivery</asp:ListItem>
-                                <asp:ListItem Value="Delivered">Delivered</asp:ListItem>
-                                <asp:ListItem Value="Cancelled">Cancelled</asp:ListItem>
-                            </asp:DropDownList>
-                            <div class="input-group-append">
-                                <asp:Button ID="btnUpdateStatus" runat="server" Text="Update" CssClass="btn btn-primary" OnClick="btnUpdateStatus_Click" />
+
+                        <!-- Shown instead of the controls once an order is cancelled. -->
+                        <asp:Panel ID="pnlCancelledBanner" runat="server" Visible="false" CssClass="cancelled-banner mb-3">
+                            <i class="fas fa-ban mr-1"></i>
+                            This order is <strong>cancelled</strong>.
+                            <asp:Label ID="lblCancelledDetail" runat="server" CssClass="d-block mt-1 small"></asp:Label>
+                        </asp:Panel>
+
+                        <asp:Panel ID="pnlStatusControls" runat="server">
+                            <div class="input-group">
+                                <asp:DropDownList ID="ddlNewStatus" runat="server" CssClass="form-control">
+                                    <asp:ListItem Value="Pending">Pending</asp:ListItem>
+                                    <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
+                                    <asp:ListItem Value="Preparing">Preparing</asp:ListItem>
+                                    <asp:ListItem Value="Ready">Ready</asp:ListItem>
+                                    <asp:ListItem Value="Out for Delivery">Out for Delivery</asp:ListItem>
+                                    <asp:ListItem Value="Delivered">Delivered</asp:ListItem>
+                                </asp:DropDownList>
+                                <div class="input-group-append">
+                                    <asp:Button ID="btnUpdateStatus" runat="server" Text="Update" CssClass="btn btn-primary" OnClick="btnUpdateStatus_Click" />
+                                </div>
                             </div>
-                        </div>
+                        </asp:Panel>
+
                         <asp:Label ID="lblStatusMsg" runat="server" Visible="false" CssClass="alert alert-success d-block mt-2 mb-0 py-2"></asp:Label>
+                        <asp:Label ID="lblStatusError" runat="server" Visible="false" CssClass="alert alert-danger d-block mt-2 mb-0 py-2"></asp:Label>
                     </div>
+                </div>
+
+                <!-- Cancellation (SuperAdmin only; hidden entirely for other roles) -->
+                <asp:Panel ID="pnlCancel" runat="server" Visible="false" CssClass="card mb-4 border-danger">
+                    <div class="card-header text-danger" style="border-bottom-color:#dc3545;">
+                        <i class="fas fa-ban mr-1"></i> <asp:Literal ID="litCancelHeading" runat="server">Cancel Order</asp:Literal>
+                    </div>
+                    <div class="card-body">
+                        <asp:Panel ID="pnlCancelForm" runat="server">
+                            <asp:Label ID="lblCancelWarning" runat="server" Visible="false" CssClass="alert alert-warning d-block py-2 small"></asp:Label>
+                            <div class="form-group mb-2">
+                                <label class="filter-label">Reason for cancellation <span class="text-danger">*</span></label>
+                                <asp:TextBox ID="txtCancelReason" runat="server" CssClass="form-control form-control-sm"
+                                    TextMode="MultiLine" Rows="2" MaxLength="500"
+                                    placeholder="e.g. Customer called to cancel; item unavailable"></asp:TextBox>
+                                <small class="text-muted">Recorded in the order history against your name.</small>
+                            </div>
+                            <asp:Button ID="btnCancelOrder" runat="server" Text="Cancel This Order" CssClass="btn btn-danger btn-sm"
+                                OnClick="btnCancelOrder_Click" CausesValidation="false"
+                                OnClientClick="return confirm('Cancel this order? This is recorded in the order history and the customer will see the cancelled status.');" />
+                        </asp:Panel>
+
+                        <!-- Reopen path, so a mistaken cancellation is recoverable. -->
+                        <asp:Panel ID="pnlReopen" runat="server" Visible="false">
+                            <div class="form-group mb-2">
+                                <label class="filter-label">Reason for reopening <span class="text-danger">*</span></label>
+                                <asp:TextBox ID="txtReopenReason" runat="server" CssClass="form-control form-control-sm"
+                                    TextMode="MultiLine" Rows="2" MaxLength="500"
+                                    placeholder="e.g. Cancelled by mistake"></asp:TextBox>
+                            </div>
+                            <div class="d-flex align-items-end" style="gap:8px;">
+                                <div style="flex:1 1 auto;">
+                                    <label class="filter-label">Reopen as</label>
+                                    <asp:DropDownList ID="ddlReopenStatus" runat="server" CssClass="form-control form-control-sm">
+                                        <asp:ListItem Value="Pending">Pending</asp:ListItem>
+                                        <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
+                                        <asp:ListItem Value="Preparing">Preparing</asp:ListItem>
+                                        <asp:ListItem Value="Ready">Ready</asp:ListItem>
+                                        <asp:ListItem Value="Out for Delivery">Out for Delivery</asp:ListItem>
+                                        <asp:ListItem Value="Delivered">Delivered</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <asp:Button ID="btnReopenOrder" runat="server" Text="Reopen" CssClass="btn btn-outline-danger btn-sm"
+                                    OnClick="btnReopenOrder_Click" CausesValidation="false"
+                                    OnClientClick="return confirm('Reopen this cancelled order?');" />
+                            </div>
+                        </asp:Panel>
+                    </div>
+                </asp:Panel>
+            </div>
+        </div>
+
+        <!-- Audit trail -->
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-history mr-1"></i> Status History</div>
+            <div class="card-body p-0">
+                <div class="table-responsive-wrap">
+                    <asp:GridView ID="gvHistory" runat="server" AutoGenerateColumns="false" CssClass="table table-sm mb-0">
+                        <Columns>
+                            <asp:TemplateField HeaderText="When">
+                                <ItemTemplate><%# ((DateTime)Eval("ChangedAt")).ToString("dd MMM yyyy, hh:mm tt") %></ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Change">
+                                <ItemTemplate>
+                                    <%# Eval("OldStatus") == null
+                                        ? "<span class='text-muted'>Order placed</span>"
+                                        : "<span class='order-status-badge status-" + ((string)Eval("OldStatus")).Replace(" ","") + "'>" + Server.HtmlEncode((string)Eval("OldStatus")) + "</span>" %>
+                                    <i class="fas fa-arrow-right mx-1 text-muted small"></i>
+                                    <span class='order-status-badge status-<%# ((string)Eval("NewStatus")).Replace(" ","") %>'><%# Server.HtmlEncode((string)Eval("NewStatus")) %></span>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="ChangedByDisplay" HeaderText="By" />
+                            <asp:TemplateField HeaderText="Reason">
+                                <ItemTemplate><%# string.IsNullOrEmpty((string)Eval("Reason")) ? "—" : Server.HtmlEncode((string)Eval("Reason")) %></ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                        <EmptyDataTemplate>
+                            <div class="text-center text-muted py-3">No status changes recorded yet.</div>
+                        </EmptyDataTemplate>
+                    </asp:GridView>
                 </div>
             </div>
         </div>
@@ -220,5 +312,9 @@
         .status-OutForDelivery { background:#cce5ff; color:#004085; }
         .status-Delivered { background:#d4edda; color:#155724; }
         .status-Cancelled { background:#f8d7da; color:#721c24; }
+        .cancelled-banner { background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; border-radius:6px; padding:10px 12px; font-size:.9rem; }
+        /* Cancelled rows are muted in the list so they read as inactive at a glance. */
+        .row-cancelled td { opacity:.65; }
+        .row-cancelled td:first-child { box-shadow: inset 3px 0 0 #dc3545; }
     </style>
 </asp:Content>

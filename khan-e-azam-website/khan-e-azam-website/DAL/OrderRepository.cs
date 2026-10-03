@@ -277,18 +277,117 @@ namespace KhanEAzam.DAL
             return list;
         }
 
-        public bool UpdateStatus(int id, string status)
+        /// <summary>
+        /// Changes an order's status and records the transition in OrderStatusHistory.
+        /// The update and the audit row share one transaction, so a status can never
+        /// change without leaving a trace.
+        ///
+        /// This is the single entry point for every status change, cancellations
+        /// included — cancelling is just a transition to OrderStatus.Cancelled.
+        /// </summary>
+        /// <param name="changedBy">Admin username, or null when not an admin action.</param>
+        /// <param name="changedByRole">Admin role, recorded alongside the username.</param>
+        /// <param name="reason">Why the change was made. Required by the UI for cancellations.</param>
+        /// <returns>False when the order does not exist or already has that status.</returns>
+        public bool UpdateStatus(int id, string status, string changedBy = null,
+                                 string changedByRole = null, string reason = null)
         {
             using (var cn = Database.GetConnection())
             {
                 cn.Open();
-                using (var cmd = new SqlCommand("UPDATE Orders SET Status=@S,UpdatedAt=GETDATE() WHERE Id=@Id", cn))
+                using (var tx = cn.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@S", status);
-                    cmd.Parameters.AddWithValue("@Id", id);
-                    return cmd.ExecuteNonQuery() > 0;
+                    try
+                    {
+                        // Read the current status under the transaction so the recorded
+                        // "from" value is the one actually being replaced.
+                        string oldStatus;
+                        using (var cmd = new SqlCommand(
+                            "SELECT Status FROM Orders WITH (UPDLOCK, ROWLOCK) WHERE Id=@Id", cn, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            oldStatus = cmd.ExecuteScalar() as string;
+                        }
+
+                        if (oldStatus == null)
+                        {
+                            tx.Rollback();
+                            return false;   // no such order
+                        }
+
+                        // Nothing to record when the status is unchanged.
+                        if (string.Equals(oldStatus, status, StringComparison.OrdinalIgnoreCase))
+                        {
+                            tx.Rollback();
+                            return false;
+                        }
+
+                        using (var cmd = new SqlCommand(
+                            "UPDATE Orders SET Status=@S,UpdatedAt=GETDATE() WHERE Id=@Id", cn, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@S", status);
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            if (cmd.ExecuteNonQuery() == 0)
+                            {
+                                tx.Rollback();
+                                return false;
+                            }
+                        }
+
+                        using (var cmd = new SqlCommand(
+                            @"INSERT INTO OrderStatusHistory
+                                  (OrderId, OldStatus, NewStatus, ChangedBy, ChangedByRole, Reason, ChangedAt)
+                              VALUES (@OId, @Old, @New, @By, @Role, @Reason, GETDATE())", cn, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@OId", id);
+                            cmd.Parameters.AddWithValue("@Old", (object)oldStatus ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@New", status);
+                            cmd.Parameters.AddWithValue("@By", string.IsNullOrWhiteSpace(changedBy) ? (object)DBNull.Value : changedBy.Trim());
+                            cmd.Parameters.AddWithValue("@Role", string.IsNullOrWhiteSpace(changedByRole) ? (object)DBNull.Value : changedByRole.Trim());
+                            cmd.Parameters.AddWithValue("@Reason", string.IsNullOrWhiteSpace(reason) ? (object)DBNull.Value : reason.Trim());
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        tx.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        tx.Rollback();
+                        throw;
+                    }
                 }
             }
+        }
+
+        /// <summary>The audit trail for one order, oldest change first.</summary>
+        public List<OrderStatusHistoryEntry> GetStatusHistory(int orderId)
+        {
+            var list = new List<OrderStatusHistoryEntry>();
+            using (var cn = Database.GetConnection())
+            {
+                cn.Open();
+                using (var cmd = new SqlCommand(
+                    @"SELECT Id, OrderId, OldStatus, NewStatus, ChangedBy, ChangedByRole, Reason, ChangedAt
+                      FROM OrderStatusHistory WHERE OrderId=@OId ORDER BY ChangedAt, Id", cn))
+                {
+                    cmd.Parameters.AddWithValue("@OId", orderId);
+                    using (var dr = cmd.ExecuteReader())
+                        while (dr.Read())
+                            list.Add(new OrderStatusHistoryEntry
+                            {
+                                Id = (int)dr["Id"],
+                                OrderId = (int)dr["OrderId"],
+                                OldStatus = dr["OldStatus"] == DBNull.Value ? null : dr["OldStatus"].ToString(),
+                                NewStatus = dr["NewStatus"].ToString(),
+                                ChangedBy = dr["ChangedBy"] == DBNull.Value ? null : dr["ChangedBy"].ToString(),
+                                ChangedByRole = dr["ChangedByRole"] == DBNull.Value ? null : dr["ChangedByRole"].ToString(),
+                                Reason = dr["Reason"] == DBNull.Value ? null : dr["Reason"].ToString(),
+                                ChangedAt = (DateTime)dr["ChangedAt"]
+                            });
+                }
+            }
+            return list;
         }
 
         private Order FetchOrder(SqlConnection cn, string sql, params SqlParameter[] parms)

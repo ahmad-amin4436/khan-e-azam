@@ -40,9 +40,24 @@ namespace KhanEAzam.Admin {
         protected global::System.Web.UI.WebControls.Label lblDetailNotes;
         protected global::System.Web.UI.WebControls.Label lblDetailStatus;
         protected global::System.Web.UI.WebControls.HiddenField hfDetailOrderId;
+        protected global::System.Web.UI.WebControls.Panel pnlCancelledBanner;
+        protected global::System.Web.UI.WebControls.Label lblCancelledDetail;
+        protected global::System.Web.UI.WebControls.Panel pnlStatusControls;
         protected global::System.Web.UI.WebControls.DropDownList ddlNewStatus;
         protected global::System.Web.UI.WebControls.Button btnUpdateStatus;
         protected global::System.Web.UI.WebControls.Label lblStatusMsg;
+        protected global::System.Web.UI.WebControls.Label lblStatusError;
+        protected global::System.Web.UI.WebControls.Panel pnlCancel;
+        protected global::System.Web.UI.WebControls.Literal litCancelHeading;
+        protected global::System.Web.UI.WebControls.Panel pnlCancelForm;
+        protected global::System.Web.UI.WebControls.Label lblCancelWarning;
+        protected global::System.Web.UI.WebControls.TextBox txtCancelReason;
+        protected global::System.Web.UI.WebControls.Button btnCancelOrder;
+        protected global::System.Web.UI.WebControls.Panel pnlReopen;
+        protected global::System.Web.UI.WebControls.TextBox txtReopenReason;
+        protected global::System.Web.UI.WebControls.DropDownList ddlReopenStatus;
+        protected global::System.Web.UI.WebControls.Button btnReopenOrder;
+        protected global::System.Web.UI.WebControls.GridView gvHistory;
         protected global::System.Web.UI.WebControls.GridView gvItems;
         protected global::System.Web.UI.WebControls.Label lblDetailTotal;
     }
