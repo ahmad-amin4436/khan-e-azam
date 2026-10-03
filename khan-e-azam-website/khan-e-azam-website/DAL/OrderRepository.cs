@@ -147,6 +147,136 @@ namespace KhanEAzam.DAL
             return list;
         }
 
+        /// <summary>
+        /// Admin list query: optional status / order-type / payment / date-range / keyword filters,
+        /// a whitelisted sort column and direction, and server-side paging.
+        ///
+        /// Only the requested page is fetched (OFFSET/FETCH). COUNT(*) OVER() returns the
+        /// total matching row count in the same round trip, so the pager and the row-range
+        /// readout stay consistent with the rows actually returned.
+        /// </summary>
+        public PagedResult<Order> Search(OrderFilter f)
+        {
+            if (f == null) f = new OrderFilter();
+
+            var where = new List<string>();
+            var ps = new List<SqlParameter>();
+
+            if (!string.IsNullOrEmpty(f.Status))
+            {
+                where.Add("Status = @Status");
+                ps.Add(new SqlParameter("@Status", f.Status));
+            }
+            if (!string.IsNullOrEmpty(f.OrderType))
+            {
+                where.Add("OrderType = @OrderType");
+                ps.Add(new SqlParameter("@OrderType", f.OrderType));
+            }
+            if (!string.IsNullOrEmpty(f.PaymentMethod))
+            {
+                where.Add("PaymentMethod = @Payment");
+                ps.Add(new SqlParameter("@Payment", f.PaymentMethod));
+            }
+            if (f.FromDate.HasValue)
+            {
+                where.Add("CreatedAt >= @From");
+                ps.Add(new SqlParameter("@From", f.FromDate.Value.Date));
+            }
+            if (f.ToDate.HasValue)
+            {
+                // Inclusive of the whole "to" day.
+                where.Add("CreatedAt < @To");
+                ps.Add(new SqlParameter("@To", f.ToDate.Value.Date.AddDays(1)));
+            }
+            if (!string.IsNullOrWhiteSpace(f.Keyword))
+            {
+                where.Add("(CustomerName LIKE @Kw OR CustomerPhone LIKE @Kw OR CAST(Id AS NVARCHAR(20)) LIKE @Kw)");
+                ps.Add(new SqlParameter("@Kw", "%" + f.Keyword.Trim() + "%"));
+            }
+
+            string sortCol = SortColumn(f.SortBy);
+            // Id is already unique, so only add it as a tie-breaker when it is not the sort column
+            // (SQL Server rejects a column repeated in ORDER BY).
+            string order = sortCol + (f.SortDescending ? " DESC" : " ASC")
+                + (sortCol == "Id" ? "" : ", Id DESC");
+
+            int pageSize = f.PageSize < 1 ? 20 : (f.PageSize > 200 ? 200 : f.PageSize);
+            int pageIndex = f.PageIndex < 0 ? 0 : f.PageIndex;
+
+            string sql = "SELECT *, COUNT(*) OVER() AS _TotalRows FROM Orders"
+                + (where.Count > 0 ? " WHERE " + string.Join(" AND ", where) : "")
+                + " ORDER BY " + order
+                + " OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+
+            ps.Add(new SqlParameter("@Skip", pageIndex * pageSize));
+            ps.Add(new SqlParameter("@Take", pageSize));
+
+            var result = new PagedResult<Order> { PageIndex = pageIndex, PageSize = pageSize };
+            using (var cn = Database.GetConnection())
+            {
+                cn.Open();
+                using (var cmd = new SqlCommand(sql, cn))
+                {
+                    cmd.Parameters.AddRange(ps.ToArray());
+                    using (var dr = cmd.ExecuteReader())
+                        while (dr.Read())
+                        {
+                            result.Items.Add(MapOrder(dr));
+                            result.TotalRows = (int)dr["_TotalRows"];
+                        }
+                }
+            }
+
+            // Deleting or filtering can leave the requested page past the end; re-run on the
+            // last real page so the user sees rows rather than an empty grid.
+            if (result.Items.Count == 0 && result.TotalRows > 0 && pageIndex > 0)
+            {
+                f.PageIndex = Math.Max(0, (int)Math.Ceiling(result.TotalRows / (double)pageSize) - 1);
+                if (f.PageIndex != pageIndex) return Search(f);
+            }
+
+            return result;
+        }
+
+        /// <summary>Maps a sort key to a literal column name so nothing user-supplied reaches the SQL.</summary>
+        private static string SortColumn(string sortBy)
+        {
+            switch ((sortBy ?? "").ToLowerInvariant())
+            {
+                case "id": return "Id";
+                case "customer": return "CustomerName";
+                case "type": return "OrderType";
+                case "payment": return "PaymentMethod";
+                case "total": return "TotalAmount";
+                case "status": return "Status";
+                default: return "CreatedAt";
+            }
+        }
+
+        /// <summary>Distinct values used to populate the admin filter dropdowns.</summary>
+        public List<string> GetDistinct(string column)
+        {
+            string col;
+            switch ((column ?? "").ToLowerInvariant())
+            {
+                case "ordertype": col = "OrderType"; break;
+                case "paymentmethod": col = "PaymentMethod"; break;
+                case "status": col = "Status"; break;
+                default: return new List<string>();
+            }
+
+            var list = new List<string>();
+            using (var cn = Database.GetConnection())
+            {
+                cn.Open();
+                using (var cmd = new SqlCommand(
+                    "SELECT DISTINCT " + col + " FROM Orders WHERE " + col + " IS NOT NULL AND LTRIM(RTRIM(" + col + ")) <> '' ORDER BY " + col, cn))
+                using (var dr = cmd.ExecuteReader())
+                    while (dr.Read()) list.Add(dr[0].ToString());
+            }
+            return list;
+        }
+
         public bool UpdateStatus(int id, string status)
         {
             using (var cn = Database.GetConnection())

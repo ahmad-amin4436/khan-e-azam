@@ -32,15 +32,86 @@
         .table thead th { background: #1F4D2C; color: #fff; border: none; }
         .badge-active { background: #28a745; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: .78rem; }
         .badge-inactive { background: #dc3545; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: .78rem; }
+        /* Shared filter + sort bar used by the Orders / Quick Requests / Reservations lists */
+        .filter-panel { padding: 14px 20px; background: #fbfcfd; border-bottom: 1px solid #e6e9ee; }
+        .filter-label { display: block; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #6b7280; margin-bottom: 3px; }
+        .filter-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+        .sort-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .sort-bar .form-control { width: auto; min-width: 130px; }
+        .count-pill { background: #1F4D2C; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: .75rem; font-weight: 600; margin-left: 8px; }
+        /* Sortable GridView headers */
+        .table thead th a { color: #fff; text-decoration: none; }
+        .table thead th a:hover { color: #F5B82E; text-decoration: none; }
+        .sort-indicator { font-size: .7rem; margin-left: 4px; color: #F5B82E; }
+        /* ---------- Pager (server-side paging) ---------- */
+        .pager-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 20px; border-top: 1px solid #e6e9ee; background: #fbfcfd; }
+        .pager-range { font-size: .85rem; color: #4b5563; }
+        .pager-range strong { color: #1F4D2C; }
+        .pager-controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .pager-controls .btn { min-width: 38px; }
+        .pager-page { font-size: .85rem; color: #4b5563; padding: 0 6px; white-space: nowrap; }
+        .pager-size { display: flex; align-items: center; gap: 6px; }
+        .pager-size .form-control { width: auto; }
+        .pager-size label { font-size: .78rem; color: #6b7280; margin: 0; white-space: nowrap; }
+        @media (max-width: 575.98px) {
+            .pager-bar { padding: 10px 12px; justify-content: center; }
+            .pager-range { width: 100%; text-align: center; order: -1; }
+            .pager-controls, .pager-size { justify-content: center; }
+        }
+        /* ---------- Responsive admin layout ---------- */
+        /* Hamburger + backdrop are desktop-hidden and only appear under 992px. */
+        .sidebar-toggle { display: none; background: none; border: 0; color: #1F4D2C; font-size: 1.35rem; line-height: 1; padding: 4px 10px 4px 0; cursor: pointer; }
+        .sidebar-toggle:focus { outline: 2px solid #F5B82E; outline-offset: 2px; }
+        .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 99; }
+        .sidebar-backdrop.show { display: block; }
+        .topbar .page-heading { overflow-wrap: anywhere; }
+
+        @media (max-width: 991.98px) {
+            /* Sidebar slides in over the content instead of reserving 250px. */
+            .sidebar { transform: translateX(-100%); transition: transform .25s ease; box-shadow: 2px 0 12px rgba(0,0,0,.25); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .sidebar-toggle { display: inline-block; }
+            .topbar { padding: 10px 16px; gap: 8px; }
+            .topbar .page-heading { font-size: 1.05rem; }
+            .content-area { padding: 16px; }
+            .filter-panel { padding: 12px 16px; }
+            /* Sort controls drop below the card title rather than squeezing beside it. */
+            .card-header .sort-bar { width: 100%; margin-top: 8px; }
+            .sort-bar .form-control { flex: 1 1 auto; min-width: 0; }
+        }
+
+        @media (max-width: 575.98px) {
+            .topbar .admin-info { font-size: .8rem; }
+            .content-area { padding: 12px; }
+            .filter-panel { padding: 10px 12px; }
+            .filter-actions .btn { flex: 1 1 auto; }
+            .filter-actions .text-muted { flex: 1 1 100%; margin-left: 0 !important; }
+            .card-header { font-size: .95rem; }
+            /* Date range inputs stack so neither is unusably narrow. */
+            .filter-panel .d-flex > .form-control { min-width: 0; }
+        }
+
+        /* Wide grids scroll horizontally inside the card instead of breaking the page.
+           GridView renders a plain <table>, so the wrapper is applied in code-behind. */
+        .table-responsive-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .table-responsive-wrap > .table { margin-bottom: 0; }
+        @media (max-width: 991.98px) {
+            .table-responsive-wrap > .table { white-space: nowrap; }
+            .table-responsive-wrap > .table td,
+            .table-responsive-wrap > .table th { vertical-align: middle; }
+        }
     </style>
 </head>
 <body>
     <form id="frmAdmin" runat="server">
-        <div class="sidebar">
+        <div class="sidebar" id="adminSidebar">
             <div class="brand"><i class="fas fa-utensils me-2"></i> Khan-E-Azam</div>
             <nav>
+                <% if (CanViewDashboard) { %>
                 <div class="nav-section">Main</div>
                 <a href="Dashboard.aspx" class='<%= GetActiveClass("Dashboard") %>'><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <% } %>
                 <% if (CanManageContent) { %>
                 <div class="nav-section">Content</div>
                 <a href="BannerSlides.aspx" class='<%= GetActiveClass("BannerSlides") %>'><i class="fas fa-images"></i> Banner Slides</a>
@@ -63,9 +134,16 @@
                 <a href="Logout.aspx"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
         </div>
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
         <div class="main-content">
             <div class="topbar">
-                <h1 class="page-heading"><asp:ContentPlaceHolder ID="PageHeading" runat="server">Dashboard</asp:ContentPlaceHolder></h1>
+                <div class="d-flex align-items-center" style="min-width:0;">
+                    <button type="button" class="sidebar-toggle" id="sidebarToggle"
+                            aria-label="Toggle navigation" aria-expanded="false" aria-controls="adminSidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-heading"><asp:ContentPlaceHolder ID="PageHeading" runat="server">Dashboard</asp:ContentPlaceHolder></h1>
+                </div>
                 <span class="admin-info"><i class="fas fa-user-circle me-1"></i> <%= Session["AdminUsername"] ?? "Admin" %></span>
             </div>
             <div class="content-area">
@@ -75,6 +153,39 @@
     </form>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Off-canvas sidebar for narrow screens. Desktop layout is unaffected: the
+        // toggle is display:none above 992px and the sidebar is never transformed.
+        (function () {
+            var sidebar = document.getElementById('adminSidebar');
+            var toggle = document.getElementById('sidebarToggle');
+            var backdrop = document.getElementById('sidebarBackdrop');
+            if (!sidebar || !toggle || !backdrop) return;
+
+            function setOpen(open) {
+                sidebar.classList.toggle('open', open);
+                backdrop.classList.toggle('show', open);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            }
+
+            toggle.addEventListener('click', function () {
+                setOpen(!sidebar.classList.contains('open'));
+            });
+            backdrop.addEventListener('click', function () { setOpen(false); });
+
+            // Escape closes it, and following a nav link should not leave it stuck open.
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') setOpen(false);
+            });
+            sidebar.addEventListener('click', function (e) {
+                if (e.target.closest('a')) setOpen(false);
+            });
+            // Returning to desktop width clears the mobile state.
+            window.addEventListener('resize', function () {
+                if (window.innerWidth >= 992) setOpen(false);
+            });
+        })();
+    </script>
     <asp:ContentPlaceHolder ID="Scripts" runat="server"></asp:ContentPlaceHolder>
 </body>
 </html>

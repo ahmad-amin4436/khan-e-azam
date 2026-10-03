@@ -4,42 +4,91 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
 
     <!-- List Panel -->
-    <asp:Panel ID="pnlList" runat="server">
+    <asp:Panel ID="pnlList" runat="server" DefaultButton="btnApply">
         <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                All Orders
-                <div>
-                    <asp:DropDownList ID="ddlFilter" runat="server" CssClass="form-control form-control-sm d-inline-block" style="width:auto;" AutoPostBack="true" OnSelectedIndexChanged="ddlFilter_Changed">
-                        <asp:ListItem Value="">All Statuses</asp:ListItem>
-                        <asp:ListItem Value="Pending">Pending</asp:ListItem>
-                        <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
-                        <asp:ListItem Value="Preparing">Preparing</asp:ListItem>
-                        <asp:ListItem Value="Ready">Ready</asp:ListItem>
-                        <asp:ListItem Value="Out for Delivery">Out for Delivery</asp:ListItem>
-                        <asp:ListItem Value="Delivered">Delivered</asp:ListItem>
-                        <asp:ListItem Value="Cancelled">Cancelled</asp:ListItem>
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                <span>All Orders <asp:Label ID="lblCount" runat="server" CssClass="count-pill" /></span>
+                <div class="sort-bar">
+                    <label class="filter-label mb-0 mr-1">Sort</label>
+                    <asp:DropDownList ID="ddlSort" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true" OnSelectedIndexChanged="Sort_Changed">
+                        <asp:ListItem Value="date">Date</asp:ListItem>
+                        <asp:ListItem Value="id">Order #</asp:ListItem>
+                        <asp:ListItem Value="customer">Customer</asp:ListItem>
+                        <asp:ListItem Value="type">Type</asp:ListItem>
+                        <asp:ListItem Value="payment">Payment</asp:ListItem>
+                        <asp:ListItem Value="total">Total</asp:ListItem>
+                        <asp:ListItem Value="status">Status</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:DropDownList ID="ddlSortDir" runat="server" CssClass="form-control form-control-sm" AutoPostBack="true" OnSelectedIndexChanged="Sort_Changed">
+                        <asp:ListItem Value="desc">Descending</asp:ListItem>
+                        <asp:ListItem Value="asc">Ascending</asp:ListItem>
                     </asp:DropDownList>
                 </div>
             </div>
+
+            <!-- Filter bar -->
+            <div class="filter-panel">
+                <div class="form-row align-items-end">
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <label class="filter-label">Search</label>
+                        <asp:TextBox ID="txtKeyword" runat="server" CssClass="form-control form-control-sm" placeholder="Name, phone or order #"></asp:TextBox>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-2">
+                        <label class="filter-label">Status</label>
+                        <asp:DropDownList ID="ddlFilter" runat="server" CssClass="form-control form-control-sm">
+                            <asp:ListItem Value="">All Statuses</asp:ListItem>
+                            <asp:ListItem Value="Pending">Pending</asp:ListItem>
+                            <asp:ListItem Value="Confirmed">Confirmed</asp:ListItem>
+                            <asp:ListItem Value="Preparing">Preparing</asp:ListItem>
+                            <asp:ListItem Value="Ready">Ready</asp:ListItem>
+                            <asp:ListItem Value="Out for Delivery">Out for Delivery</asp:ListItem>
+                            <asp:ListItem Value="Delivered">Delivered</asp:ListItem>
+                            <asp:ListItem Value="Cancelled">Cancelled</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-2">
+                        <label class="filter-label">Order Type</label>
+                        <asp:DropDownList ID="ddlType" runat="server" CssClass="form-control form-control-sm"></asp:DropDownList>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-2">
+                        <label class="filter-label">Payment</label>
+                        <asp:DropDownList ID="ddlPayment" runat="server" CssClass="form-control form-control-sm"></asp:DropDownList>
+                    </div>
+                    <div class="col-lg-3 col-md-12 mb-2">
+                        <label class="filter-label">Date Range</label>
+                        <div class="d-flex">
+                            <asp:TextBox ID="txtFrom" runat="server" CssClass="form-control form-control-sm mr-1" TextMode="Date"></asp:TextBox>
+                            <asp:TextBox ID="txtTo" runat="server" CssClass="form-control form-control-sm" TextMode="Date"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <asp:Button ID="btnApply" runat="server" Text="Apply Filters" CssClass="btn btn-primary btn-sm" OnClick="btnApply_Click" />
+                    <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnReset_Click" CausesValidation="false" />
+                    <asp:Label ID="lblActiveFilters" runat="server" CssClass="text-muted small ml-2"></asp:Label>
+                </div>
+            </div>
+
             <div class="card-body p-0">
                 <asp:Label ID="lblMsg" runat="server" Visible="false" CssClass="alert alert-success m-3 d-block"></asp:Label>
+                <div class="table-responsive-wrap">
                 <asp:GridView ID="gvOrders" runat="server" AutoGenerateColumns="false" CssClass="table table-hover mb-0"
-                    DataKeyNames="Id" OnRowCommand="gvOrders_RowCommand">
+                    DataKeyNames="Id" OnRowCommand="gvOrders_RowCommand" AllowSorting="true" OnSorting="gvOrders_Sorting">
                     <Columns>
-                        <asp:BoundField DataField="Id" HeaderText="#" />
-                        <asp:BoundField DataField="CustomerName" HeaderText="Customer" />
+                        <asp:BoundField DataField="Id" HeaderText="#" SortExpression="id" />
+                        <asp:BoundField DataField="CustomerName" HeaderText="Customer" SortExpression="customer" />
                         <asp:BoundField DataField="CustomerPhone" HeaderText="Phone" />
-                        <asp:BoundField DataField="OrderType" HeaderText="Type" />
-                        <asp:BoundField DataField="PaymentMethod" HeaderText="Payment" />
-                        <asp:TemplateField HeaderText="Total">
+                        <asp:BoundField DataField="OrderType" HeaderText="Type" SortExpression="type" />
+                        <asp:BoundField DataField="PaymentMethod" HeaderText="Payment" SortExpression="payment" />
+                        <asp:TemplateField HeaderText="Total" SortExpression="total">
                             <ItemTemplate>Rs. <%# ((decimal)Eval("TotalAmount")).ToString("0") %></ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Status">
+                        <asp:TemplateField HeaderText="Status" SortExpression="status">
                             <ItemTemplate>
                                 <span class='order-status-badge status-<%# ((string)Eval("Status")).Replace(" ","") %>'><%# Eval("Status") %></span>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Date">
+                        <asp:TemplateField HeaderText="Date" SortExpression="date">
                             <ItemTemplate><%# ((DateTime)Eval("CreatedAt")).ToString("dd MMM yy, hh:mm tt") %></ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Actions">
@@ -49,9 +98,38 @@
                         </asp:TemplateField>
                     </Columns>
                     <EmptyDataTemplate>
-                        <div class="text-center text-muted py-4">No orders found.</div>
+                        <div class="text-center text-muted py-4">No orders match the current filters.</div>
                     </EmptyDataTemplate>
                 </asp:GridView>
+                </div>
+            </div>
+
+            <!-- Server-side pager: only the current page is fetched from SQL. -->
+            <div class="pager-bar">
+                <div class="pager-range">
+                    <asp:Label ID="lblRange" runat="server"></asp:Label>
+                </div>
+                <div class="pager-controls">
+                    <asp:Button ID="btnFirst" runat="server" Text="&laquo;" CssClass="btn btn-outline-secondary btn-sm"
+                        OnClick="btnFirst_Click" CausesValidation="false" ToolTip="First page" />
+                    <asp:Button ID="btnPrev" runat="server" Text="&lsaquo;" CssClass="btn btn-outline-secondary btn-sm"
+                        OnClick="btnPrev_Click" CausesValidation="false" ToolTip="Previous page" />
+                    <span class="pager-page"><asp:Label ID="lblPageInfo" runat="server"></asp:Label></span>
+                    <asp:Button ID="btnNext" runat="server" Text="&rsaquo;" CssClass="btn btn-outline-secondary btn-sm"
+                        OnClick="btnNext_Click" CausesValidation="false" ToolTip="Next page" />
+                    <asp:Button ID="btnLast" runat="server" Text="&raquo;" CssClass="btn btn-outline-secondary btn-sm"
+                        OnClick="btnLast_Click" CausesValidation="false" ToolTip="Last page" />
+                </div>
+                <div class="pager-size">
+                    <label for="<%= ddlPageSize.ClientID %>">Rows</label>
+                    <asp:DropDownList ID="ddlPageSize" runat="server" CssClass="form-control form-control-sm"
+                        AutoPostBack="true" OnSelectedIndexChanged="ddlPageSize_Changed">
+                        <asp:ListItem Value="10">10</asp:ListItem>
+                        <asp:ListItem Value="20" Selected="True">20</asp:ListItem>
+                        <asp:ListItem Value="50">50</asp:ListItem>
+                        <asp:ListItem Value="100">100</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
         </div>
     </asp:Panel>

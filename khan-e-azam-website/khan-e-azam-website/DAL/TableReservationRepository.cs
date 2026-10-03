@@ -30,6 +30,99 @@ namespace KhanEAzam.DAL
             return list;
         }
 
+
+        /// <summary>
+        /// Admin list query: optional date-range / party-size / keyword filters plus an
+        /// "upcoming only" shortcut, with a whitelisted sort column and direction.
+        /// </summary>
+        public PagedResult<TableReservation> Search(System.DateTime? from, System.DateTime? to, int? minPartySize,
+                                                    string keyword, bool upcomingOnly, string sortBy, bool sortDescending,
+                                                    int pageIndex, int pageSize)
+        {
+            var where = new List<string>();
+            var ps = new List<SqlParameter>();
+
+            if (upcomingOnly)
+            {
+                where.Add("ReservationDate >= @today");
+                ps.Add(new SqlParameter("@today", System.DateTime.Today));
+            }
+            if (from.HasValue)
+            {
+                where.Add("ReservationDate >= @from");
+                ps.Add(new SqlParameter("@from", from.Value.Date));
+            }
+            if (to.HasValue)
+            {
+                where.Add("ReservationDate <= @to");
+                ps.Add(new SqlParameter("@to", to.Value.Date));
+            }
+            if (minPartySize.HasValue)
+            {
+                where.Add("PartySize >= @ps");
+                ps.Add(new SqlParameter("@ps", minPartySize.Value));
+            }
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                where.Add("(FullName LIKE @kw OR ContactNumber LIKE @kw)");
+                ps.Add(new SqlParameter("@kw", "%" + keyword.Trim() + "%"));
+            }
+
+            string col;
+            switch ((sortBy ?? "").ToLowerInvariant())
+            {
+                case "id": col = "Id"; break;
+                case "name": col = "FullName"; break;
+                case "contact": col = "ContactNumber"; break;
+                case "guests": col = "PartySize"; break;
+                case "submitted": col = "CreatedAt"; break;
+                default: col = "ReservationDate"; break;
+            }
+
+            string order = col + (sortDescending ? " DESC" : " ASC");
+            // Keep same-day reservations in time order when sorting by date.
+            if (col == "ReservationDate") order += ", ReservationTime" + (sortDescending ? " DESC" : " ASC");
+            // Id is already unique, so only add it as a tie-breaker when it is not the sort column
+            // (SQL Server rejects a column repeated in ORDER BY).
+            if (col != "Id") order += ", Id DESC";
+
+            if (pageSize < 1) pageSize = 20; else if (pageSize > 200) pageSize = 200;
+            if (pageIndex < 0) pageIndex = 0;
+
+            string sql = "SELECT *, COUNT(*) OVER() AS _TotalRows FROM TableReservations"
+                + (where.Count > 0 ? " WHERE " + string.Join(" AND ", where) : "")
+                + " ORDER BY " + order
+                + " OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+
+            ps.Add(new SqlParameter("@Skip", pageIndex * pageSize));
+            ps.Add(new SqlParameter("@Take", pageSize));
+
+            var result = new PagedResult<TableReservation> { PageIndex = pageIndex, PageSize = pageSize };
+            using (var conn = Database.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddRange(ps.ToArray());
+                    using (var r = cmd.ExecuteReader())
+                        while (r.Read())
+                        {
+                            result.Items.Add(Map(r));
+                            result.TotalRows = (int)r["_TotalRows"];
+                        }
+                }
+            }
+
+            // A delete can leave the requested page past the end; fall back to the last real page.
+            if (result.Items.Count == 0 && result.TotalRows > 0 && pageIndex > 0)
+            {
+                int last = (int)System.Math.Ceiling(result.TotalRows / (double)pageSize) - 1;
+                if (last != pageIndex)
+                    return Search(from, to, minPartySize, keyword, upcomingOnly, sortBy, sortDescending, last, pageSize);
+            }
+
+            return result;
+        }
         public void Insert(TableReservation t)
         {
             using (var conn = Database.GetConnection())

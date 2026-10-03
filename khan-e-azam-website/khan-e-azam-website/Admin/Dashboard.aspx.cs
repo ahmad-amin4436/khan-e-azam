@@ -11,6 +11,14 @@ namespace KhanEAzam.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Master page also blocks this, but guard here so the page is never rendered for
+            // a Manager/Staff session even if the nav changes.
+            if ((Session["AdminRole"] as string) != "SuperAdmin")
+            {
+                Response.Redirect(AdminMaster.DefaultPageForRestrictedRoles);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 lblBannerCount.Text = new BannerSlideRepository().GetAll().Count.ToString();

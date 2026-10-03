@@ -15,7 +15,13 @@ namespace KhanEAzam.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["AdminId"] != null)
-                Response.Redirect("~/Admin/Dashboard.aspx");
+                Response.Redirect(LandingPageFor(Session["AdminRole"] as string));
+        }
+
+        // Only SuperAdmin has a Dashboard; everyone else starts on Orders.
+        private static string LandingPageFor(string role)
+        {
+            return role == "SuperAdmin" ? "~/Admin/Dashboard.aspx" : AdminMaster.DefaultPageForRestrictedRoles;
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -58,7 +64,7 @@ namespace KhanEAzam.Admin
             Session["AdminId"] = user.Id;
             Session["AdminUsername"] = user.Username;
             Session["AdminRole"] = user.Role;
-            Response.Redirect("~/Admin/Dashboard.aspx");
+            Response.Redirect(LandingPageFor(user.Role));
         }
     }
 }

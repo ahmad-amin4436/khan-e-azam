@@ -569,6 +569,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="connectionStrings.config.template" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -635,6 +636,8 @@
     <Compile Include="Models\Testimonial.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderFilter.cs" />
+    <Compile Include="Models\PagedResult.cs" />
     <Compile Include="Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -6,9 +6,17 @@ namespace KhanEAzam.Admin
 {
     public partial class AdminMaster : MasterPage
     {
-        // Pages the "Staff" role may open. Everything else (content management, Admin Users)
-        // needs at least "Manager"; Admin Users itself needs "SuperAdmin" (checked below too).
-        private static readonly string[] StaffAllowedPages = { "Dashboard", "Orders", "QuickRequests", "TableReservations", "Logout" };
+        // Dashboard and all content management belong to SuperAdmin only.
+        // Manager and Staff share the operational pages below; Admin Users stays SuperAdmin-only.
+        private static readonly string[] SuperAdminOnlyPages =
+        {
+            "Dashboard", "Users",
+            "BannerSlides", "BrowseMenu", "TodaysSpecials", "MenuFilter",
+            "IconFeatures", "Chefs", "Testimonials", "BlogPosts"
+        };
+
+        // Where a Manager/Staff session lands instead of the Dashboard.
+        public const string DefaultPageForRestrictedRoles = "~/Admin/Orders.aspx";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,18 +26,11 @@ namespace KhanEAzam.Admin
                 return;
             }
 
-            string role = Session["AdminRole"] as string ?? "Staff";
             string current = System.IO.Path.GetFileNameWithoutExtension(Request.AppRelativeCurrentExecutionFilePath ?? "");
 
-            if (current.Equals("Users", StringComparison.OrdinalIgnoreCase) && role != "SuperAdmin")
+            if (!IsSuperAdmin && SuperAdminOnlyPages.Contains(current, StringComparer.OrdinalIgnoreCase))
             {
-                Response.Redirect("~/Admin/Dashboard.aspx");
-                return;
-            }
-
-            if (role == "Staff" && !StaffAllowedPages.Contains(current, StringComparer.OrdinalIgnoreCase))
-            {
-                Response.Redirect("~/Admin/Dashboard.aspx");
+                Response.Redirect(DefaultPageForRestrictedRoles);
             }
         }
 
@@ -40,6 +41,9 @@ namespace KhanEAzam.Admin
         }
 
         public bool IsSuperAdmin => (Session["AdminRole"] as string) == "SuperAdmin";
-        public bool CanManageContent => (Session["AdminRole"] as string) != "Staff";
+
+        // Dashboard and content management are both SuperAdmin-only, so they share this gate.
+        public bool CanManageContent => IsSuperAdmin;
+        public bool CanViewDashboard => IsSuperAdmin;
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  TEMPLATE - this file IS committed. Copy it to connectionStrings.config (which is
+  gitignored) and fill in the real values for the environment you are setting up.
+
+  Never put a real password in this template, and never commit connectionStrings.config.
+
+  Local development (Windows auth, no password needed):
+    Data Source=.\SQLEXPRESS;Initial Catalog=KhanEAzamDB;Integrated Security=True;TrustServerCertificate=True
+
+  Production (SQL login):
+    Data Source=<server>,<port>;Initial Catalog=KhanEAzamDB;User ID=<user>;Password=<password>;TrustServerCertificate=True
+-->
+<connectionStrings>
+  <add name="KhanEAzamDB"
+       connectionString="Data Source=.\SQLEXPRESS;Initial Catalog=KhanEAzamDB;Integrated Security=True;TrustServerCertificate=True"
+       providerName="System.Data.SqlClient" />
+</connectionStrings>

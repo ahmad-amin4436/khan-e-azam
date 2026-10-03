@@ -428,3 +428,6 @@ FodyWeavers.xsd
 *.msm
 *.msp
 /khan-e-azam-website/khan-e-azam-website/khan-e-azam-template
+
+# Environment-specific DB credentials — never commit (see connectionStrings.config.template)
+connectionStrings.config

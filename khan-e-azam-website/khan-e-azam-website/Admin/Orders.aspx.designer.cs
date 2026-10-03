@@ -7,9 +7,27 @@
 namespace KhanEAzam.Admin {
     public partial class Orders {
         protected global::System.Web.UI.WebControls.Panel pnlList;
+        protected global::System.Web.UI.WebControls.Label lblCount;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSort;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSortDir;
+        protected global::System.Web.UI.WebControls.TextBox txtKeyword;
         protected global::System.Web.UI.WebControls.DropDownList ddlFilter;
+        protected global::System.Web.UI.WebControls.DropDownList ddlType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPayment;
+        protected global::System.Web.UI.WebControls.TextBox txtFrom;
+        protected global::System.Web.UI.WebControls.TextBox txtTo;
+        protected global::System.Web.UI.WebControls.Button btnApply;
+        protected global::System.Web.UI.WebControls.Button btnReset;
+        protected global::System.Web.UI.WebControls.Label lblActiveFilters;
         protected global::System.Web.UI.WebControls.Label lblMsg;
         protected global::System.Web.UI.WebControls.GridView gvOrders;
+        protected global::System.Web.UI.WebControls.Label lblRange;
+        protected global::System.Web.UI.WebControls.Button btnFirst;
+        protected global::System.Web.UI.WebControls.Button btnPrev;
+        protected global::System.Web.UI.WebControls.Label lblPageInfo;
+        protected global::System.Web.UI.WebControls.Button btnNext;
+        protected global::System.Web.UI.WebControls.Button btnLast;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPageSize;
         protected global::System.Web.UI.WebControls.Panel pnlDetail;
         protected global::System.Web.UI.WebControls.Label lblDetailId;
         protected global::System.Web.UI.WebControls.Button btnBackToList;
