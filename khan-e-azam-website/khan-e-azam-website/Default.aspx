@@ -487,8 +487,9 @@
 							<li data-filter=".All" class="btn md:mb-0 mb-2 active"><a href="javascript:void(0);"><span><i class="flaticon-fast-food"></i></span>All</a></li>
 							<li data-filter=".drink" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-cocktail"></i></span>COLD DRINK</a></li>
 							<li data-filter=".pizza" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-pizza-slice"></i></span>PIZZA</a></li>
-							<li data-filter=".salad" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-salad"></i></span>SALAD</a></li>
-							<li data-filter=".sweet" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-cupcake"></i></span>SWEETS</a></li>
+							<li data-filter=".bbq" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-fast-food"></i></span>BBQ</a></li>
+							<li data-filter=".broast" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-fast-food"></i></span>BROAST</a></li>
+							<li data-filter=".sweet" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-cupcake"></i></span>ICE CREAM</a></li>
 							<li data-filter=".spicy" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-chili-pepper"></i></span>SPICY</a></li>
 							<li data-filter=".burger" class="btn md:mb-0 mb-2"><a href="javascript:void(0);"><span><i class="flaticon-hamburger-1"></i></span>BURGER</a></li>
 						</ul>

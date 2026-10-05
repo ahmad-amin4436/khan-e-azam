@@ -55,7 +55,9 @@ namespace khan_e_azam_website
         // One representative item per filter category guarantees each button has a match.
         private List<MenuFilterItem> GetMenuPreviewItems()
         {
-            string[] previewCategories = { "drink", "pizza", "salad", "sweet", "spicy", "burger" };
+            // Must match the filter buttons rendered on the homepage, so each button
+            // has at least one card to show.
+            string[] previewCategories = { "drink", "pizza", "bbq", "broast", "sweet", "spicy", "burger" };
             var allItems = new MenuFilterRepository().GetAll().Where(x => x.IsActive).OrderBy(x => x.SortOrder).ToList();
 
             var preview = new List<MenuFilterItem>();

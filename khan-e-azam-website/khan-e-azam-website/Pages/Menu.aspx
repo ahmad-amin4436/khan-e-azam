@@ -78,9 +78,6 @@
 							<li data-filter=".sandwich" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-burger-1 text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SANDWICH</a>
 							</li>
-							<li data-filter=".shawarma" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cuisine text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SHAWARMA</a>
-							</li>
 							<li data-filter=".burger" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-hamburger-1 text-[25px] lg:mr-[10px] mr-[5px]"></i></span>BURGER</a>
 							</li>
@@ -90,14 +87,8 @@
 							<li data-filter=".roll" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>WRAP ROLL</a>
 							</li>
-							<li data-filter=".paratha" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-restaurant text-[25px] lg:mr-[10px] mr-[5px]"></i></span>PARATHA ROLL</a>
-							</li>
 							<li data-filter=".fries" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>FRIES</a>
-							</li>
-							<li data-filter=".pasta" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-pot text-[25px] lg:mr-[10px] mr-[5px]"></i></span>PASTA</a>
 							</li>
 							<li data-filter=".wings" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>WINGS</a>
@@ -105,14 +96,23 @@
 							<li data-filter=".broast" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>BROAST</a>
 							</li>
-							<li data-filter=".salad" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-salad text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SALAD</a>
+							<li data-filter=".bbq" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>BBQ</a>
+							</li>
+							<li data-filter=".starter" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>STARTERS</a>
+							</li>
+							<li data-filter=".deal" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-fast-food text-[25px] lg:mr-[10px] mr-[5px]"></i></span>DEALS</a>
 							</li>
 							<li data-filter=".sweet" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
-								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cupcake text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SWEETS</a>
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cupcake text-[25px] lg:mr-[10px] mr-[5px]"></i></span>ICE CREAM</a>
 							</li>
 							<li data-filter=".spicy" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-chili-pepper text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SPICY</a>
+							</li>
+							<li data-filter=".shake" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
+								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cocktail text-[25px] lg:mr-[10px] mr-[5px]"></i></span>SHAKES</a>
 							</li>
 							<li data-filter=".drink" class="btn lg:py-2 lg:px-[15px] p-2 lg:mr-[10px] mr-[5px]">
 								<a href="javascript:void(0);" class="flex items-center lg:text-[15px] text-[13px]"><span class="mb-0"><i class="flaticon-cocktail text-[25px] lg:mr-[10px] mr-[5px]"></i></span>COLD DRINK</a>
